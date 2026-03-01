@@ -14,8 +14,8 @@ const YouStayInControl = () => {
       <div className="container-narrow">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
           className="mb-12"
         >
           <h2 className="text-3xl font-bold text-primary-foreground md:text-4xl">
@@ -31,9 +31,8 @@ const YouStayInControl = () => {
             <motion.div
               key={i}
               initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.1, duration: 0.5 }}
               className="flex items-start gap-4 rounded-2xl bg-primary-foreground/10 p-6"
             >
               <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-accent">

@@ -34,8 +34,8 @@ const FAQ = () => {
         <div className="grid gap-12 md:grid-cols-2">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
           >
             <h2 className="text-3xl font-bold text-foreground md:text-4xl">
               Frequently Asked
@@ -56,9 +56,8 @@ const FAQ = () => {
               <motion.div
                 key={i}
                 initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.05 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.05, duration: 0.4 }}
                 className="rounded-xl bg-card shadow-sm"
               >
                 <button

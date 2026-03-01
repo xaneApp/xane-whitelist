@@ -24,8 +24,8 @@ const MoneyWorks = () => {
       <div className="container-narrow">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
           className="mb-12 text-center"
         >
           <h2 className="text-3xl font-bold text-foreground md:text-4xl">
@@ -41,9 +41,8 @@ const MoneyWorks = () => {
             <motion.div
               key={i}
               initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.15, duration: 0.5 }}
               className="overflow-hidden rounded-2xl"
             >
               <img
@@ -57,8 +56,8 @@ const MoneyWorks = () => {
 
         <motion.p
           initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.5 }}
           className="mt-10 text-center text-lg text-muted-foreground"
         >
           Easy to build for those everyday moments — not just trading charts.

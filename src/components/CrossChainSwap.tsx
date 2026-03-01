@@ -8,8 +8,8 @@ const CrossChainSwap = () => {
         <div className="grid items-center gap-12 md:grid-cols-2">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
           >
             <h2 className="text-3xl font-bold text-foreground md:text-4xl lg:text-5xl">
               CrossChain Swap
@@ -34,8 +34,8 @@ const CrossChainSwap = () => {
 
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
             className="flex justify-center"
           >
             <img

@@ -17,8 +17,8 @@ const OwnershipUsability = () => {
       <div className="container-narrow">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
           className="mb-12 text-center"
         >
           <p className="text-sm font-semibold uppercase tracking-wider text-primary">
@@ -34,9 +34,8 @@ const OwnershipUsability = () => {
             <motion.div
               key={i}
               initial={{ opacity: 0, y: 30, rotate: i % 2 === 0 ? -3 : 3 }}
-              whileInView={{ opacity: 1, y: 0, rotate: i % 2 === 0 ? -3 : 3 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
+              animate={{ opacity: 1, y: 0, rotate: i % 2 === 0 ? -3 : 3 }}
+              transition={{ delay: i * 0.1, duration: 0.5 }}
               whileHover={{ rotate: 0, scale: 1.05 }}
               className="overflow-hidden rounded-2xl shadow-lg transition-shadow hover:shadow-xl"
             >
