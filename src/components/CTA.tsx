@@ -6,8 +6,8 @@ const CTA = () => {
       <div className="container-narrow text-center">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
         >
           <h2 className="text-3xl font-bold text-primary-foreground md:text-4xl lg:text-5xl">
             Start using Crypto like

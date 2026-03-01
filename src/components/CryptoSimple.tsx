@@ -8,8 +8,8 @@ const CryptoSimple = () => {
       <div className="container-narrow">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
           className="mb-16 max-w-3xl"
         >
           <h2 className="text-4xl font-bold leading-tight text-foreground md:text-5xl lg:text-6xl">
@@ -31,8 +31,8 @@ const CryptoSimple = () => {
         <div className="grid gap-8 md:grid-cols-2">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
             className="flex flex-col items-center rounded-3xl bg-card p-8 shadow-sm"
           >
             <h3 className="mb-2 text-lg font-semibold text-foreground">XanePay</h3>
@@ -46,8 +46,8 @@ const CryptoSimple = () => {
 
           <motion.div
             initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
             className="flex flex-col items-center rounded-3xl bg-card p-8 shadow-sm"
           >
             <h3 className="mb-2 text-lg font-semibold text-foreground">Receive via QR or phone</h3>
@@ -71,9 +71,8 @@ const CryptoSimple = () => {
             <motion.div
               key={i}
               initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 + i * 0.1, duration: 0.5 }}
               className="text-center"
             >
               <p className="text-3xl font-bold text-primary">{stat.value}</p>

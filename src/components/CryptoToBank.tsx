@@ -8,8 +8,8 @@ const CryptoToBank = () => {
         <div className="grid items-center gap-12 md:grid-cols-2">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6 }}
           >
             <h2 className="text-3xl font-bold text-foreground md:text-4xl">
               From Crypto to Bank
@@ -24,8 +24,8 @@ const CryptoToBank = () => {
 
           <motion.div
             initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
             className="flex justify-center"
           >
             <img
