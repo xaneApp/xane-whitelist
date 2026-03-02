@@ -1,11 +1,11 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
-import { ChevronDown } from "lucide-react";
+import { Plus, Minus } from "lucide-react";
 
 const faqs = [
   {
     q: "Do I need crypto knowledge to use Xane?",
-    a: "No. Xane is designed so you don't need to understand blockchain, wallets, or gas fees. If you can use a banking app, you can use Xane. Behind the scenes, powerful crypto technology runs, but you only see simple actions like Send, Convert and Withdraw.",
+    a: "No.\n\nXane is designed so you don't need to understand blockchain, wallets, or gas fees.\n\nIf you can use a banking app, you can use Xane.\nBehind the scenes, powerful crypto technology runs, but you only see simple actions like Send, Convert and Withdraw.",
   },
   {
     q: "What is the difference between XaneWallet and XanePay?",
@@ -26,68 +26,90 @@ const faqs = [
 ];
 
 const FAQ = () => {
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const [openIndex, setOpenIndex] = useState<number | null>(0); 
 
   return (
-    <section id="faq" className="section-padding bg-secondary">
-      <div className="container-narrow">
-        <div className="grid gap-12 md:grid-cols-2">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
+    <section className="relative w-full bg-[#F0F7FA] py-24 lg:py-32" style={{ zoom: 0.666667 }}>
+      <div className="mx-auto flex w-full max-w-[1500px] flex-col justify-between px-6 md:px-16 lg:flex-row lg:gap-20">
+
+        {/* LEFT: HEADING & CONTACT */}
+        <div className="w-full max-w-[450px] shrink-0">
+          <motion.h2 
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="font-sans text-[45px] font-medium leading-[1.2] tracking-tight text-[#0A0A0A] md:text-[55px] lg:text-[60px]"
           >
-            <h2 className="text-3xl font-bold text-foreground md:text-4xl">
-              Frequently Asked
-              <br />
-              Questions
-            </h2>
-            <p className="mt-4 text-muted-foreground">Got a question?</p>
+            Frequently <br />
+            Asked <br />
+            Questions
+          </motion.h2>
+
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            className="mt-16 lg:mt-32"
+          >
+            <p className="font-sans text-[18px] font-medium text-[#4B5563]">
+              Still have questions?
+            </p>
             <a
-              href="mailto:support@xane.app"
-              className="mt-2 inline-block text-primary font-medium hover:underline"
+              href="mailto:Support@xane.app"
+              className="mt-2 inline-block font-sans text-[28px] font-medium text-[#4F3CFF] transition-opacity hover:opacity-80 md:text-[34px]"
             >
-              support@xane.app
+              Support@xane.app
             </a>
           </motion.div>
-
-          <div className="space-y-3">
-            {faqs.map((faq, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.05, duration: 0.4 }}
-                className="rounded-xl bg-card shadow-sm"
-              >
-                <button
-                  onClick={() => setOpenIndex(openIndex === i ? null : i)}
-                  className="flex w-full items-center justify-between p-5 text-left"
-                >
-                  <span className="pr-4 font-medium text-foreground">{faq.q}</span>
-                  <ChevronDown
-                    className={`h-5 w-5 shrink-0 text-muted-foreground transition-transform ${
-                      openIndex === i ? "rotate-180" : ""
-                    }`}
-                  />
-                </button>
-                <AnimatePresence>
-                  {openIndex === i && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.2 }}
-                      className="overflow-hidden"
-                    >
-                      <p className="px-5 pb-5 text-muted-foreground">{faq.a}</p>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </motion.div>
-            ))}
-          </div>
         </div>
+
+        {/* RIGHT: THE EDITORIAL ACCORDION */}
+        <div className="mt-16 w-full lg:mt-0 lg:max-w-[850px]">
+          {faqs.map((faq, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.8 }}
+              transition={{ delay: i * 0.1, duration: 0.4 }}
+              className={`border-[#D1D5DB] ${i === 0 ? 'border-t' : ''} border-b`}
+            >
+              <button
+                onClick={() => setOpenIndex(openIndex === i ? null : i)}
+                className="group flex w-full items-center justify-between py-8 text-left transition-colors"
+              >
+                <span className="pr-4 font-sans text-[22px] font-medium text-[#0A0A0A] group-hover:text-[#4F3CFF] md:text-[26px]">
+                  {faq.q}
+                </span>
+                <span className="ml-4 shrink-0 text-[#0A0A0A] transition-transform duration-300">
+                  {openIndex === i ? (
+                    <Minus className="h-6 w-6 md:h-8 md:w-8" strokeWidth={1.5} />
+                  ) : (
+                    <Plus className="h-6 w-6 md:h-8 md:w-8" strokeWidth={1.5} />
+                  )}
+                </span>
+              </button>
+
+              <AnimatePresence>
+                {openIndex === i && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: "auto", opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.3, ease: "easeInOut" }}
+                    className="overflow-hidden"
+                  >
+                    <p className="whitespace-pre-wrap pb-10 pr-12 font-sans text-[16px] leading-relaxed text-[#6B7280] md:text-[18px]">
+                      {faq.a}
+                    </p>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.div>
+          ))}
+        </div>
+
       </div>
     </section>
   );

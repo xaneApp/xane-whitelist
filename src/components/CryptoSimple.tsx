@@ -1,85 +1,62 @@
 import { motion } from "framer-motion";
-import appXanepay from "@/assets/app-xanepay.png";
 import receiveCrypto from "@/assets/receive-crypto.png";
 
 const CryptoSimple = () => {
   return (
-    <section id="features" className="section-padding bg-secondary">
-      <div className="container-narrow">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="mb-16 max-w-3xl"
+    <section className="relative flex min-h-[900px] w-full items-center overflow-hidden bg-white py-24 lg:py-32" style={{ zoom: 0.666667 }}>
+      
+      <div 
+        className="absolute inset-0 z-0 opacity-40 pointer-events-none"
+        style={{
+          backgroundImage: `linear-gradient(to right, #e5e7eb 1px, transparent 1px), linear-gradient(to bottom, #e5e7eb 1px, transparent 1px)`,
+          backgroundSize: '4rem 4rem',
+        }}
+      />
+
+      <div className="relative z-10 mx-auto flex w-full max-w-[1600px] flex-col items-center justify-between px-6 md:px-16 lg:flex-row lg:gap-12">
+        
+        <motion.div 
+          initial={{ opacity: 0, x: -50 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="w-full max-w-[750px] pt-10 lg:pt-0"
         >
-          <h2 className="text-4xl font-bold leading-tight text-foreground md:text-5xl lg:text-6xl">
-            Crypto shouldn't feel{" "}
-            <span className="text-primary">technical</span>
+          <h2 className="font-sans text-[70px] font-black leading-[0.85] tracking-[-0.05em] text-[#0A0A0A] md:text-[90px] lg:text-[130px]">
+            Crypto <br />
+            shouldn't <br />
+            feel <span className="text-[#0047FF]">technical</span>
           </h2>
-          <p className="mt-6 text-lg text-muted-foreground">
-            Xane turns complex finance into simple actions.
+          
+          <p className="mt-10 max-w-[500px] text-2xl font-bold leading-tight text-[#0047FF] md:text-3xl">
+            Xane turns complex finance into simple actions
           </p>
-          <a
-            href="#"
-            className="mt-8 inline-flex items-center gap-2 rounded-full bg-primary px-8 py-3.5 font-semibold text-primary-foreground transition hover:opacity-90"
+
+          <motion.button 
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="mt-14 rounded-2xl bg-[#D9FF3F] px-12 py-5 text-xl font-bold text-[#0A0A0A] shadow-md transition-colors hover:bg-[#cbf530]"
           >
             Get started
-          </a>
+          </motion.button>
         </motion.div>
 
-        {/* Feature cards grid */}
-        <div className="grid gap-8 md:grid-cols-2">
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="flex flex-col items-center rounded-3xl bg-card p-8 shadow-sm"
-          >
-            <h3 className="mb-2 text-lg font-semibold text-foreground">XanePay</h3>
-            <p className="mb-6 text-center text-sm text-muted-foreground">
-              Convert and send money instantly
-            </p>
-            <div className="relative w-56">
-              <img src={appXanepay} alt="XanePay interface" className="w-full rounded-2xl shadow-lg" />
-            </div>
-          </motion.div>
+        <motion.div 
+          initial={{ opacity: 0, x: 50, y: 30 }}
+          whileInView={{ opacity: 1, x: 0, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+          className="relative mt-20 flex w-full max-w-[550px] items-center justify-center lg:mt-0 lg:w-1/2 lg:justify-end"
+        >
+          <div className="absolute right-[5%] top-1/2 h-[105%] w-[110%] -translate-y-1/2 rounded-[80px] bg-[#F4F9FF] z-0 lg:right-[-5%]" />
+          
+          <img 
+            src={receiveCrypto} 
+            alt="Receive Crypto on Xane" 
+            className="relative z-10 w-full max-w-[450px] drop-shadow-[0_30px_60px_rgba(0,0,0,0.12)] lg:max-w-[550px]" 
+          />
+        </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="flex flex-col items-center rounded-3xl bg-card p-8 shadow-sm"
-          >
-            <h3 className="mb-2 text-lg font-semibold text-foreground">Receive via QR or phone</h3>
-            <p className="mb-6 text-center text-sm text-muted-foreground">
-              No wallet address copying. Ever.
-            </p>
-            <div className="relative w-56">
-              <img src={receiveCrypto} alt="Receive crypto via QR" className="w-full rounded-2xl shadow-lg" />
-            </div>
-          </motion.div>
-        </div>
-
-        {/* Stats row */}
-        <div className="mt-16 grid grid-cols-2 gap-8 md:grid-cols-4">
-          {[
-            { label: "Transactions", value: "50K+" },
-            { label: "Users", value: "10K+" },
-            { label: "Countries", value: "15+" },
-            { label: "Uptime", value: "99.9%" },
-          ].map((stat, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 + i * 0.1, duration: 0.5 }}
-              className="text-center"
-            >
-              <p className="text-3xl font-bold text-primary">{stat.value}</p>
-              <p className="mt-1 text-sm text-muted-foreground">{stat.label}</p>
-            </motion.div>
-          ))}
-        </div>
       </div>
     </section>
   );

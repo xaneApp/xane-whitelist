@@ -19,10 +19,9 @@ const Index = () => {
       <MoneyWorks />
       <CryptoSimple />
       <OwnershipUsability />
-      <CryptoToBank />
       <CrossChainSwap />
+      <CryptoToBank />
       <YouStayInControl />
-      <UseCases />
       <FAQ />
       <CTA />
       <Footer />
