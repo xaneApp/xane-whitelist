@@ -7,7 +7,6 @@ const Hero = () => {
   return (
     <section className="relative min-h-[900px] h-screen w-full overflow-hidden bg-[#0047FF]" style={{ zoom: 0.666667 }}>
       
-      {/* 1. EXACT BACKGROUND GEOMETRY */}
       <div 
         className="absolute top-0 left-0 h-full w-full bg-[#0A0A0A] z-0" 
         style={{ clipPath: 'polygon(0 0, 37% 0, 18% 100%, 0 100%)' }} 
@@ -17,7 +16,6 @@ const Hero = () => {
         className="absolute right-[-5%] top-[45%] h-[240px] w-[55%] bg-[#0A0A0A] -skew-x-[25deg] z-0" 
       />
 
-      {/* 2. BACKGROUND DECORATIONS */}
       <div className="absolute bottom-[-15%] left-[35%] z-0 flex h-[500px] w-[500px] items-center justify-center opacity-20">
         <div className="absolute h-[250px] w-[250px] rounded-full border-[2px] border-white" />
         <div className="absolute h-[380px] w-[380px] rounded-full border-[2px] border-white" />
@@ -29,10 +27,8 @@ const Hero = () => {
       <div className="absolute left-[20%] bottom-[30%] h-5 w-5 rounded-full bg-[#0A0A0A] z-0" />
       <div className="absolute left-[30%] bottom-[15%] h-6 w-6 rounded-full bg-[#0A0A0A] z-0" />
 
-      {/* 3. MAIN FOREGROUND CONTENT */}
       <div className="relative z-10 mx-auto flex h-full w-full max-w-[1600px] items-center justify-between px-10 md:px-16 pt-20">
 
-        {/* LEFT: MONUMENTAL TYPOGRAPHY */}
         <div className="w-full max-w-[850px] pt-12">
           <motion.h1 
             initial={{ opacity: 0, x: -30 }}
@@ -64,8 +60,27 @@ const Hero = () => {
             transition={{ delay: 0.2 }}
             className="mt-12 flex items-center gap-5"
           >
-            <img src={appStore} alt="App Store" className="h-[48px] lg:h-[56px] w-auto cursor-pointer transition hover:opacity-80" />
-            <img src={googlePlay} alt="Google Play" className="h-[48px] lg:h-[56px] w-auto cursor-pointer transition hover:opacity-80" />
+            <div className="relative group">
+              <img 
+                src={appStore} 
+                alt="App Store" 
+                className="h-[48px] lg:h-[56px] w-auto cursor-pointer transition hover:opacity-80" 
+              />
+              <span className="absolute left-1/2 -translate-x-1/2 top-full mt-1 text-white/70 text-xs opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                disabled
+              </span>
+            </div>
+
+            <div className="relative group">
+              <img 
+                src={googlePlay} 
+                alt="Google Play" 
+                className="h-[48px] lg:h-[56px] w-auto cursor-pointer transition hover:opacity-80" 
+              />
+              <span className="absolute left-1/2 -translate-x-1/2 top-full mt-1 text-white/70 text-xs opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                disabled
+              </span>
+            </div>
           </motion.div>
 
           <motion.div 
@@ -85,7 +100,6 @@ const Hero = () => {
           </motion.div>
         </div>
 
-        {/* RIGHT: THE STATIC ANCHORED PHONE */}
         <div className="relative hidden w-[450px] lg:block xl:w-[550px] flex-shrink-0">
           <motion.img
             initial={{ opacity: 0, y: 30 }}

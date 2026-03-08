@@ -19,7 +19,7 @@ const Navbar = () => {
         <div className="hidden items-center gap-12 md:flex">
           <a href="#features" className="text-lg font-bold text-white hover:text-xane-lime transition-colors">Features</a>
           <button className="rounded-xl bg-xane-lime px-8 py-3 text-lg font-black text-xane-black transition hover:scale-105 active:scale-95">
-            Get started
+            Join Waitlist
           </button>
         </div>
 
