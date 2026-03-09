@@ -8,7 +8,7 @@ import sendMessage from "@/assets/send-message.png";
 
 const useCases = [
   { img: familySupport, title: "Family Support made easy", desc: "Children abroad send money home in seconds, no agents" },
-  { img: alwaysProtected, title: "Always Protected", desc: "Shopping with UNINE is even more secure thanks to Buyer Protection." },
+  { img: alwaysProtected, title: "Always Protected", desc: "Shopping with Xane is even more secure thanks to Buyer Protection." },
   { img: globalWork, title: "Global Work, Local Living", desc: "Freelancers get paid from abroad and spend locally the same day." },
   { img: smallBusiness, title: "Small Business Owner", desc: "Accept payments even when card networks are down." },
   { img: dailyTrading, title: "Daily Trading Made Easy", desc: "Convert between cash and crypto anytime you need." },

@@ -1,4 +1,5 @@
 import { Twitter, Instagram } from "lucide-react";
+import xaneLogo from "@/assets/xane-logo.png";
 
 const Footer = () => {
   return (
@@ -15,14 +16,15 @@ const Footer = () => {
           <div className="flex flex-col gap-10">
             {/* Logo area */}
             <div className="flex items-center gap-3 text-white">
-              {/* Box Logo Placeholder from reference */}
-              <div className="flex h-8 w-8 items-center justify-center bg-white text-[#111111]">
-                <svg className="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M4 4h16v16H4V4zm4 4v8h8V8H8z" />
-                </svg>
+            {/* Real Xane Logo */}
+<div className="flex items-center text-white">
+  <img 
+    src={xaneLogo} 
+    alt="Xane Logo" 
+    className="h-8 w-auto md:h-10" 
+  />
+</div>
               </div>
-              <span className="font-sans text-[28px] font-bold tracking-tight">xane</span>
-            </div>
             
             {/* Social Icons */}
             <div className="flex items-center gap-6 text-white">

@@ -49,7 +49,7 @@ const OwnershipUsability = () => {
               transition={{ delay: 0.3 }}
               className="font-sans text-xl font-bold leading-relaxed text-[#0A0A0A]"
             >
-              Motion video display from <br /><br /> Xanewallet to xanepay
+              <br /><br /> Xanewallet to xanepay
             </motion.p>
           </div>
         </div>
