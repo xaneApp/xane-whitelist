@@ -1,72 +1,74 @@
 import { motion } from "framer-motion";
 import xanePhone from "@/assets/hero-phone.png";
+import heroCoin from "@/assets/hero-coin.png";
 import appStore from "@/assets/app-store.png";
 import googlePlay from "@/assets/google-play.png";
 
 const Hero = () => {
   return (
-    <section className="relative min-h-[900px] h-screen w-full overflow-hidden bg-[#0047FF]" style={{ zoom: 0.666667 }}>
+    <section className="relative w-full overflow-hidden bg-[#0047FF] pb-16 pt-32 lg:pb-24 lg:pt-40">
       
+      {/* 1. BACKGROUND GEOMETRIES */}
       <div 
-        className="absolute top-0 left-0 h-full w-full bg-[#0A0A0A] z-0" 
-        style={{ clipPath: 'polygon(0 0, 37% 0, 18% 100%, 0 100%)' }} 
+        className="absolute left-0 top-0 z-0 h-[400px] w-[400px] bg-[#111111] lg:h-[600px] lg:w-[600px]" 
+        style={{ clipPath: 'polygon(0 0, 100% 0, 0 100%)' }} 
       />
       
-      <div 
-        className="absolute right-[-5%] top-[45%] h-[240px] w-[55%] bg-[#0A0A0A] -skew-x-[25deg] z-0" 
-      />
+      <div className="absolute right-0 top-[45%] z-0 h-[150px] w-[50%] origin-right -skew-y-[15deg] bg-[#111111] lg:h-[220px]" />
 
-      <div className="absolute bottom-[-15%] left-[35%] z-0 flex h-[500px] w-[500px] items-center justify-center opacity-20">
-        <div className="absolute h-[250px] w-[250px] rounded-full border-[2px] border-white" />
-        <div className="absolute h-[380px] w-[380px] rounded-full border-[2px] border-white" />
-        <div className="absolute h-[500px] w-[500px] rounded-full border-[2px] border-white" />
-      </div>
+      {/* Floating Black Dots */}
+      <div className="absolute left-[8%] top-[65%] z-0 h-16 w-16 rounded-full bg-[#111111]" />
+      <div className="absolute left-[28%] top-[58%] z-0 h-4 w-4 rounded-full bg-[#111111]" />
+      <div className="absolute left-[43%] top-[18%] z-0 h-5 w-5 rounded-full bg-[#111111]" />
+      <div className="absolute left-[52%] top-[30%] z-0 h-3 w-3 rounded-full bg-[#111111]" />
+      <div className="absolute right-[42%] top-[24%] z-0 h-4 w-4 rounded-full bg-[#111111]" />
+      <div className="absolute right-[35%] top-[55%] z-0 h-6 w-6 rounded-full bg-[#111111]" />
+      <div className="absolute bottom-[15%] left-[12%] z-0 h-6 w-6 rounded-full bg-[#111111]" />
 
-      <div className="absolute left-[38%] top-[18%] h-3 w-3 rounded-full bg-[#0A0A0A] z-0" />
-      <div className="absolute left-[48%] top-[30%] h-4 w-4 rounded-full bg-[#0A0A0A] z-0" />
-      <div className="absolute left-[20%] bottom-[30%] h-5 w-5 rounded-full bg-[#0A0A0A] z-0" />
-      <div className="absolute left-[30%] bottom-[15%] h-6 w-6 rounded-full bg-[#0A0A0A] z-0" />
+      {/* 2. MAIN CONTENT CONTAINER */}
+      <div className="relative z-10 mx-auto flex w-full max-w-[1400px] flex-col items-center justify-between px-6 md:px-10 lg:flex-row lg:items-center lg:px-16">
 
-      <div className="relative z-10 mx-auto flex h-full w-full max-w-[1600px] items-center justify-between px-10 md:px-16 pt-20">
-
-        <div className="w-full max-w-[850px] pt-12">
+        {/* LEFT: STRICT TEXT ARRANGEMENT */}
+        <div className="relative z-20 w-full pt-8 lg:w-[60%] lg:pt-0">
           <motion.h1 
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="font-sans text-[70px] lg:text-[110px] xl:text-[140px] font-black tracking-[-0.05em] leading-[0.85] text-white"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="font-sans text-[42px] font-bold leading-[1.05] tracking-tight text-white md:text-[54px] lg:text-[64px] xl:text-[74px]"
           >
-            Your crypto <br />
-            now works <br />
+            {/* whitespace-nowrap FORCES this entire sentence to stay on line 1 */}
+            <span className="inline-block whitespace-nowrap">Your crypto now works</span> <br />
             like money.
           </motion.h1>
 
           <motion.div 
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="mt-12 space-y-4"
+            className="mt-6 space-y-3 lg:mt-8 lg:space-y-4"
           >
-            <p className="font-sans text-[26px] lg:text-[36px] font-bold tracking-tight text-white leading-tight">
-              Use crypto without understanding <br className="hidden md:block" /> blockchain.
+            <p className="font-sans text-[18px] font-normal leading-tight text-white md:text-[24px] lg:text-[28px] xl:text-[32px]">
+              Use crypto without understanding blockchain.
             </p>
-            <p className="max-w-[480px] font-sans text-[18px] lg:text-[22px] font-normal italic text-white/50 leading-snug">
-              A self-custody wallet and instant cash payment app in one simple platform.
+            <p className="max-w-[480px] font-sans text-[15px] font-light italic leading-relaxed text-white/80 md:text-[16px] lg:text-[18px]">
+              A self-custody wallet and instant cash payment app <br className="hidden md:block" />
+              in one simple platform.
             </p>
           </motion.div>
 
+          {/* STORE BUTTONS */}
           <motion.div 
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="mt-12 flex items-center gap-5"
+            className="mt-8 flex flex-wrap items-center gap-4 lg:mt-10 lg:gap-5"
           >
             <div className="relative group">
               <img 
                 src={appStore} 
                 alt="App Store" 
-                className="h-[48px] lg:h-[56px] w-auto cursor-pointer transition hover:opacity-80" 
+                className="h-[45px] w-auto cursor-pointer transition hover:opacity-80 lg:h-[50px]" 
               />
-              <span className="absolute left-1/2 -translate-x-1/2 top-full mt-1 text-white/70 text-xs opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+              <span className="absolute left-1/2 -translate-x-1/2 top-full mt-1.5 whitespace-nowrap text-xs font-medium text-white/70 opacity-0 transition-opacity group-hover:opacity-100">
                 disabled
               </span>
             </div>
@@ -75,24 +77,25 @@ const Hero = () => {
               <img 
                 src={googlePlay} 
                 alt="Google Play" 
-                className="h-[48px] lg:h-[56px] w-auto cursor-pointer transition hover:opacity-80" 
+                className="h-[45px] w-auto cursor-pointer transition hover:opacity-80 lg:h-[50px]" 
               />
-              <span className="absolute left-1/2 -translate-x-1/2 top-full mt-1 text-white/70 text-xs opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+              <span className="absolute left-1/2 -translate-x-1/2 top-full mt-1.5 whitespace-nowrap text-xs font-medium text-white/70 opacity-0 transition-opacity group-hover:opacity-100">
                 disabled
               </span>
             </div>
           </motion.div>
 
+          {/* RATING */}
           <motion.div 
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="mt-12 flex items-center gap-4"
+            className="mt-8 flex items-center gap-3"
           >
-            <span className="font-sans text-[18px] lg:text-[22px] font-bold text-white">Excellent 4.9 out of 5</span>
+            <span className="font-sans text-[15px] font-medium text-white lg:text-[17px]">Excellent 4.9 out of 5</span>
             <div className="flex gap-1 text-[#D9FF3F]">
               {[...Array(5)].map((_, i) => (
-                <svg key={i} className="h-6 w-6 lg:h-7 lg:w-7 fill-current" viewBox="0 0 20 20">
+                <svg key={i} className="h-5 w-5 fill-current" viewBox="0 0 20 20">
                   <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                 </svg>
               ))}
@@ -100,18 +103,30 @@ const Hero = () => {
           </motion.div>
         </div>
 
-        {/* Here is the surgical fix. 
-          If 250px isn't low enough, change it to 300px or 400px!
-        */}
-        <div className="relative hidden w-[450px] lg:block xl:w-[550px] flex-shrink-0 lg:mt-[250px] xl:mt-[350px]">
-          <motion.img
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-            src={xanePhone}
-            alt="Xane App"
-            className="w-full drop-shadow-[0_40px_80px_rgba(0,0,0,0.6)]"
-          />
+        {/* CENTER: SCALED DOWN COIN */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.5, rotate: -20 }}
+          animate={{ opacity: 1, scale: 1, rotate: 0 }}
+          transition={{ type: "spring", duration: 1.5, delay: 0.4 }}
+          className="relative z-20 mt-12 w-[160px] lg:absolute lg:bottom-5 lg:left-[45%] lg:mt-0 lg:-ml-[80px] lg:w-[200px] xl:w-[240px]"
+        >
+          <img src={heroCoin} alt="Xane Coin" className="w-full drop-shadow-[0_20px_40px_rgba(0,0,0,0.3)]" />
+        </motion.div>
+
+        {/* RIGHT: THE PHONE */}
+        <div className="relative z-30 mt-16 flex w-full justify-center lg:mt-0 lg:w-[45%] lg:justify-end lg:pr-6">
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="w-full max-w-[220px] bg-white p-2.5 rounded-[32px] drop-shadow-[0_30px_60px_rgba(0,0,0,0.5)] md:max-w-[260px] lg:max-w-[280px] xl:max-w-[310px]"
+          >
+            <img
+              src={xanePhone}
+              alt="Xane App Interface"
+              className="w-full h-full object-contain"
+            />
+          </motion.div>
         </div>
 
       </div>
