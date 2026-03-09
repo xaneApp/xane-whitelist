@@ -100,7 +100,10 @@ const Hero = () => {
           </motion.div>
         </div>
 
-        <div className="relative hidden w-[450px] lg:block xl:w-[550px] flex-shrink-0">
+        {/* Here is the surgical fix. 
+          If 250px isn't low enough, change it to 300px or 400px!
+        */}
+        <div className="relative hidden w-[450px] lg:block xl:w-[550px] flex-shrink-0 lg:mt-[250px] xl:mt-[350px]">
           <motion.img
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
