@@ -65,7 +65,6 @@ const Navbar = () => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 50 }}
               transition={{ delay: 0.1, duration: 0.5 }}
-              /* Used clamp() to dynamically shrink this monster word */
               className="pointer-events-none absolute bottom-[-10vh] left-0 flex w-full justify-center select-none lg:bottom-[-20vh]"
             >
               <span 
@@ -76,46 +75,42 @@ const Navbar = () => {
               </span>
             </motion.div>
 
-            {/* Modal Card - SURGICALLY SHRUNK FOR 150% ZOOM */}
+            {/* Modal Card - BULLETPROOFED FOR 1650px+ */}
             <motion.div 
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
               transition={{ type: "spring", duration: 0.5 }}
-              /* On smaller/zoomed screens: max-w-[380px] p-6 (Super compact)
-                 On 100% large screens (xl): max-w-[480px] p-10 (Premium size)
-                 Also added max-h-[90vh] and overflow-y-auto so it literally can't bleed off the screen
-              */
-              className="relative z-10 w-full max-w-[380px] max-h-[90vh] overflow-y-auto rounded-[24px] bg-white p-6 shadow-2xl xl:max-w-[480px] xl:p-10"
+              className="relative z-10 w-full max-w-[380px] max-h-[90vh] overflow-y-auto rounded-[24px] bg-white p-6 shadow-2xl min-[1650px]:max-w-[480px] min-[1650px]:p-10"
             >
               {/* Close Button */}
               <button 
                 onClick={() => setWaitlistOpen(false)}
-                className="absolute right-3 top-3 flex h-7 w-7 items-center justify-center rounded-full bg-gray-50 text-gray-400 transition-colors hover:bg-gray-200 hover:text-gray-800 xl:right-4 xl:top-4 xl:h-8 xl:w-8"
+                className="absolute right-3 top-3 flex h-7 w-7 items-center justify-center rounded-full bg-gray-50 text-gray-400 transition-colors hover:bg-gray-200 hover:text-gray-800 min-[1650px]:right-4 min-[1650px]:top-4 min-[1650px]:h-8 min-[1650px]:w-8"
               >
                 <X size={16} strokeWidth={2.5} />
               </button>
 
               {/* Header */}
               <div className="text-center">
-                <h2 className="font-sans text-[22px] font-black tracking-tight text-[#111111] xl:text-[26px]">Join the Waitlist</h2>
-                <p className="mt-1.5 text-[13px] text-gray-500 xl:text-[14px]">Get early access before we launch publicly.</p>
+                <h2 className="font-sans text-[22px] font-black tracking-tight text-[#111111] min-[1650px]:text-[26px]">Join the Waitlist</h2>
+                <p className="mt-1.5 text-[13px] text-gray-500 min-[1650px]:text-[14px]">Get early access before we launch publicly.</p>
               </div>
 
               {/* Form */}
-              <form className="mt-6 space-y-4 xl:mt-8 xl:space-y-5" onSubmit={(e) => e.preventDefault()}>
+              <form className="mt-6 space-y-4 min-[1650px]:mt-8 min-[1650px]:space-y-5" onSubmit={(e) => e.preventDefault()}>
                 
                 {/* Full Name Input */}
                 <div className="space-y-1.5">
                   <label className="text-[10px] font-bold tracking-widest text-[#111111] uppercase">Full Name</label>
                   <div className="relative">
-                    <div className="absolute inset-y-0 left-0 flex items-center pl-3.5 text-gray-300 xl:pl-4">
-                      <User size={16} className="xl:h-[18px] xl:w-[18px]" />
+                    <div className="absolute inset-y-0 left-0 flex items-center pl-3.5 text-gray-300 min-[1650px]:pl-4">
+                      <User size={16} className="min-[1650px]:h-[18px] min-[1650px]:w-[18px]" />
                     </div>
                     <input 
                       type="text" 
                       placeholder="Your full name" 
-                      className="w-full rounded-[14px] border border-gray-200 bg-transparent py-2.5 pl-10 pr-4 text-[13px] outline-none transition-all placeholder:text-gray-300 focus:border-[#0047FF] focus:ring-4 focus:ring-[#0047FF]/10 xl:py-3.5 xl:pl-11 xl:text-[14px]"
+                      className="w-full rounded-[14px] border border-gray-200 bg-transparent py-2.5 pl-10 pr-4 text-[13px] outline-none transition-all placeholder:text-gray-300 focus:border-[#0047FF] focus:ring-4 focus:ring-[#0047FF]/10 min-[1650px]:py-3.5 min-[1650px]:pl-11 min-[1650px]:text-[14px]"
                     />
                   </div>
                 </div>
@@ -124,13 +119,13 @@ const Navbar = () => {
                 <div className="space-y-1.5">
                   <label className="text-[10px] font-bold tracking-widest text-[#111111] uppercase">Email Address</label>
                   <div className="relative">
-                    <div className="absolute inset-y-0 left-0 flex items-center pl-3.5 text-[#0047FF] xl:pl-4">
-                      <Mail size={16} className="xl:h-[18px] xl:w-[18px]" />
+                    <div className="absolute inset-y-0 left-0 flex items-center pl-3.5 text-[#0047FF] min-[1650px]:pl-4">
+                      <Mail size={16} className="min-[1650px]:h-[18px] min-[1650px]:w-[18px]" />
                     </div>
                     <input 
                       type="email" 
                       placeholder="your@email.com" 
-                      className="w-full rounded-[14px] border border-[#0047FF] bg-[#F0F5FF] py-2.5 pl-10 pr-4 text-[13px] outline-none transition-all placeholder:text-[#0047FF]/70 focus:border-[#0047FF] focus:ring-4 focus:ring-[#0047FF]/10 xl:py-3.5 xl:pl-11 xl:text-[14px]"
+                      className="w-full rounded-[14px] border border-[#0047FF] bg-[#F0F5FF] py-2.5 pl-10 pr-4 text-[13px] outline-none transition-all placeholder:text-[#0047FF]/70 focus:border-[#0047FF] focus:ring-4 focus:ring-[#0047FF]/10 min-[1650px]:py-3.5 min-[1650px]:pl-11 min-[1650px]:text-[14px]"
                     />
                   </div>
                 </div>
@@ -138,22 +133,22 @@ const Navbar = () => {
                 {/* Submit Button */}
                 <button 
                   type="submit"
-                  className="mt-4 w-full rounded-full bg-[#0047FF] py-3 text-[14px] font-bold text-white transition-all hover:bg-[#0036CC] active:scale-[0.98] xl:mt-6 xl:py-4 xl:text-[15px]"
+                  className="mt-4 w-full rounded-full bg-[#0047FF] py-3 text-[14px] font-bold text-white transition-all hover:bg-[#0036CC] active:scale-[0.98] min-[1650px]:mt-6 min-[1650px]:py-4 min-[1650px]:text-[15px]"
                 >
                   Get Early Access
                 </button>
               </form>
 
               {/* Footer Avatars */}
-              <div className="mt-6 flex items-center justify-center gap-3 xl:mt-8">
+              <div className="mt-6 flex items-center justify-center gap-3 min-[1650px]:mt-8">
                 <div className="flex -space-x-2">
-                  <div className="flex h-6 w-6 items-center justify-center rounded-full border-2 border-white bg-[#0047FF] text-[9px] font-bold text-white xl:h-7 xl:w-7 xl:text-[10px]">D</div>
-                  <div className="flex h-6 w-6 items-center justify-center rounded-full border-2 border-white bg-[#00C853] text-[9px] font-bold text-white xl:h-7 xl:w-7 xl:text-[10px]">S</div>
-                  <div className="flex h-6 w-6 items-center justify-center rounded-full border-2 border-white bg-[#FFB300] text-[9px] font-bold text-white xl:h-7 xl:w-7 xl:text-[10px]">K</div>
+                  <div className="flex h-6 w-6 items-center justify-center rounded-full border-2 border-white bg-[#0047FF] text-[9px] font-bold text-white min-[1650px]:h-7 min-[1650px]:w-7 min-[1650px]:text-[10px]">D</div>
+                  <div className="flex h-6 w-6 items-center justify-center rounded-full border-2 border-white bg-[#00C853] text-[9px] font-bold text-white min-[1650px]:h-7 min-[1650px]:w-7 min-[1650px]:text-[10px]">S</div>
+                  <div className="flex h-6 w-6 items-center justify-center rounded-full border-2 border-white bg-[#FFB300] text-[9px] font-bold text-white min-[1650px]:h-7 min-[1650px]:w-7 min-[1650px]:text-[10px]">K</div>
                 </div>
                 <div className="flex flex-col text-left">
-                  <span className="text-[10px] font-bold leading-tight text-[#111111] xl:text-[11px]">Early users already in.</span>
-                  <span className="text-[10px] leading-tight text-gray-500 xl:text-[11px]">Join before public launch.</span>
+                  <span className="text-[10px] font-bold leading-tight text-[#111111] min-[1650px]:text-[11px]">Early users already in.</span>
+                  <span className="text-[10px] leading-tight text-gray-500 min-[1650px]:text-[11px]">Join before public launch.</span>
                 </div>
               </div>
 
