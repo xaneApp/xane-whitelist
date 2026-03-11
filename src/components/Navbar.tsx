@@ -75,7 +75,7 @@ const Navbar = () => {
               </span>
             </motion.div>
 
-            {/* Modal Card - BULLETPROOFED FOR 1650px+ */}
+            {/* Modal Card */}
             <motion.div 
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -139,8 +139,8 @@ const Navbar = () => {
                 </button>
               </form>
 
-              {/* Footer Avatars */}
-              <div className="mt-6 flex items-center justify-center gap-3 min-[1650px]:mt-8">
+              {/* Footer Avatars - Now using justify-start to align left */}
+              <div className="mt-6 flex items-center justify-start gap-3 min-[1650px]:mt-8">
                 <div className="flex -space-x-2">
                   <div className="flex h-6 w-6 items-center justify-center rounded-full border-2 border-white bg-[#0047FF] text-[9px] font-bold text-white min-[1650px]:h-7 min-[1650px]:w-7 min-[1650px]:text-[10px]">D</div>
                   <div className="flex h-6 w-6 items-center justify-center rounded-full border-2 border-white bg-[#00C853] text-[9px] font-bold text-white min-[1650px]:h-7 min-[1650px]:w-7 min-[1650px]:text-[10px]">S</div>
