@@ -27,13 +27,13 @@ const Hero = () => {
       {/* 2. STRICTLY PROPORTIONAL CONTAINER */}
       <div className="relative z-10 mx-auto flex w-full max-w-[1400px] flex-col items-center justify-between px-6 md:px-10 lg:flex-row lg:items-center lg:px-16">
 
-        {/* LEFT: TEXT */}
-        <div className="relative z-20 w-full pt-8 lg:w-[50%] lg:pt-0">
+        {/* LEFT: TEXT (Given 55% width and extra right padding to act as a barrier) */}
+        <div className="relative z-20 w-full pt-8 lg:w-[55%] lg:pr-8 lg:pt-0 min-[1650px]:w-[50%] min-[1650px]:pr-0">
           <motion.h1 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            /* Micro-bumped the font sizes here */
-            className="font-sans text-[36px] font-bold leading-[1.05] tracking-tight text-white md:text-[42px] lg:text-[38px] xl:text-[44px] min-[1650px]:text-[72px] pr-4"
+            /* Shrunk fonts slightly for Chrome's wider rendering */
+            className="font-sans text-[36px] font-bold leading-[1.05] tracking-tight text-white md:text-[42px] lg:text-[32px] xl:text-[38px] min-[1650px]:text-[72px]"
           >
             <span className="inline-block whitespace-nowrap">Your crypto now works</span> <br />
             like money.
@@ -43,12 +43,12 @@ const Hero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="mt-5 space-y-3 lg:mt-6 min-[1650px]:mt-8 min-[1650px]:space-y-4"
+            className="mt-4 space-y-3 lg:mt-5 min-[1650px]:mt-8 min-[1650px]:space-y-4"
           >
-            <p className="font-sans text-[18px] font-normal leading-tight text-white pr-4 lg:text-[20px] xl:text-[22px] min-[1650px]:text-[30px]">
+            <p className="font-sans text-[18px] font-normal leading-tight text-white pr-4 lg:text-[18px] xl:text-[20px] min-[1650px]:text-[30px]">
               Use crypto without understanding blockchain.
             </p>
-            <p className="max-w-[480px] font-sans text-[14px] font-light italic leading-relaxed text-white/80 lg:text-[15px] xl:text-[16px] min-[1650px]:text-[18px]">
+            <p className="max-w-[480px] font-sans text-[14px] font-light italic leading-relaxed text-white/80 lg:text-[14px] xl:text-[15px] min-[1650px]:text-[18px]">
               A self-custody wallet and instant cash payment app <br className="hidden md:block" />
               in one simple platform.
             </p>
@@ -62,13 +62,13 @@ const Hero = () => {
             className="mt-6 flex flex-wrap items-center gap-4 lg:mt-8 min-[1650px]:mt-10 min-[1650px]:gap-5"
           >
             <div className="relative group">
-              <img src={appStore} alt="App Store" className="h-[40px] w-auto cursor-pointer transition hover:opacity-80 lg:h-[42px] min-[1650px]:h-[50px]" />
+              <img src={appStore} alt="App Store" className="h-[40px] w-auto cursor-pointer transition hover:opacity-80 lg:h-[40px] xl:h-[44px] min-[1650px]:h-[50px]" />
               <span className="absolute left-1/2 -translate-x-1/2 top-full mt-1.5 whitespace-nowrap text-[10px] font-medium text-white/70 opacity-0 transition-opacity group-hover:opacity-100 min-[1650px]:text-xs">
                 disabled
               </span>
             </div>
             <div className="relative group">
-              <img src={googlePlay} alt="Google Play" className="h-[40px] w-auto cursor-pointer transition hover:opacity-80 lg:h-[42px] min-[1650px]:h-[50px]" />
+              <img src={googlePlay} alt="Google Play" className="h-[40px] w-auto cursor-pointer transition hover:opacity-80 lg:h-[40px] xl:h-[44px] min-[1650px]:h-[50px]" />
               <span className="absolute left-1/2 -translate-x-1/2 top-full mt-1.5 whitespace-nowrap text-[10px] font-medium text-white/70 opacity-0 transition-opacity group-hover:opacity-100 min-[1650px]:text-xs">
                 disabled
               </span>
@@ -82,7 +82,7 @@ const Hero = () => {
             transition={{ delay: 0.3 }}
             className="mt-6 flex items-center gap-3 min-[1650px]:mt-8"
           >
-            <span className="font-sans text-[13px] font-medium text-white lg:text-[14px] min-[1650px]:text-[17px]">Excellent 4.9 out of 5</span>
+            <span className="font-sans text-[13px] font-medium text-white lg:text-[13px] xl:text-[14px] min-[1650px]:text-[17px]">Excellent 4.9 out of 5</span>
             <div className="flex gap-1 text-[#D9FF3F]">
               {[...Array(5)].map((_, i) => (
                 <svg key={i} className="h-4 w-4 fill-current min-[1650px]:h-5 min-[1650px]:w-5" viewBox="0 0 20 20">
@@ -103,13 +103,13 @@ const Hero = () => {
           <img src={heroCoin} alt="Xane Coin" className="w-full drop-shadow-[0_20px_40px_rgba(0,0,0,0.3)]" />
         </motion.div>
 
-        {/* RIGHT: THE PHONE */}
-        <div className="relative z-30 mt-12 flex w-full justify-center lg:mt-0 lg:w-[50%] lg:justify-end min-[1650px]:mt-16">
+        {/* RIGHT: THE PHONE (Now restricted to 45% width to make room for text) */}
+        <div className="relative z-30 mt-12 flex w-full justify-center lg:mt-0 lg:w-[45%] lg:justify-end min-[1650px]:w-[50%] min-[1650px]:mt-16">
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="w-[60vw] max-w-[220px] rounded-[24px] bg-white p-2 drop-shadow-[0_20px_40px_rgba(0,0,0,0.4)] lg:max-w-[240px] xl:max-w-[260px] min-[1650px]:max-w-[310px] min-[1650px]:rounded-[32px] min-[1650px]:p-2.5 min-[1650px]:drop-shadow-[0_30px_60px_rgba(0,0,0,0.5)]"
+            className="w-[60vw] max-w-[220px] rounded-[24px] bg-white p-2 drop-shadow-[0_20px_40px_rgba(0,0,0,0.4)] lg:max-w-[220px] xl:max-w-[240px] min-[1650px]:max-w-[310px] min-[1650px]:rounded-[32px] min-[1650px]:p-2.5 min-[1650px]:drop-shadow-[0_30px_60px_rgba(0,0,0,0.5)]"
           >
             <img
               src={xanePhone}
