@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, FormEvent } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, User, Mail } from "lucide-react";
 import xaneLogo from "@/assets/xane-logo.png"; 
@@ -6,6 +6,51 @@ import xaneLogo from "@/assets/xane-logo.png";
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const [waitlistOpen, setWaitlistOpen] = useState(false);
+
+  // --- NEW: Form State ---
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+
+  // --- NEW: Submit Handler ---
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    if (!fullName || !email) return;
+
+    setIsSubmitting(true);
+
+    // Package the data exactly how Google Sheets expects it
+    const formData = new FormData();
+    formData.append("Name", fullName);
+    formData.append("Email", email);
+
+    try {
+      // Shoot the data to her specific Google Apps Script URL
+      await fetch("https://script.google.com/macros/s/AKfycbzAUCnxTKKYzeSth2LiF0ROigPtV-XeliqmEs0YVFmvOYZEBL2NkzF4YPKblxvOCWE/exec", {
+        method: "POST",
+        body: formData,
+        mode: "no-cors" // This bypasses Google's strict CORS policy block
+      });
+
+      // Show success state
+      setIsSuccess(true);
+      
+      // Clean up and close modal after 2 seconds
+      setTimeout(() => {
+        setWaitlistOpen(false);
+        setIsSuccess(false);
+        setFullName("");
+        setEmail("");
+      }, 2000);
+
+    } catch (error) {
+      console.error("Error submitting to waitlist:", error);
+      alert("Something went wrong. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <>
@@ -97,8 +142,8 @@ const Navbar = () => {
                 <p className="mt-1.5 text-[13px] text-gray-500 min-[1650px]:text-[14px]">Get early access before we launch publicly.</p>
               </div>
 
-              {/* Form */}
-              <form className="mt-6 space-y-4 min-[1650px]:mt-8 min-[1650px]:space-y-5" onSubmit={(e) => e.preventDefault()}>
+              {/* Form - Now wired to handleSubmit */}
+              <form className="mt-6 space-y-4 min-[1650px]:mt-8 min-[1650px]:space-y-5" onSubmit={handleSubmit}>
                 
                 {/* Full Name Input */}
                 <div className="space-y-1.5">
@@ -109,6 +154,9 @@ const Navbar = () => {
                     </div>
                     <input 
                       type="text" 
+                      required
+                      value={fullName}
+                      onChange={(e) => setFullName(e.target.value)}
                       placeholder="Your full name" 
                       className="w-full rounded-[14px] border border-gray-200 bg-transparent py-2.5 pl-10 pr-4 text-[13px] outline-none transition-all placeholder:text-gray-300 focus:border-[#0047FF] focus:ring-4 focus:ring-[#0047FF]/10 min-[1650px]:py-3.5 min-[1650px]:pl-11 min-[1650px]:text-[14px]"
                     />
@@ -124,22 +172,26 @@ const Navbar = () => {
                     </div>
                     <input 
                       type="email" 
+                      required
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
                       placeholder="your@email.com" 
                       className="w-full rounded-[14px] border border-[#0047FF] bg-[#F0F5FF] py-2.5 pl-10 pr-4 text-[13px] outline-none transition-all placeholder:text-[#0047FF]/70 focus:border-[#0047FF] focus:ring-4 focus:ring-[#0047FF]/10 min-[1650px]:py-3.5 min-[1650px]:pl-11 min-[1650px]:text-[14px]"
                     />
                   </div>
                 </div>
 
-                {/* Submit Button */}
+                {/* Submit Button - Dynamic Text based on state */}
                 <button 
                   type="submit"
-                  className="mt-4 w-full rounded-full bg-[#0047FF] py-3 text-[14px] font-bold text-white transition-all hover:bg-[#0036CC] active:scale-[0.98] min-[1650px]:mt-6 min-[1650px]:py-4 min-[1650px]:text-[15px]"
+                  disabled={isSubmitting || isSuccess}
+                  className="mt-4 w-full rounded-full bg-[#0047FF] py-3 text-[14px] font-bold text-white transition-all hover:bg-[#0036CC] active:scale-[0.98] disabled:opacity-70 disabled:hover:scale-100 min-[1650px]:mt-6 min-[1650px]:py-4 min-[1650px]:text-[15px]"
                 >
-                  Get Early Access
+                  {isSubmitting ? "Submitting..." : isSuccess ? "You're in! 🎉" : "Get Early Access"}
                 </button>
               </form>
 
-              {/* Footer Avatars - Now using justify-start to align left */}
+              {/* Footer Avatars */}
               <div className="mt-6 flex items-center justify-start gap-3 min-[1650px]:mt-8">
                 <div className="flex -space-x-2">
                   <div className="flex h-6 w-6 items-center justify-center rounded-full border-2 border-white bg-[#0047FF] text-[9px] font-bold text-white min-[1650px]:h-7 min-[1650px]:w-7 min-[1650px]:text-[10px]">D</div>
