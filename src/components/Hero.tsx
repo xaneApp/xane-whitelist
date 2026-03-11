@@ -32,11 +32,10 @@ const Hero = () => {
           <motion.h1 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="font-sans text-[42px] font-bold leading-[1.05] tracking-tight text-white md:text-[50px] lg:text-[46px] xl:text-[50px] min-[1650px]:text-[74px] pr-4"
+            /* Micro-bumped the font sizes here */
+            className="font-sans text-[36px] font-bold leading-[1.05] tracking-tight text-white md:text-[42px] lg:text-[38px] xl:text-[44px] min-[1650px]:text-[72px] pr-4"
           >
-            Your crypto now{' '}
-            <br className="block min-[1650px]:hidden" />
-            works <br />
+            <span className="inline-block whitespace-nowrap">Your crypto now works</span> <br />
             like money.
           </motion.h1>
 
