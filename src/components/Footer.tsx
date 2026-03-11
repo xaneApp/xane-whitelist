@@ -70,7 +70,7 @@ const Footer = () => {
         {/* BOTTOM ROW: Divider & Copyright */}
         <div className="mt-24 border-t border-[#333333] pt-10 text-center">
           <p className="font-sans text-[14px] text-[#A0AABF]">
-            © 2022 COPYRIGHT BY XANE LLC
+
           </p>
         </div>
 
