@@ -1,4 +1,4 @@
-import { useState, FormEvent } from "react";
+import { useState, type FormEvent } from "react";
 import { Mail, CheckCircle, X } from "lucide-react";
 import xaneLogo from "./assets/xane-logo.png"; 
 
