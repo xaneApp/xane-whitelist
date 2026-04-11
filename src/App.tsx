@@ -131,7 +131,6 @@ export default function App() {
           <div className="flex justify-center gap-8 text-gray-400 font-bold text-[10px] uppercase tracking-widest mt-8">
             <a href="https://x.com/XaneApp_" className="hover:text-[#0047FF] transition-colors">X</a>
             <a href="#" className="hover:text-[#0047FF] transition-colors">Instagram</a>
-            <a href="#" className="hover:text-[#0047FF] transition-colors">Linkedin</a>
           </div>
         </div>
       </main>
