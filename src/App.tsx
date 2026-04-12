@@ -41,7 +41,6 @@ export default function App() {
   };
 
   return (
-    // min-h-screen ensures it takes the full height, overflow-hidden stops scrolling
     <div className="relative min-h-screen w-full bg-[#0052FF] overflow-hidden flex flex-col font-sans">
       
       {/* BACKGROUND SHAPES */}
@@ -53,7 +52,6 @@ export default function App() {
       </div>
 
       {/* HEADER */}
-      {/* Reduced py (padding-y) so it doesn't eat up vertical space on scaled screens */}
       <nav className="relative z-10 w-full max-w-[1400px] mx-auto px-6 py-4 md:py-6 lg:px-16 flex justify-start">
         <div className="flex items-center gap-3">
           <img src={xaneLogo} alt="Xane" className="h-6 w-auto md:h-7 object-contain" />
@@ -62,12 +60,10 @@ export default function App() {
       </nav>
 
       {/* HERO & CARD SECTION */}
-      {/* flex-1 and justify-center naturally push everything to the middle based on available height */}
       <main className="relative z-10 flex-1 flex flex-col items-center justify-center px-4 w-full z-20 pb-10">
         
         {/* Hero Text */}
         <div className="text-center mb-6 md:mb-8">
-          {/* MAGIC FIX: clamp() checks Viewport Height (vh) to shrink text on 150% scaled laptops */}
           <h1 
             className="font-[900] text-white leading-[1.05] tracking-tight"
             style={{ fontSize: 'clamp(2.5rem, 8vh, 6rem)' }}
@@ -83,7 +79,6 @@ export default function App() {
         </div>
 
         {/* THE CARD */}
-        {/* Reduced padding on smaller screens (p-6) so it fits better */}
         <div className="w-full max-w-[460px] rounded-[24px] bg-white p-6 md:p-8 shadow-2xl relative z-30">
           
           <div className="text-center mb-5">
@@ -134,22 +129,20 @@ export default function App() {
             </div>
           </div>
 
-          {/* SOCIAL LINKS */}
+          {/* SOCIAL LINKS (Updated X link, removed LinkedIn) */}
           <div className="flex justify-center gap-6 text-gray-400 font-bold text-[9px] md:text-[10px] uppercase tracking-widest mt-6">
-            <a href="#" className="hover:text-[#0047FF] transition-colors">X</a>
+            <a href="https://x.com/XaneApp_" target="_blank" rel="noopener noreferrer" className="hover:text-[#0047FF] transition-colors">X</a>
             <a href="#" className="hover:text-[#0047FF] transition-colors">Instagram</a>
-            <a href="#" className="hover:text-[#0047FF] transition-colors">Linkedin</a>
           </div>
         </div>
       </main>
 
-      {/* BOTTOM WATERMARK */}
-      {/* Sized using vh so it doesn't push the card up on squished screens */}
-      <div className="absolute bottom-[-2vh] left-0 flex w-full justify-center pointer-events-none z-0">
+      {/* BOTTOM WATERMARK (Massively expanded) */}
+      <div className="absolute bottom-[-4vh] md:bottom-[-6vh] left-0 flex w-full justify-center pointer-events-none z-0">
         <span 
-          className="font-sans font-[900] tracking-tighter text-transparent select-none uppercase leading-none opacity-40"
+          className="font-sans font-[900] tracking-tighter text-transparent select-none uppercase leading-none opacity-30 whitespace-nowrap"
           style={{ 
-            fontSize: 'clamp(80px, 20vh, 400px)',
+            fontSize: 'clamp(120px, 25vw, 500px)', /* Switched to vw to stretch across the width */
             WebkitTextStroke: '2px rgba(255, 255, 255, 0.4)' 
           }}
         >
