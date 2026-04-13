@@ -19,9 +19,12 @@ export default function App() {
     formData.append("Email", email);
 
     try {
-      await fetch("https://script.google.com/macros/s/AKfycbzAUCnxTKKYzeSth2LiF0ROigPtV-XeliqmEs0YVFmvOYZEBL2NkzF4YPKblxvOCWE/exec", {
+      await fetch("https://script.google.com/macros/s/AKfycbyCRIpq1i5j6nyL2kQYtXDA3Mztno3YmCBs7VCmeLA9EQ6jtBG5j7PSsoTAjiFq3CQ/exec", {
         method: "POST",
-        body: formData,
+        body: urlEncodedData,
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
         mode: "no-cors" 
       });
 
