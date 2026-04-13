@@ -14,9 +14,10 @@ export default function App() {
 
     setIsSubmitting(true);
 
-    const formData = new FormData();
-    formData.append("Name", "Early Access User");
-    formData.append("Email", email);
+    // FIX: Properly initialize URLSearchParams so it matches the fetch body
+    const urlEncodedData = new URLSearchParams();
+    urlEncodedData.append("Name", "Early Access User");
+    urlEncodedData.append("Email", email);
 
     try {
       await fetch("https://script.google.com/macros/s/AKfycbyCRIpq1i5j6nyL2kQYtXDA3Mztno3YmCBs7VCmeLA9EQ6jtBG5j7PSsoTAjiFq3CQ/exec", {
@@ -132,7 +133,7 @@ export default function App() {
             </div>
           </div>
 
-          {/* SOCIAL LINKS (Updated X link, removed LinkedIn) */}
+          {/* SOCIAL LINKS */}
           <div className="flex justify-center gap-6 text-gray-400 font-bold text-[9px] md:text-[10px] uppercase tracking-widest mt-6">
             <a href="https://x.com/XaneApp_" target="_blank" rel="noopener noreferrer" className="hover:text-[#0047FF] transition-colors">X</a>
             <a href="#" className="hover:text-[#0047FF] transition-colors">Instagram</a>
@@ -140,12 +141,12 @@ export default function App() {
         </div>
       </main>
 
-      {/* BOTTOM WATERMARK (Massively expanded) */}
+      {/* BOTTOM WATERMARK */}
       <div className="absolute bottom-[-4vh] md:bottom-[-6vh] left-0 flex w-full justify-center pointer-events-none z-0">
         <span 
           className="font-sans font-[900] tracking-tighter text-transparent select-none uppercase leading-none opacity-30 whitespace-nowrap"
           style={{ 
-            fontSize: 'clamp(120px, 25vw, 500px)', /* Switched to vw to stretch across the width */
+            fontSize: 'clamp(120px, 25vw, 500px)', 
             WebkitTextStroke: '2px rgba(255, 255, 255, 0.4)' 
           }}
         >
