@@ -1,6 +1,8 @@
 import { useState, type FormEvent } from "react";
 import { Mail, CheckCircle, X } from "lucide-react";
 import xaneLogo from "./assets/xane-logo.png"; 
+import xLogo from "./assets/x.png";
+import instagramLogo from "./assets/instagram.png";
 
 export default function App() {
   const [email, setEmail] = useState("");
@@ -14,7 +16,6 @@ export default function App() {
 
     setIsSubmitting(true);
 
-    // FIX: Properly initialize URLSearchParams so it matches the fetch body
     const urlEncodedData = new URLSearchParams();
     urlEncodedData.append("Name", "Early Access User");
     urlEncodedData.append("Email", email);
@@ -31,10 +32,6 @@ export default function App() {
 
       setIsSuccess(true);
       setEmail(""); 
-
-      setTimeout(() => {
-        setIsSuccess(false);
-      }, 4000);
 
     } catch (error) {
       console.error("Waitlist error:", error);
@@ -134,9 +131,13 @@ export default function App() {
           </div>
 
           {/* SOCIAL LINKS */}
-          <div className="flex justify-center gap-6 text-gray-400 font-bold text-[9px] md:text-[10px] uppercase tracking-widest mt-6">
-            <a href="https://x.com/XaneApp_" target="_blank" rel="noopener noreferrer" className="hover:text-[#0047FF] transition-colors">X</a>
-            <a href="#" className="hover:text-[#0047FF] transition-colors">Instagram</a>
+          <div className="flex justify-center items-center gap-6 mt-6">
+            <a href="https://x.com/XaneApp_" target="_blank" rel="noopener noreferrer" className="hover:opacity-70 hover:scale-105 transition-all">
+              <img src={xLogo} alt="X (formerly Twitter)" className="h-5 w-auto object-contain" />
+            </a>
+            <a href="https://www.instagram.com/xaneapp_?igsh=eGQ1aTJvYnAxMG43&utm_source=ig_contact_invite" target="_blank" rel="noopener noreferrer" className="hover:opacity-70 hover:scale-105 transition-all">
+              <img src={instagramLogo} alt="Instagram" className="h-5 w-auto object-contain" />
+            </a>
           </div>
         </div>
       </main>
@@ -163,23 +164,58 @@ export default function App() {
       {/* SUCCESS POPUP MODAL */}
       {isSuccess && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm px-4">
-          <div className="bg-white rounded-3xl p-8 max-w-sm w-full text-center shadow-2xl relative">
+          <div className="bg-white rounded-[24px] p-8 max-w-sm w-full text-center shadow-2xl relative">
             <button 
               onClick={() => setIsSuccess(false)}
               className="absolute right-4 top-4 text-gray-400 hover:text-gray-800 transition-colors"
             >
               <X size={20} strokeWidth={2.5} />
             </button>
+            
             <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
               <CheckCircle className="text-green-500 w-8 h-8" />
             </div>
+            
             <h3 className="text-2xl font-black text-gray-900 mb-2">You're in! 🎉</h3>
-            <p className="text-sm text-gray-500 font-medium mb-8">
+            <p className="text-sm text-gray-500 font-medium mb-6">
               We've added you to the early access list. Keep an eye on your inbox!
             </p>
+
+            {/* CALL TO ACTION FOR SOCIALS */}
+            <div className="bg-[#F0F5FF] rounded-[16px] p-5 mb-6 border border-[#0047FF]/10">
+              <p className="text-[12px] font-bold text-[#0047FF] mb-3 uppercase tracking-widest">
+                While you wait
+              </p>
+              <p className="text-[13px] text-gray-700 font-medium mb-4">
+                Make sure to follow us for the latest updates and sneak peeks!
+              </p>
+              
+              <div className="flex justify-center items-center gap-3">
+                <a 
+                  href="https://x.com/XaneApp_" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="flex items-center justify-center gap-2 flex-1 py-2.5 bg-white rounded-xl border border-[#0047FF]/20 hover:border-[#0047FF] hover:shadow-md transition-all group"
+                >
+                  <img src={xLogo} alt="X" className="h-4 w-auto object-contain group-hover:scale-110 transition-transform" />
+                  <span className="text-[13px] font-bold text-gray-800">Follow</span>
+                </a>
+                
+                <a 
+                  href="https://www.instagram.com/xaneapp_?igsh=eGQ1aTJvYnAxMG43&utm_source=ig_contact_invite" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="flex items-center justify-center gap-2 flex-1 py-2.5 bg-white rounded-xl border border-[#0047FF]/20 hover:border-[#0047FF] hover:shadow-md transition-all group"
+                >
+                  <img src={instagramLogo} alt="Instagram" className="h-4 w-auto object-contain group-hover:scale-110 transition-transform" />
+                  <span className="text-[13px] font-bold text-gray-800">Follow</span>
+                </a>
+              </div>
+            </div>
+
             <button 
               onClick={() => setIsSuccess(false)} 
-              className="w-full bg-[#0047FF] text-white font-bold py-3.5 rounded-[14px] hover:bg-blue-700 transition-colors shadow-lg shadow-blue-500/20"
+              className="w-full bg-[#111111] text-white font-bold py-3.5 rounded-[14px] hover:bg-black transition-colors shadow-lg"
             >
               Got it, thanks!
             </button>
