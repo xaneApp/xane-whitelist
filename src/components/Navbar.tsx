@@ -64,7 +64,7 @@ const Navbar = () => {
           </a>
 
           {/* Desktop Links */}
-          <div className="hidden items-center gap-4 md:flex">
+          {/* <div className="hidden items-center gap-4 md:flex">
             <a 
               href="#features" 
               className="rounded-xl bg-[#002B99] px-5 py-2 text-[14px] font-bold text-white transition hover:bg-[#001D66]"
@@ -77,7 +77,7 @@ const Navbar = () => {
             >
               Get started
             </button>
-          </div>
+          </div> */}
 
           {/* Mobile Hamburger */}
           <button onClick={() => setOpen(!open)} className="text-white md:hidden">
