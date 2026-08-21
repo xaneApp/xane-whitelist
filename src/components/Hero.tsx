@@ -6,50 +6,50 @@ import googlePlay from "@/assets/google-play.png";
 
 const Hero = () => {
   return (
-    <section className="relative w-full overflow-hidden bg-[#0047FF] pb-16 pt-32 lg:pb-24 lg:pt-40 min-[1650px]:pt-48">
+    <section className="relative w-full overflow-hidden bg-[#0047FF] pb-16 pt-28 sm:pb-20 sm:pt-32 md:pt-36 lg:pb-28 lg:pt-40">
       
       {/* 1. FLUID BACKGROUND GEOMETRIES */}
       <div 
-        className="absolute left-0 top-0 z-0 h-[60vh] w-[80vw] max-h-[600px] max-w-[600px] bg-[#111111]" 
+        className="pointer-events-none absolute left-0 top-0 z-0 h-[50vh] w-[70vw] max-h-[500px] max-w-[500px] bg-[#111111]" 
         style={{ clipPath: 'polygon(0 0, 100% 0, 0 100%)' }} 
       />
-      <div className="absolute right-0 top-[45%] z-0 h-[150px] w-[50%] origin-right -skew-y-[15deg] bg-[#111111] lg:h-[180px] min-[1650px]:h-[220px]" />
+      <div className="pointer-events-none absolute right-0 top-[40%] z-0 h-[100px] sm:h-[140px] lg:h-[180px] w-[45%] origin-right -skew-y-[15deg] bg-[#111111]" />
 
       {/* Floating Black Dots */}
-      <div className="absolute left-[8%] top-[65%] z-0 h-12 w-12 rounded-full bg-[#111111] min-[1650px]:h-16 min-[1650px]:w-16" />
-      <div className="absolute left-[28%] top-[58%] z-0 h-3 w-3 rounded-full bg-[#111111] min-[1650px]:h-4 min-[1650px]:w-4" />
-      <div className="absolute left-[43%] top-[18%] z-0 h-4 w-4 rounded-full bg-[#111111] min-[1650px]:h-5 min-[1650px]:w-5" />
-      <div className="absolute left-[52%] top-[30%] z-0 h-2 w-2 rounded-full bg-[#111111] min-[1650px]:h-3 min-[1650px]:w-3" />
-      <div className="absolute right-[42%] top-[24%] z-0 h-3 w-3 rounded-full bg-[#111111] min-[1650px]:h-4 min-[1650px]:w-4" />
-      <div className="absolute right-[35%] top-[55%] z-0 h-5 w-5 rounded-full bg-[#111111] min-[1650px]:h-6 min-[1650px]:w-6" />
-      <div className="absolute bottom-[15%] left-[12%] z-0 h-5 w-5 rounded-full bg-[#111111] min-[1650px]:h-6 min-[1650px]:w-6" />
+      <div className="pointer-events-none absolute left-[6%] top-[65%] z-0 h-8 w-8 sm:h-12 sm:w-12 rounded-full bg-[#111111]" />
+      <div className="pointer-events-none absolute left-[25%] top-[58%] z-0 h-2.5 w-2.5 sm:h-3 sm:w-3 rounded-full bg-[#111111]" />
+      <div className="pointer-events-none absolute left-[40%] top-[18%] z-0 h-3 w-3 sm:h-4 sm:w-4 rounded-full bg-[#111111]" />
+      <div className="pointer-events-none absolute left-[50%] top-[30%] z-0 h-2 w-2 rounded-full bg-[#111111]" />
+      <div className="pointer-events-none absolute right-[40%] top-[24%] z-0 h-2.5 w-2.5 sm:h-3 sm:w-3 rounded-full bg-[#111111]" />
+      <div className="pointer-events-none absolute right-[30%] top-[55%] z-0 h-4 w-4 sm:h-5 sm:w-5 rounded-full bg-[#111111]" />
+      <div className="pointer-events-none absolute bottom-[12%] left-[10%] z-0 h-4 w-4 sm:h-5 sm:w-5 rounded-full bg-[#111111]" />
 
-      {/* 2. STRICTLY PROPORTIONAL CONTAINER */}
-      <div className="relative z-10 mx-auto flex w-full max-w-[1400px] flex-col items-center justify-between px-6 md:px-10 lg:flex-row lg:items-center lg:px-16">
+      {/* 2. MAIN CONTAINER */}
+      <div className="relative z-10 mx-auto flex w-full max-w-[1400px] flex-col items-center justify-between px-4 sm:px-6 md:px-10 lg:flex-row lg:items-center lg:px-16">
 
-        {/* LEFT: TEXT (Given 55% width and extra right padding to act as a barrier) */}
-        <div className="relative z-20 w-full pt-8 lg:w-[55%] lg:pr-8 lg:pt-0 min-[1650px]:w-[50%] min-[1650px]:pr-0">
+        {/* LEFT: TEXT */}
+        <div className="relative z-20 w-full pt-4 text-left sm:pt-6 lg:w-[55%] lg:pr-8 lg:pt-0">
           <motion.h1 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            /* Shrunk fonts slightly for Chrome's wider rendering */
-            className="font-sans text-[36px] font-bold leading-[1.05] tracking-tight text-white md:text-[42px] lg:text-[32px] xl:text-[38px] min-[1650px]:text-[72px]"
+            transition={{ duration: 0.6 }}
+            className="font-sans text-[32px] sm:text-[42px] md:text-[48px] lg:text-[54px] xl:text-[62px] font-black leading-[1.08] tracking-tight text-white"
           >
-            <span className="inline-block whitespace-nowrap">Your crypto now works</span> <br />
+            Your crypto now works <br />
             like money.
           </motion.h1>
 
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="mt-4 space-y-3 lg:mt-5 min-[1650px]:mt-8 min-[1650px]:space-y-4"
+            transition={{ delay: 0.1, duration: 0.6 }}
+            className="mt-4 space-y-2 sm:mt-5 sm:space-y-3 lg:mt-6"
           >
-            <p className="font-sans text-[18px] font-normal leading-tight text-white pr-4 lg:text-[18px] xl:text-[20px] min-[1650px]:text-[30px]">
+            <p className="font-sans text-base sm:text-lg md:text-xl lg:text-2xl font-normal leading-snug text-white">
               Use crypto without understanding blockchain.
             </p>
-            <p className="max-w-[480px] font-sans text-[14px] font-light italic leading-relaxed text-white/80 lg:text-[14px] xl:text-[15px] min-[1650px]:text-[18px]">
-              A self-custody wallet and instant cash payment app <br className="hidden md:block" />
+            <p className="max-w-[480px] font-sans text-xs sm:text-sm md:text-base font-light italic leading-relaxed text-white/80">
+              A self-custody wallet and instant cash payment app <br className="hidden sm:inline" />
               in one simple platform.
             </p>
           </motion.div>
@@ -58,19 +58,27 @@ const Hero = () => {
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="mt-6 flex flex-wrap items-center gap-4 lg:mt-8 min-[1650px]:mt-10 min-[1650px]:gap-5"
+            transition={{ delay: 0.2, duration: 0.6 }}
+            className="mt-6 flex flex-wrap items-center gap-3 sm:gap-4 lg:mt-8"
           >
             <div className="relative group">
-              <img src={appStore} alt="App Store" className="h-[40px] w-auto cursor-pointer transition hover:opacity-80 lg:h-[40px] xl:h-[44px] min-[1650px]:h-[50px]" />
-              <span className="absolute left-1/2 -translate-x-1/2 top-full mt-1.5 whitespace-nowrap text-[10px] font-medium text-white/70 opacity-0 transition-opacity group-hover:opacity-100 min-[1650px]:text-xs">
-                disabled
+              <img 
+                src={appStore} 
+                alt="App Store" 
+                className="h-[36px] sm:h-[42px] md:h-[46px] w-auto cursor-pointer transition-transform hover:scale-105 active:scale-95 hover:opacity-90" 
+              />
+              <span className="absolute left-1/2 -translate-x-1/2 top-full mt-1 whitespace-nowrap text-[10px] font-medium text-white/70 opacity-0 transition-opacity group-hover:opacity-100">
+                Coming soon
               </span>
             </div>
             <div className="relative group">
-              <img src={googlePlay} alt="Google Play" className="h-[40px] w-auto cursor-pointer transition hover:opacity-80 lg:h-[40px] xl:h-[44px] min-[1650px]:h-[50px]" />
-              <span className="absolute left-1/2 -translate-x-1/2 top-full mt-1.5 whitespace-nowrap text-[10px] font-medium text-white/70 opacity-0 transition-opacity group-hover:opacity-100 min-[1650px]:text-xs">
-                disabled
+              <img 
+                src={googlePlay} 
+                alt="Google Play" 
+                className="h-[36px] sm:h-[42px] md:h-[46px] w-auto cursor-pointer transition-transform hover:scale-105 active:scale-95 hover:opacity-90" 
+              />
+              <span className="absolute left-1/2 -translate-x-1/2 top-full mt-1 whitespace-nowrap text-[10px] font-medium text-white/70 opacity-0 transition-opacity group-hover:opacity-100">
+                Coming soon
               </span>
             </div>
           </motion.div>
@@ -79,13 +87,15 @@ const Hero = () => {
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-            className="mt-6 flex items-center gap-3 min-[1650px]:mt-8"
+            transition={{ delay: 0.3, duration: 0.6 }}
+            className="mt-6 flex items-center gap-2.5 sm:gap-3 lg:mt-8"
           >
-            <span className="font-sans text-[13px] font-medium text-white lg:text-[13px] xl:text-[14px] min-[1650px]:text-[17px]">Excellent 4.9 out of 5</span>
+            <span className="font-sans text-xs sm:text-sm md:text-base font-medium text-white">
+              Excellent 4.9 out of 5
+            </span>
             <div className="flex gap-1 text-[#D9FF3F]">
               {[...Array(5)].map((_, i) => (
-                <svg key={i} className="h-4 w-4 fill-current min-[1650px]:h-5 min-[1650px]:w-5" viewBox="0 0 20 20">
+                <svg key={i} className="h-3.5 w-3.5 sm:h-4 sm:w-4 fill-current" viewBox="0 0 20 20">
                   <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                 </svg>
               ))}
@@ -93,23 +103,23 @@ const Hero = () => {
           </motion.div>
         </div>
 
-        {/* CENTER: COIN */}
+        {/* CENTER: COIN (Desktop only) */}
         <motion.div
           initial={{ opacity: 0, scale: 0.5, rotate: -20 }}
           animate={{ opacity: 1, scale: 1, rotate: 0 }}
           transition={{ type: "spring", duration: 1.5, delay: 0.4 }}
-          className="hidden min-[1650px]:block absolute z-20 bottom-[5%] left-[52%] -ml-[20px] w-[15vw] max-w-[240px]"
+          className="pointer-events-none hidden lg:block absolute z-20 bottom-[8%] left-[48%] -ml-[30px] w-[140px] xl:w-[180px]"
         >
           <img src={heroCoin} alt="Xane Coin" className="w-full drop-shadow-[0_20px_40px_rgba(0,0,0,0.3)]" />
         </motion.div>
 
-        {/* RIGHT: THE PHONE (Now restricted to 45% width to make room for text) */}
-        <div className="relative z-30 mt-12 flex w-full justify-center lg:mt-0 lg:w-[45%] lg:justify-end min-[1650px]:w-[50%] min-[1650px]:mt-16">
+        {/* RIGHT: THE PHONE */}
+        <div className="relative z-30 mt-10 flex w-full justify-center sm:mt-12 lg:mt-0 lg:w-[45%] lg:justify-end">
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="w-[60vw] max-w-[220px] rounded-[24px] bg-white p-2 drop-shadow-[0_20px_40px_rgba(0,0,0,0.4)] lg:max-w-[220px] xl:max-w-[240px] min-[1650px]:max-w-[310px] min-[1650px]:rounded-[32px] min-[1650px]:p-2.5 min-[1650px]:drop-shadow-[0_30px_60px_rgba(0,0,0,0.5)]"
+            className="w-[65vw] max-w-[230px] sm:max-w-[270px] md:max-w-[310px] lg:max-w-[340px] xl:max-w-[380px] rounded-[24px] sm:rounded-[28px] md:rounded-[32px] bg-white p-2 sm:p-2.5 drop-shadow-[0_20px_40px_rgba(0,0,0,0.35)]"
           >
             <img
               src={xanePhone}

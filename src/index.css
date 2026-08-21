@@ -14,11 +14,11 @@
 
 @layer base {
   html {
-    /* This forces the 150% scale globally to match your Figma reference */
-    zoom: 1.5; 
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
   }
   body {
-    @apply bg-white text-xane-black antialiased overflow-x-hidden;
+    @apply bg-white text-xane-black antialiased overflow-x-hidden w-full max-w-full;
   }
 }
 

@@ -55,15 +55,15 @@ const Navbar = () => {
   return (
     <>
       {/* NAVBAR */}
-      <nav className="absolute left-0 top-0 z-40 w-full bg-transparent px-6 py-6 md:px-10 lg:px-16">
+      <nav className="absolute left-0 top-0 z-40 w-full bg-transparent px-4 py-5 sm:px-6 sm:py-6 md:px-10 lg:px-16">
         <div className="mx-auto flex w-full max-w-[1400px] items-center justify-between">
           
           {/* Logo */}
-          <a href="#" className="flex items-center gap-3">
-            <img src={xaneLogo} alt="Xane" className="h-7 w-auto md:h-8" />
+          <a href="#" className="flex items-center gap-3 transition-opacity hover:opacity-90">
+            <img src={xaneLogo} alt="Xane" className="h-7 w-auto sm:h-8 md:h-9" />
           </a>
 
-          {/* Desktop Links */}
+          {/* Desktop Links - currently commented out */}
           {/* <div className="hidden items-center gap-4 md:flex">
             <a 
               href="#features" 
@@ -78,15 +78,6 @@ const Navbar = () => {
               Get started
             </button>
           </div> */}
-
-          {/* Mobile Hamburger */}
-          <button onClick={() => setOpen(!open)} className="text-white md:hidden">
-            <div className="space-y-1.5">
-              <div className={`h-0.5 w-6 bg-white transition-all ${open ? 'translate-y-2 rotate-45' : ''}`} />
-              <div className={`h-0.5 w-6 bg-white ${open ? 'opacity-0' : ''}`} />
-              <div className={`h-0.5 w-6 bg-white transition-all ${open ? '-translate-y-2 -rotate-45' : ''}`} />
-            </div>
-          </button>
         </div>
       </nav>
 

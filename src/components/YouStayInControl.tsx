@@ -22,43 +22,43 @@ const features = [
 
 const YouStayInControl = () => {
   return (
-    <section className="relative w-full overflow-hidden bg-white py-24 lg:py-32" style={{ zoom: 0.666667 }}>
-      <div className="mx-auto flex w-full max-w-[1500px] flex-col items-center justify-between px-6 md:px-16 lg:flex-row lg:gap-16">
+    <section className="relative w-full overflow-hidden bg-white py-16 sm:py-20 md:py-28 lg:py-32">
+      <div className="mx-auto flex w-full max-w-[1500px] flex-col items-center justify-between px-4 sm:px-6 md:px-16 lg:flex-row lg:gap-16">
         
         {/* LEFT BLOCK: TYPOGRAPHY & LIST */}
         <motion.div 
-          initial={{ opacity: 0, x: -50 }}
+          initial={{ opacity: 0, x: -40 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="w-full max-w-[650px]"
+          className="w-full max-w-[650px] text-left"
         >
-          <h2 className="font-sans text-[45px] font-black leading-[1.1] tracking-tight text-[#0A0A0A] md:text-[55px] lg:text-[65px]">
+          <h2 className="font-sans text-[32px] sm:text-[44px] md:text-[54px] lg:text-[62px] font-black leading-[1.08] tracking-tight text-[#0A0A0A]">
             You Stay in Control
           </h2>
-          <p className="mt-4 font-sans text-[18px] font-medium text-[#6B7280] md:text-[20px]">
+          <p className="mt-3 sm:mt-4 font-sans text-base sm:text-lg md:text-xl font-medium text-[#6B7280]">
             Xane confirms that all these can be done in one app
           </p>
 
-          <div className="mt-14 flex flex-col gap-10">
+          <div className="mt-8 sm:mt-12 flex flex-col gap-6 sm:gap-8 md:gap-10">
             {features.map((feat, i) => (
               <motion.div 
                 key={i}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.8 }}
-                transition={{ duration: 0.5, delay: i * 0.15 }}
-                className="flex items-start gap-6"
+                viewport={{ once: true, amount: 0.4 }}
+                transition={{ duration: 0.5, delay: i * 0.12 }}
+                className="flex items-start gap-4 sm:gap-6"
               >
-                <div className="flex h-[60px] w-[60px] shrink-0 items-center justify-center rounded-[18px] bg-[#F3F4F6] text-[#4B5563]">
-                  <feat.icon strokeWidth={2} className="h-7 w-7" />
+                <div className="flex h-[48px] w-[48px] sm:h-[58px] sm:w-[58px] shrink-0 items-center justify-center rounded-[14px] sm:rounded-[18px] bg-[#F3F4F6] text-[#4B5563]">
+                  <feat.icon strokeWidth={2} className="h-5 w-5 sm:h-6 sm:w-6" />
                 </div>
                 
-                <div className="flex flex-col pt-1">
-                  <h3 className="font-sans text-[22px] font-bold text-[#0A0A0A]">
+                <div className="flex flex-col pt-0.5">
+                  <h3 className="font-sans text-lg sm:text-xl md:text-2xl font-bold text-[#0A0A0A]">
                     {feat.title}
                   </h3>
-                  <p className="mt-2 font-sans text-[16px] font-medium leading-relaxed text-[#6B7280]">
+                  <p className="mt-1.5 font-sans text-xs sm:text-sm md:text-base font-medium leading-relaxed text-[#6B7280]">
                     {feat.desc}
                   </p>
                 </div>
@@ -69,18 +69,18 @@ const YouStayInControl = () => {
 
         {/* RIGHT BLOCK: PHONE ANCHOR */}
         <motion.div 
-          initial={{ opacity: 0, x: 50 }}
-          whileInView={{ opacity: 1, x: 0 }}
+          initial={{ opacity: 0, scale: 0.9, y: 30 }}
+          whileInView={{ opacity: 1, scale: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-          className="relative mt-20 flex w-full max-w-[500px] justify-center lg:mt-0 lg:w-1/2 lg:max-w-[650px] lg:justify-end"
+          className="relative mt-12 flex w-full max-w-[440px] justify-center sm:mt-16 lg:mt-0 lg:w-1/2 lg:max-w-[580px] lg:justify-end"
         >
-          <div className="absolute right-[5%] top-1/2 h-[90%] w-[100%] -translate-y-1/2 rounded-[40px] bg-[#F4F5F7] z-0 lg:right-0" />
+          <div className="absolute right-0 top-1/2 h-[90%] w-[95%] -translate-y-1/2 rounded-[32px] sm:rounded-[40px] bg-[#F4F5F7] z-0" />
           
           <img 
             src={phoneQr} 
             alt="Xane App QR Receive Screen" 
-            className="relative z-10 w-full max-w-[400px] drop-shadow-[0_40px_60px_rgba(0,0,0,0.12)] lg:max-w-[450px]" 
+            className="relative z-10 w-full max-w-[280px] sm:max-w-[340px] md:max-w-[400px] lg:max-w-[440px] drop-shadow-[0_25px_50px_rgba(0,0,0,0.1)]" 
           />
         </motion.div>
 

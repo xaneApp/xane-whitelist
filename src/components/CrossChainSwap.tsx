@@ -3,57 +3,55 @@ import swapUi from "@/assets/swap-ui.png";
 
 const CrossChainSwap = () => {
   return (
-    <section className="relative w-full overflow-hidden bg-[#F0F7FA] py-24 lg:py-32" style={{ zoom: 0.666667 }}>
-      <div className="mx-auto flex w-full max-w-[1500px] flex-col items-center justify-between px-6 md:px-16 lg:flex-row lg:gap-10">
+    <section className="relative w-full overflow-hidden bg-[#F0F7FA] py-16 sm:py-20 md:py-28 lg:py-32">
+      <div className="mx-auto flex w-full max-w-[1500px] flex-col items-center justify-between px-4 sm:px-6 md:px-16 lg:flex-row lg:gap-10">
         
         <motion.div
-          initial={{ opacity: 0, x: -50 }}
+          initial={{ opacity: 0, x: -40 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="w-full max-w-[650px] z-10"
+          className="w-full max-w-[650px] z-10 text-left"
         >
-          <h2 className="font-sans text-[55px] font-black leading-[1.05] tracking-tight text-[#0047FF] md:text-[75px] lg:text-[85px]">
+          <h2 className="font-sans text-[32px] sm:text-[46px] md:text-[58px] lg:text-[72px] font-black leading-[1.06] tracking-tight text-[#0047FF]">
             CrossChain Swap <br />
             made easy
           </h2>
           
-          <div className="mt-8 space-y-6">
-            <p className="font-sans text-[20px] font-medium leading-relaxed text-[#333333] md:text-[24px]">
-              Xane turns Swap tokens from one network to <br className="hidden lg:block" />
-              another without third parties.
+          <div className="mt-6 sm:mt-8 space-y-4 sm:space-y-5">
+            <p className="font-sans text-base sm:text-lg md:text-xl lg:text-2xl font-medium leading-relaxed text-[#333333]">
+              Swap tokens from one network to another without third parties.
             </p>
-            <p className="font-sans text-[20px] font-medium leading-relaxed text-[#333333] md:text-[24px]">
-              No risky bridges. No external exchanges.complex <br className="hidden lg:block" />
-              finance into simple actions
+            <p className="font-sans text-base sm:text-lg md:text-xl lg:text-2xl font-medium leading-relaxed text-[#555555]">
+              No risky bridges. No external exchanges. Complex finance into simple actions.
             </p>
           </div>
 
-          <motion.button
-            whileHover={{ scale: 1.02, backgroundColor: "#0047FF", color: "#FFFFFF" }}
-            whileTap={{ scale: 0.98 }}
-            className="mt-12 rounded-[16px] border-2 border-[#0047FF] bg-transparent px-10 py-4 font-sans text-[20px] font-bold text-[#0A0A0A] transition-colors"
+          <motion.div
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.97 }}
+            className="mt-8 sm:mt-10 inline-block rounded-2xl border-2 border-[#0047FF] bg-transparent px-8 py-3.5 sm:px-10 sm:py-4 font-sans text-base sm:text-lg font-bold text-[#0047FF] transition-all hover:bg-[#0047FF] hover:text-white cursor-pointer"
           >
-            Try Cross-Chain Swap
-          </motion.button>
+            Zero Bridges. Zero Hassle.
+          </motion.div>
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, x: 100 }}
-          whileInView={{ opacity: 1, x: 0 }}
+          initial={{ opacity: 0, scale: 0.9, y: 30 }}
+          whileInView={{ opacity: 1, scale: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ 
             type: "spring", 
             bounce: 0.2,
-            duration: 1.2, 
+            duration: 1, 
             delay: 0.2 
           }}
-          className="relative mt-20 flex w-full max-w-[500px] justify-center lg:mt-0 lg:w-1/2 lg:max-w-[700px] lg:justify-end"
+          className="relative mt-12 flex w-full max-w-[420px] justify-center sm:mt-16 sm:max-w-[500px] lg:mt-0 lg:w-1/2 lg:max-w-[620px] lg:justify-end overflow-visible"
         >
           <img
             src={swapUi}
             alt="CrossChain Swap Interface"
-            className="relative z-10 w-full min-w-[750px] max-w-[900px] drop-shadow-[0_40px_60px_rgba(0,0,0,0.15)] -rotate-[18deg] translate-x-[20%]"
+            className="relative z-10 w-full max-w-[300px] sm:max-w-[400px] md:max-w-[480px] lg:max-w-[560px] drop-shadow-[0_25px_50px_rgba(0,0,0,0.12)] -rotate-[6deg] sm:-rotate-[10deg] md:-rotate-[14deg]"
           />
         </motion.div>
 

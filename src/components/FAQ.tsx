@@ -29,16 +29,16 @@ const FAQ = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(0); 
 
   return (
-    <section className="relative w-full bg-[#F0F7FA] py-24 lg:py-32" style={{ zoom: 0.666667 }}>
-      <div className="mx-auto flex w-full max-w-[1500px] flex-col justify-between px-6 md:px-16 lg:flex-row lg:gap-20">
+    <section className="relative w-full bg-[#F0F7FA] py-16 sm:py-20 md:py-28 lg:py-32">
+      <div className="mx-auto flex w-full max-w-[1500px] flex-col justify-between px-4 sm:px-6 md:px-16 lg:flex-row lg:gap-16 xl:gap-20">
 
         {/* LEFT: HEADING & CONTACT */}
-        <div className="w-full max-w-[450px] shrink-0">
+        <div className="w-full max-w-[450px] shrink-0 text-left">
           <motion.h2 
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="font-sans text-[45px] font-medium leading-[1.2] tracking-tight text-[#0A0A0A] md:text-[55px] lg:text-[60px]"
+            className="font-sans text-[32px] sm:text-[44px] md:text-[52px] lg:text-[60px] font-bold leading-[1.15] tracking-tight text-[#0A0A0A]"
           >
             Frequently <br />
             Asked <br />
@@ -50,43 +50,43 @@ const FAQ = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="mt-16 lg:mt-32"
+            className="mt-8 sm:mt-12 lg:mt-24"
           >
-            <p className="font-sans text-[18px] font-medium text-[#4B5563]">
+            <p className="font-sans text-sm sm:text-base md:text-lg font-medium text-[#4B5563]">
               Still have questions?
             </p>
             <a
               href="mailto:Support@xane.app"
-              className="mt-2 inline-block font-sans text-[28px] font-medium text-[#4F3CFF] transition-opacity hover:opacity-80 md:text-[34px]"
+              className="mt-1 inline-block font-sans text-xl sm:text-2xl md:text-3xl font-bold text-[#4F3CFF] transition-opacity hover:opacity-80 break-all"
             >
               Support@xane.app
             </a>
           </motion.div>
         </div>
 
-        {/* RIGHT: THE EDITORIAL ACCORDION */}
-        <div className="mt-16 w-full lg:mt-0 lg:max-w-[850px]">
+        {/* RIGHT: THE ACCORDION */}
+        <div className="mt-10 sm:mt-12 w-full lg:mt-0 lg:max-w-[850px] text-left">
           {faqs.map((faq, i) => (
             <motion.div
               key={i}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 15 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.8 }}
-              transition={{ delay: i * 0.1, duration: 0.4 }}
+              viewport={{ once: true, amount: 0.4 }}
+              transition={{ delay: i * 0.08, duration: 0.4 }}
               className={`border-[#D1D5DB] ${i === 0 ? 'border-t' : ''} border-b`}
             >
               <button
                 onClick={() => setOpenIndex(openIndex === i ? null : i)}
-                className="group flex w-full items-center justify-between py-8 text-left transition-colors"
+                className="group flex w-full items-center justify-between py-5 sm:py-6 md:py-8 text-left transition-colors cursor-pointer"
               >
-                <span className="pr-4 font-sans text-[22px] font-medium text-[#0A0A0A] group-hover:text-[#4F3CFF] md:text-[26px]">
+                <span className="pr-4 font-sans text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-[#0A0A0A] group-hover:text-[#4F3CFF]">
                   {faq.q}
                 </span>
-                <span className="ml-4 shrink-0 text-[#0A0A0A] transition-transform duration-300">
+                <span className="ml-2 shrink-0 text-[#0A0A0A]">
                   {openIndex === i ? (
-                    <Minus className="h-6 w-6 md:h-8 md:w-8" strokeWidth={1.5} />
+                    <Minus className="h-5 w-5 sm:h-6 sm:w-6 md:h-7 md:w-7" strokeWidth={2} />
                   ) : (
-                    <Plus className="h-6 w-6 md:h-8 md:w-8" strokeWidth={1.5} />
+                    <Plus className="h-5 w-5 sm:h-6 sm:w-6 md:h-7 md:w-7" strokeWidth={2} />
                   )}
                 </span>
               </button>
@@ -100,7 +100,7 @@ const FAQ = () => {
                     transition={{ duration: 0.3, ease: "easeInOut" }}
                     className="overflow-hidden"
                   >
-                    <p className="whitespace-pre-wrap pb-10 pr-12 font-sans text-[16px] leading-relaxed text-[#6B7280] md:text-[18px]">
+                    <p className="whitespace-pre-wrap pb-6 sm:pb-8 pr-4 sm:pr-8 font-sans text-xs sm:text-sm md:text-base leading-relaxed text-[#6B7280]">
                       {faq.a}
                     </p>
                   </motion.div>
