@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import MoneyWorks from "@/components/MoneyWorks";
@@ -9,12 +10,15 @@ import YouStayInControl from "@/components/YouStayInControl";
 import FAQ from "@/components/FAQ";
 import CTA from "@/components/CTA";
 import Footer from "@/components/Footer";
+import WaitlistModal from "@/components/WaitlistModal";
 
 const Index = () => {
+  const [isWaitlistOpen, setIsWaitlistOpen] = useState(false);
+
   return (
     <div className="min-h-screen bg-background">
-      <Navbar />
-      <Hero />
+      <Navbar onOpenWaitlist={() => setIsWaitlistOpen(true)} />
+      <Hero onOpenWaitlist={() => setIsWaitlistOpen(true)} />
       <MoneyWorks />
       <CryptoSimple />
       <OwnershipUsability />
@@ -24,6 +28,10 @@ const Index = () => {
       <FAQ />
       <CTA />
       <Footer />
+      <WaitlistModal
+        isOpen={isWaitlistOpen}
+        onClose={() => setIsWaitlistOpen(false)}
+      />
     </div>
   );
 };
