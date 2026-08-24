@@ -26,7 +26,7 @@ const Index = () => {
       <CryptoToBank />
       <YouStayInControl />
       <FAQ />
-      <CTA />
+      <CTA onOpenWaitlist={() => setIsWaitlistOpen(true)} />
       <Footer />
       <WaitlistModal
         isOpen={isWaitlistOpen}
