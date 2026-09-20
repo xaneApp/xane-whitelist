@@ -81,7 +81,7 @@ const WaitlistPage = () => {
           rightAction="leaderboard-nav"
           onJoinWaitlistClick={handleGoToForm}
         />
-      ) : (
+      ) : currentStep === "telegram" ? null : (
         <WaitlistHeader rightAction="homepage" />
       )}
 

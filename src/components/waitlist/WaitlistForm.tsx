@@ -166,7 +166,7 @@ const WaitlistForm: React.FC<WaitlistFormProps> = ({ onSubmitSuccess }) => {
   };
 
   return (
-    <div className="mx-auto flex w-full max-w-[620px] flex-col items-center px-4 py-8 sm:py-12">
+    <div className="mx-auto flex w-full max-w-[720px] flex-col items-center px-4 py-8 sm:py-12">
       {/* Title & Subtitle */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -174,10 +174,10 @@ const WaitlistForm: React.FC<WaitlistFormProps> = ({ onSubmitSuccess }) => {
         transition={{ duration: 0.5 }}
         className="text-center"
       >
-        <h1 className="font-sans text-[32px] sm:text-[44px] md:text-[50px] font-black tracking-tight text-white">
+        <h1 className="font-sans text-[34px] sm:text-[46px] md:text-[54px] font-black tracking-tight text-white leading-tight">
           Join the Xane Waitlist.
         </h1>
-        <p className="mt-2 text-sm sm:text-base md:text-lg font-medium text-white/90">
+        <p className="mt-2.5 text-base sm:text-lg md:text-xl font-medium text-white/90">
           Get early access, reserve your XaneTag before launch.
         </p>
       </motion.div>
@@ -187,18 +187,18 @@ const WaitlistForm: React.FC<WaitlistFormProps> = ({ onSubmitSuccess }) => {
         initial={{ opacity: 0, scale: 0.96, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         transition={{ delay: 0.1, duration: 0.5 }}
-        className="mt-8 w-full rounded-[28px] bg-white p-6 sm:p-8 md:p-10 shadow-2xl text-[#111111]"
+        className="mt-8 sm:mt-10 w-full rounded-[32px] bg-white p-6 sm:p-8 md:p-11 shadow-2xl text-[#111111]"
       >
-        <form onSubmit={handleSubmit} className="space-y-5 sm:space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-6">
           
           {/* 1. Full Name */}
           <div className="space-y-1.5 text-left">
-            <label className="text-[11px] font-bold tracking-wider text-[#111111] uppercase">
+            <label className="text-xs font-black tracking-wider text-[#111111] uppercase">
               FULL NAME
             </label>
             <div className="relative flex items-center">
-              <div className="pointer-events-none absolute left-3.5 flex items-center text-gray-400">
-                <User size={18} />
+              <div className="pointer-events-none absolute left-4 flex items-center text-gray-400">
+                <User size={19} />
               </div>
               <input
                 type="text"
@@ -206,7 +206,7 @@ const WaitlistForm: React.FC<WaitlistFormProps> = ({ onSubmitSuccess }) => {
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
                 placeholder="e.g your name"
-                className="w-full rounded-[14px] border border-gray-300 py-3 pl-11 pr-4 text-sm font-medium text-[#111111] outline-none transition-all placeholder:text-gray-400 focus:border-[#0047FF] focus:ring-4 focus:ring-[#0047FF]/10"
+                className="w-full rounded-[16px] border border-gray-300 py-3.5 pl-12 pr-4 text-sm sm:text-base font-medium text-[#111111] outline-none transition-all placeholder:text-gray-400 focus:border-[#0047FF] focus:ring-4 focus:ring-[#0047FF]/10"
               />
             </div>
           </div>
@@ -216,22 +216,22 @@ const WaitlistForm: React.FC<WaitlistFormProps> = ({ onSubmitSuccess }) => {
             
             {/* Phone Number Field */}
             <div className="space-y-1.5 text-left">
-              <label className="text-[11px] font-bold tracking-wider text-[#111111] uppercase">
+              <label className="text-xs font-black tracking-wider text-[#111111] uppercase">
                 PHONE NUMBER
               </label>
-              <div className="flex items-center gap-1.5">
-                <span className="text-sm font-semibold text-gray-500 whitespace-nowrap">
+              <div className="flex items-center gap-2">
+                <span className="text-sm font-bold text-gray-600 whitespace-nowrap">
                   +234
                 </span>
                 <div
-                  className={`relative flex flex-1 items-center rounded-[14px] border bg-white transition-all ${
+                  className={`relative flex flex-1 items-center rounded-[16px] border bg-white transition-all ${
                     otpState.startsWith("error")
                       ? "border-red-500 ring-4 ring-red-500/10"
                       : "border-gray-300 focus-within:border-[#0047FF] focus-within:ring-4 focus-within:ring-[#0047FF]/10"
                   } ${otpState === "verified" || otpState === "otp-sent" ? "bg-gray-50" : ""}`}
                 >
-                  <div className="pointer-events-none absolute left-3 flex items-center text-gray-400">
-                    <Phone size={16} />
+                  <div className="pointer-events-none absolute left-3.5 flex items-center text-gray-400">
+                    <Phone size={17} />
                   </div>
                   <input
                     type="tel"
@@ -239,7 +239,7 @@ const WaitlistForm: React.FC<WaitlistFormProps> = ({ onSubmitSuccess }) => {
                     value={phone}
                     onChange={(e) => handlePhoneChange(e.target.value)}
                     placeholder="e.g 12345678901"
-                    className="w-full rounded-[14px] bg-transparent py-3 pl-9 pr-16 text-xs sm:text-sm font-medium text-[#111111] outline-none placeholder:text-gray-400 disabled:text-gray-500"
+                    className="w-full rounded-[16px] bg-transparent py-3.5 pl-10 pr-16 text-xs sm:text-sm font-medium text-[#111111] outline-none placeholder:text-gray-400 disabled:text-gray-500"
                   />
 
                   {/* Inline Verify Button */}
