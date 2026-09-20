@@ -33,10 +33,10 @@ const WaitlistBackground = ({ children, showWatermark = true }: WaitlistBackgrou
 
       {/* Massive Background Stroked Text "Waitlist" */}
       {showWatermark && (
-        <div className="pointer-events-none absolute bottom-[-4vw] left-0 z-0 flex w-full justify-center select-none overflow-hidden opacity-40">
+        <div className="pointer-events-none absolute bottom-0 left-0 z-0 flex w-full justify-center select-none overflow-hidden opacity-30">
           <span 
-            className="font-sans text-[clamp(110px,21vw,360px)] font-black tracking-tight text-transparent whitespace-nowrap"
-            style={{ WebkitTextStroke: '2px rgba(255, 255, 255, 0.35)' }}
+            className="font-sans text-[clamp(90px,18vw,300px)] font-black tracking-tight text-transparent whitespace-nowrap"
+            style={{ WebkitTextStroke: '2px rgba(255, 255, 255, 0.3)' }}
           >
             Waitlist
           </span>
