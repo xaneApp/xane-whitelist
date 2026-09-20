@@ -74,7 +74,7 @@ const WaitlistPage = () => {
   };
 
   return (
-    <WaitlistBackground showWatermark={true}>
+    <WaitlistBackground variant={currentStep} showWatermark={true}>
       {/* Dynamic Header based on active view */}
       {currentStep === "leaderboard" ? (
         <WaitlistHeader

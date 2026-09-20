@@ -25,58 +25,58 @@ const TelegramStep = ({
   };
 
   return (
-    <div className="relative mx-auto flex w-full max-w-[1100px] flex-1 flex-col items-center justify-center px-4 py-12 sm:py-16 text-center">
+    <div className="relative flex min-h-[85vh] w-full flex-col items-center justify-between px-4 py-8 sm:py-12 overflow-hidden">
       
-      {/* Top Xane Logo for Telegram view */}
-      <div className="mb-12 sm:mb-16 flex items-center justify-center">
-        <img src={xaneLogo} alt="Xane" className="h-8 sm:h-10 md:h-11 w-auto" />
+      {/* 1. AEROPLANE PINNED TO THE VERY LEFT EDGE OF THE SCREEN */}
+      <div className="pointer-events-none absolute left-0 top-[10%] sm:top-[12%] z-10 w-[200px] sm:w-[320px] md:w-[420px] lg:w-[520px] xl:w-[580px] -translate-x-[20%] sm:-translate-x-[15%] lg:-translate-x-[10%] select-none">
+        <motion.img
+          initial={{ opacity: 0, x: -60, scale: 0.9 }}
+          animate={{ opacity: 1, x: 0, scale: 1 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          src={telegramPlane}
+          alt="Telegram Plane"
+          className="w-full object-contain drop-shadow-[0_25px_60px_rgba(0,0,0,0.45)]"
+        />
       </div>
 
-      {/* Main Container with Graphic & Content */}
-      <div className="relative flex w-full max-w-[800px] flex-col items-center justify-center">
-        
-        {/* Large Telegram Paper Plane Icon on the Left */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8, x: -40, rotate: -12 }}
-          animate={{ opacity: 1, scale: 1, x: 0, rotate: -6 }}
-          transition={{ type: "spring", duration: 0.8 }}
-          className="pointer-events-none absolute -left-4 sm:-left-20 md:-left-28 -top-8 sm:-top-12 w-[110px] sm:w-[170px] md:w-[220px] lg:w-[250px] opacity-95"
-        >
-          <img
-            src={telegramPlane}
-            alt="Telegram Plane"
-            className="w-full object-contain drop-shadow-[0_20px_40px_rgba(0,0,0,0.4)]"
-          />
-        </motion.div>
+      {/* 2. TOP CENTERED XANE LOGO */}
+      <div className="relative z-20 flex w-full items-center justify-center pt-2 sm:pt-4">
+        <img src={xaneLogo} alt="Xane" className="h-8 sm:h-10 md:h-12 w-auto drop-shadow-md" />
+      </div>
 
-        {/* Headings */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
+      {/* 3. HERO CENTER CONTENT */}
+      <div className="relative z-20 mx-auto my-auto flex w-full max-w-[850px] flex-col items-center text-center px-4">
+        <motion.h1
+          initial={{ opacity: 0, y: 25 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="relative z-10 max-w-[620px] px-2"
+          className="font-sans text-[44px] sm:text-[62px] md:text-[76px] lg:text-[84px] font-black leading-[1.04] tracking-tight text-white"
         >
-          <h1 className="font-sans text-[38px] sm:text-[54px] md:text-[64px] lg:text-[72px] font-black leading-[1.05] tracking-tight text-white">
-            Become a part of <br className="hidden sm:inline" />
-            Xane.
-          </h1>
-          <p className="mt-4 sm:mt-5 text-base sm:text-lg md:text-2xl font-medium text-white/90">
-            Join the community to complete your waitlist sign-up.
-          </p>
-        </motion.div>
+          Become a part of <br />
+          Xane.
+        </motion.h1>
 
-        {/* Action Button Area */}
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1, duration: 0.6 }}
+          className="mt-4 sm:mt-6 max-w-[580px] text-base sm:text-xl md:text-2xl font-medium text-white/95"
+        >
+          Join the community to complete your waitlist sign-up.
+        </motion.p>
+
+        {/* Action Button */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.6 }}
-          className="relative z-10 mt-10 sm:mt-14 flex flex-col items-center gap-4 w-full max-w-[420px]"
+          className="mt-10 sm:mt-14 flex w-full max-w-[420px] flex-col items-center gap-4"
         >
           {isConnected && (
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              className="flex items-center gap-2 rounded-full bg-emerald-500/20 px-5 py-2 text-xs sm:text-sm font-bold text-white border border-emerald-400/40 backdrop-blur-sm"
+              className="flex items-center gap-2 rounded-full bg-emerald-500/25 px-5 py-2 text-xs sm:text-sm font-bold text-white border border-emerald-400/50 backdrop-blur-md shadow-lg"
             >
               <CheckCircle2 size={18} className="text-emerald-400 fill-emerald-400/20" />
               <span>Telegram Connected Successfully</span>
@@ -85,32 +85,35 @@ const TelegramStep = ({
 
           {!isConnected ? (
             <motion.button
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.97 }}
+              whileHover={{ scale: 1.04 }}
+              whileTap={{ scale: 0.96 }}
               onClick={handleJoinTelegram}
-              className="flex w-full items-center justify-center gap-3 rounded-full bg-white py-4 sm:py-5 px-8 sm:px-10 text-lg sm:text-xl font-black text-[#0047FF] shadow-[0_15px_40px_rgba(0,0,0,0.3)] transition-all hover:bg-gray-50 active:scale-[0.98] cursor-pointer"
+              className="flex w-full items-center justify-center gap-4 rounded-full bg-white py-4 sm:py-5 px-8 sm:px-12 text-lg sm:text-2xl font-black text-[#0047FF] shadow-[0_20px_50px_rgba(0,0,0,0.35)] transition-all hover:bg-gray-50 active:scale-[0.98] cursor-pointer"
             >
               <span>{hasClicked ? "Connecting..." : "Join Telegram"}</span>
-              <div className="flex h-7 w-7 sm:h-8 sm:w-8 items-center justify-center rounded-full bg-[#0047FF] text-white">
-                <ArrowRight size={16} strokeWidth={3} />
+              <div className="flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-full bg-[#0047FF] text-white shrink-0">
+                <ArrowRight size={18} strokeWidth={3} />
               </div>
             </motion.button>
           ) : (
             <motion.button
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.97 }}
+              whileHover={{ scale: 1.04 }}
+              whileTap={{ scale: 0.96 }}
               onClick={onContinue}
-              className="flex w-full items-center justify-center gap-3 rounded-full bg-white py-4 sm:py-5 px-8 sm:px-10 text-lg sm:text-xl font-black text-[#0047FF] shadow-[0_15px_40px_rgba(0,0,0,0.3)] transition-all hover:bg-gray-50 active:scale-[0.98] cursor-pointer"
+              className="flex w-full items-center justify-center gap-4 rounded-full bg-white py-4 sm:py-5 px-8 sm:px-12 text-lg sm:text-2xl font-black text-[#0047FF] shadow-[0_20px_50px_rgba(0,0,0,0.35)] transition-all hover:bg-gray-50 active:scale-[0.98] cursor-pointer"
             >
               <span>Continue</span>
-              <div className="flex h-7 w-7 sm:h-8 sm:w-8 items-center justify-center rounded-full bg-[#0047FF] text-white">
-                <ArrowRight size={16} strokeWidth={3} />
+              <div className="flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-full bg-[#0047FF] text-white shrink-0">
+                <ArrowRight size={18} strokeWidth={3} />
               </div>
             </motion.button>
           )}
         </motion.div>
-
       </div>
+
+      {/* Spacer to balance bottom */}
+      <div className="h-6 sm:h-10" />
+
     </div>
   );
 };
