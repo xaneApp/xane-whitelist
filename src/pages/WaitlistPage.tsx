@@ -4,11 +4,12 @@ import WaitlistBackground from "@/components/waitlist/WaitlistBackground";
 import WaitlistHeader from "@/components/waitlist/WaitlistHeader";
 import WaitlistForm, { WaitlistFormData } from "@/components/waitlist/WaitlistForm";
 import TelegramStep from "@/components/waitlist/TelegramStep";
+import CelebrationStep from "@/components/waitlist/CelebrationStep";
 import WaitlistDashboard from "@/components/waitlist/WaitlistDashboard";
 import LeaderboardView from "@/components/waitlist/LeaderboardView";
 import WaitlistFooter from "@/components/waitlist/WaitlistFooter";
 
-type WaitlistViewStep = "form" | "telegram" | "dashboard" | "leaderboard";
+type WaitlistViewStep = "form" | "telegram" | "celebration" | "dashboard" | "leaderboard";
 
 const WaitlistPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -38,7 +39,7 @@ const WaitlistPage = () => {
 
   useEffect(() => {
     const viewParam = searchParams.get("view") as WaitlistViewStep;
-    if (viewParam && ["form", "telegram", "dashboard", "leaderboard"].includes(viewParam)) {
+    if (viewParam && ["form", "telegram", "celebration", "dashboard", "leaderboard"].includes(viewParam)) {
       setCurrentStep(viewParam);
     }
   }, [searchParams]);
@@ -52,8 +53,15 @@ const WaitlistPage = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  // Step 2 Complete: Transition to Dashboard
+  // Step 2 Complete: Transition to Celebration Step ("You're on the list")
   const handleTelegramContinue = () => {
+    setCurrentStep("celebration");
+    setSearchParams({ view: "celebration" });
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  // Step 3 Complete: Transition to Dashboard
+  const handleCelebrationContinue = () => {
     setCurrentStep("dashboard");
     setSearchParams({ view: "dashboard" });
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -81,7 +89,7 @@ const WaitlistPage = () => {
           rightAction="leaderboard-nav"
           onJoinWaitlistClick={handleGoToForm}
         />
-      ) : currentStep === "telegram" ? null : (
+      ) : currentStep === "telegram" || currentStep === "celebration" ? null : (
         <WaitlistHeader rightAction="homepage" />
       )}
 
@@ -93,6 +101,10 @@ const WaitlistPage = () => {
 
         {currentStep === "telegram" && (
           <TelegramStep onContinue={handleTelegramContinue} />
+        )}
+
+        {currentStep === "celebration" && (
+          <CelebrationStep onContinue={handleCelebrationContinue} />
         )}
 
         {currentStep === "dashboard" && (

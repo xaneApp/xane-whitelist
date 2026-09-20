@@ -3,7 +3,7 @@ import xaneSide from "@/assets/xane-side.png";
 
 interface WaitlistBackgroundProps {
   children: React.ReactNode;
-  variant?: "form" | "telegram" | "dashboard" | "leaderboard";
+  variant?: "form" | "telegram" | "celebration" | "dashboard" | "leaderboard";
   showWatermark?: boolean;
 }
 
@@ -15,38 +15,20 @@ const WaitlistBackground: React.FC<WaitlistBackgroundProps> = ({
   return (
     <div className="relative min-h-screen w-full overflow-x-hidden bg-[#0047FF] text-white selection:bg-[#D9FF3F] selection:text-[#111111] flex flex-col justify-between">
       
-      {/* 1. TOP-LEFT DARK POLYGON */}
-      <div 
-        className="pointer-events-none absolute left-0 top-0 z-0 h-[45vh] w-[45vw] max-w-[560px] bg-[#111111]" 
-        style={{ clipPath: 'polygon(0 0, 100% 0, 0 100%)' }} 
-      />
+      {/* 1. TOP-LEFT DARK POLYGON (Only on form and leaderboard) */}
+      {(variant === "form" || variant === "leaderboard") && (
+        <div 
+          className="pointer-events-none absolute left-0 top-0 z-0 h-[45vh] w-[45vw] max-w-[560px] bg-[#111111]" 
+          style={{ clipPath: 'polygon(0 0, 100% 0, 0 100%)' }} 
+        />
+      )}
 
-      {/* 2. TOP-RIGHT DARK POLYGON */}
-      <div 
-        className="pointer-events-none absolute right-0 top-0 z-0 h-[45vh] w-[40vw] max-w-[500px] bg-[#111111]" 
-        style={{ clipPath: 'polygon(100% 0, 0 0, 100% 100%)' }} 
-      />
-
-      {/* 3. LIGHT BEAM FROM BOTTOM RIGHT (For Telegram and Dashboard) */}
-      {(variant === "telegram" || variant === "dashboard" || variant === "leaderboard") && (
-        <>
-          {/* Main Cone Beam */}
-          <div 
-            className="pointer-events-none absolute right-0 bottom-0 z-0 h-[75vh] w-[50vw] max-w-[700px] opacity-80"
-            style={{
-              background: 'linear-gradient(225deg, rgba(0, 210, 255, 0.5) 0%, rgba(0, 150, 255, 0.2) 60%, transparent 100%)',
-              clipPath: 'polygon(100% 100%, 35% 100%, 100% 15%)'
-            }}
-          />
-          {/* Secondary Soft Beam */}
-          <div 
-            className="pointer-events-none absolute right-0 bottom-0 z-0 h-[60vh] w-[35vw] max-w-[500px] opacity-60"
-            style={{
-              background: 'linear-gradient(240deg, rgba(0, 230, 255, 0.4) 0%, transparent 80%)',
-              clipPath: 'polygon(100% 100%, 55% 100%, 100% 40%)'
-            }}
-          />
-        </>
+      {/* 2. TOP-RIGHT DARK POLYGON (Only on form, telegram, and leaderboard) */}
+      {(variant === "form" || variant === "telegram" || variant === "leaderboard") && (
+        <div 
+          className="pointer-events-none absolute right-0 top-0 z-0 h-[45vh] w-[40vw] max-w-[500px] bg-[#111111]" 
+          style={{ clipPath: 'polygon(100% 0, 0 0, 100% 100%)' }} 
+        />
       )}
 
       {/* 4. XANE-SIDES AT THE EDGES OF THE SCREEN */}
