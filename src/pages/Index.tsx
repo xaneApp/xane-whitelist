@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import MoneyWorks from "@/components/MoneyWorks";
@@ -10,15 +10,18 @@ import YouStayInControl from "@/components/YouStayInControl";
 import FAQ from "@/components/FAQ";
 import CTA from "@/components/CTA";
 import Footer from "@/components/Footer";
-import WaitlistModal from "@/components/WaitlistModal";
 
 const Index = () => {
-  const [isWaitlistOpen, setIsWaitlistOpen] = useState(false);
+  const navigate = useNavigate();
+
+  const handleOpenWaitlist = () => {
+    navigate("/waitlist");
+  };
 
   return (
     <div className="min-h-screen bg-background">
-      <Navbar onOpenWaitlist={() => setIsWaitlistOpen(true)} />
-      <Hero onOpenWaitlist={() => setIsWaitlistOpen(true)} />
+      <Navbar onOpenWaitlist={handleOpenWaitlist} />
+      <Hero onOpenWaitlist={handleOpenWaitlist} />
       <MoneyWorks />
       <CryptoSimple />
       <OwnershipUsability />
@@ -26,12 +29,8 @@ const Index = () => {
       <CryptoToBank />
       <YouStayInControl />
       <FAQ />
-      <CTA onOpenWaitlist={() => setIsWaitlistOpen(true)} />
+      <CTA onOpenWaitlist={handleOpenWaitlist} />
       <Footer />
-      <WaitlistModal
-        isOpen={isWaitlistOpen}
-        onClose={() => setIsWaitlistOpen(false)}
-      />
     </div>
   );
 };
