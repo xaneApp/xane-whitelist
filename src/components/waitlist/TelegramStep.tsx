@@ -2,7 +2,6 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { CheckCircle2, ArrowRight } from "lucide-react";
 import telegramPlane from "@/assets/telegramplane.png";
-import telegramPlane2 from "@/assets/telegramplane2.png";
 import xaneLogo from "@/assets/xane-logo.png";
 
 interface TelegramStepProps {
@@ -28,27 +27,15 @@ const TelegramStep = ({
   return (
     <div className="relative flex min-h-[85vh] w-full flex-col items-center justify-between px-4 py-8 sm:py-12 overflow-hidden">
       
-      {/* 1. AEROPLANE PINNED TO THE VERY LEFT EDGE OF THE SCREEN */}
-      <div className="pointer-events-none absolute left-0 top-[6%] sm:top-[8%] z-10 w-[200px] sm:w-[320px] md:w-[420px] lg:w-[500px] xl:w-[560px] -translate-x-[20%] sm:-translate-x-[15%] lg:-translate-x-[12%] select-none">
+      {/* 1. AEROPLANE PINNED TO THE TOP-LEFT EDGE OF THE SCREEN (Proportionate Sizing) */}
+      <div className="pointer-events-none absolute left-0 top-[8%] sm:top-[10%] z-10 w-[110px] sm:w-[140px] md:w-[180px] lg:w-[210px] xl:w-[230px] max-w-[240px] -translate-x-[18%] select-none">
         <motion.img
-          initial={{ opacity: 0, x: -60, scale: 0.9 }}
+          initial={{ opacity: 0, x: -50, scale: 0.9 }}
           animate={{ opacity: 1, x: 0, scale: 1 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
+          transition={{ duration: 0.7, ease: "easeOut" }}
           src={telegramPlane}
           alt="Telegram Plane"
-          className="w-full object-contain drop-shadow-[0_25px_60px_rgba(0,0,0,0.45)]"
-        />
-      </div>
-
-      {/* 2. TELEGRAM PLANE 2 PINNED TO THE BOTTOM RIGHT EDGE OF THE SCREEN */}
-      <div className="pointer-events-none absolute right-0 bottom-0 z-10 w-[240px] sm:w-[360px] md:w-[460px] lg:w-[560px] xl:w-[640px] translate-x-[5%] translate-y-[5%] select-none">
-        <motion.img
-          initial={{ opacity: 0, y: 60, scale: 0.9 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
-          src={telegramPlane2}
-          alt="Telegram Plane 2"
-          className="w-full object-contain"
+          className="w-full object-contain drop-shadow-[0_20px_40px_rgba(0,0,0,0.4)]"
         />
       </div>
 
