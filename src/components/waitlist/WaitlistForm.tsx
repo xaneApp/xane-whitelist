@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { User, Mail, Phone, CheckCircle2, ArrowRight } from "lucide-react";
 import xaneLogo from "@/assets/xane-logo.png";
+import xaneIcon from "@/assets/xane-icon.png";
 
 export interface WaitlistFormData {
   fullName: string;
@@ -23,7 +24,7 @@ type OtpState =
   | "verifying"
   | "verified"
   | "error-invalid"
-  | "error-registered";
+  | "expired";
 
 const WaitlistForm: React.FC<WaitlistFormProps> = ({ onSubmitSuccess }) => {
   const [fullName, setFullName] = useState("");
@@ -32,46 +33,32 @@ const WaitlistForm: React.FC<WaitlistFormProps> = ({ onSubmitSuccess }) => {
   const [freeTag, setFreeTag] = useState("");
   const [premiumTag, setPremiumTag] = useState("");
 
-  // OTP Verification State Machine
+  // 8-State OTP Verification System
   const [otpState, setOtpState] = useState<OtpState>("idle");
   const [otpCode, setOtpCode] = useState("");
   const [resendTimer, setResendTimer] = useState(60);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Phone input handler
+  // Phone input listener
   const handlePhoneChange = (val: string) => {
-    const cleaned = val.replace(/\D/g, "").slice(0, 11);
+    const cleaned = val.replace(/\D/g, "");
     setPhone(cleaned);
 
-    if (otpState === "verified") return;
-
-    if (cleaned.length === 0) {
-      setOtpState("idle");
-    } else if (cleaned.length >= 10) {
+    if (cleaned.length >= 10 && otpState === "idle") {
       setOtpState("ready");
-    } else {
+    } else if (cleaned.length < 10 && otpState !== "verified") {
       setOtpState("typing");
     }
   };
 
-  // Trigger Send OTP
+  // Send OTP trigger
   const handleSendOtp = () => {
-    if (phone.length < 10) {
-      setOtpState("error-invalid");
-      return;
-    }
-    // Mock check for registered numbers
-    if (phone === "08000000000") {
-      setOtpState("error-registered");
-      return;
-    }
-
+    if (phone.length < 10) return;
     setOtpState("otp-sent");
     setResendTimer(60);
-    setOtpCode("");
   };
 
-  // Timer countdown
+  // Resend countdown timer
   useEffect(() => {
     let interval: NodeJS.Timeout;
     if (otpState === "otp-sent" && resendTimer > 0) {
@@ -105,13 +92,11 @@ const WaitlistForm: React.FC<WaitlistFormProps> = ({ onSubmitSuccess }) => {
     setFreeTag(clean);
   };
 
-  // Format Premium Tag
+  // Format Premium Tag (Clear prefix handling)
   const handlePremiumTagChange = (val: string) => {
     let clean = val.toLowerCase().replace(/[^a-z0-9_.]/g, "");
-    if (!clean.startsWith("@") && clean.length > 0) {
-      clean = "@" + clean;
-    }
-    setPremiumTag(clean);
+    clean = clean.replace(/^@+/, "");
+    setPremiumTag(clean ? "@" + clean : "");
   };
 
   // Check overall form validity
@@ -387,15 +372,20 @@ const WaitlistForm: React.FC<WaitlistFormProps> = ({ onSubmitSuccess }) => {
               PREMIUM XANETAG (OPTIONAL)
             </label>
             <div className="relative flex items-center">
-              <div className="pointer-events-none absolute left-3 flex items-center">
-                <img src={xaneLogo} alt="Xane" className="h-3.5 w-auto" />
+              {/* Blue Xane Icon Badge matching Figma 1:1 */}
+              <div className="pointer-events-none absolute left-3 flex h-6 w-6 items-center justify-center rounded-md bg-[#0047FF] p-1 shadow-sm">
+                <img src={xaneIcon} alt="Xane" className="h-full w-full object-contain brightness-0 invert" />
               </div>
+              {/* Crystal-clear, bold @ symbol in high contrast #0047FF */}
+              <span className="pointer-events-none absolute left-10 sm:left-11 text-base font-black text-[#0047FF] select-none">
+                @
+              </span>
               <input
                 type="text"
-                value={premiumTag}
+                value={premiumTag.replace(/^@/, "")}
                 onChange={(e) => handlePremiumTagChange(e.target.value)}
-                placeholder="@yourname.xane"
-                className="w-full rounded-[12px] border border-[#0047FF]/40 bg-white py-2.5 pl-10 pr-4 text-sm font-medium text-[#111111] outline-none placeholder:text-gray-400 focus:border-[#0047FF] focus:ring-4 focus:ring-[#0047FF]/15"
+                placeholder="yourname.xane"
+                className="w-full rounded-[12px] border border-[#0047FF]/40 bg-white py-2.5 pl-15 sm:pl-16 pr-4 text-xs sm:text-sm font-semibold text-[#111111] outline-none placeholder:text-gray-400 placeholder:font-normal focus:border-[#0047FF] focus:ring-4 focus:ring-[#0047FF]/15"
               />
             </div>
             <p className="text-[10px] font-medium text-gray-500">
