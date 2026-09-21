@@ -8,125 +8,66 @@
     body {
       margin: 0;
       padding: 0;
-      background-color: #f4f6fb;
+      background-color: #f2f4f8;
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
       color: #111111;
       -webkit-font-smoothing: antialiased;
     }
+    table {
+      border-collapse: collapse;
+    }
     .wrapper {
       width: 100%;
       table-layout: fixed;
-      background-color: #f4f6fb;
-      padding: 20px 0;
+      background-color: #f2f4f8;
+      padding: 30px 0;
     }
-    .main {
+    .main-card {
       background-color: #ffffff;
       margin: 0 auto;
       max-width: 600px;
+      width: 100%;
       border-radius: 20px;
       overflow: hidden;
-      box-shadow: 0 4px 20px rgba(0, 71, 255, 0.08);
+      box-shadow: 0 10px 30px rgba(0, 71, 255, 0.1);
     }
-    .header {
+    .btn-pill {
+      display: inline-block;
       background-color: #0047FF;
-      text-align: center;
-      padding: 30px 20px 40px 20px;
-      color: #ffffff;
-      position: relative;
-    }
-    .header h1 {
-      margin: 15px 0 0 0;
-      font-size: 32px;
-      font-weight: 900;
-      letter-spacing: -0.5px;
-    }
-    .content {
-      padding: 32px 28px;
-    }
-    .greeting {
-      font-size: 20px;
+      color: #ffffff !important;
+      font-size: 15px;
       font-weight: 800;
-      margin-bottom: 16px;
-      color: #111111;
-    }
-    .lead-text {
-      font-size: 15px;
-      line-height: 1.6;
-      color: #333333;
-      margin-bottom: 24px;
-    }
-    .btn-primary {
-      display: inline-block;
-      background-color: #0047FF;
-      color: #ffffff !important;
-      text-decoration: none;
-      font-size: 15px;
-      font-weight: 700;
-      padding: 14px 28px;
+      padding: 14px 32px;
       border-radius: 50px;
-      text-align: center;
-      margin: 12px 0 24px 0;
-      box-shadow: 0 4px 14px rgba(0, 71, 255, 0.3);
+      text-decoration: none;
+      box-shadow: 0 4px 15px rgba(0, 71, 255, 0.3);
     }
-    .badge-section {
-      background-color: #0047FF;
-      border-radius: 16px;
-      padding: 24px;
-      text-align: center;
-      color: #ffffff;
-      margin: 28px 0;
-    }
-    .badge-section h3 {
-      margin: 0 0 16px 0;
-      font-size: 14px;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      opacity: 0.9;
-    }
-    .badge-card {
-      background: #ffffff;
-      border-radius: 16px;
-      padding: 20px;
-      color: #111111;
-      display: inline-block;
-      width: 85%;
-      margin: 0 auto;
-    }
-    .ticket-card {
-      background: linear-gradient(135deg, #0036CC 0%, #0047FF 100%);
-      border-radius: 16px;
-      padding: 24px;
-      color: #ffffff;
-      text-align: left;
-      margin: 24px 0;
-      box-shadow: 0 8px 24px rgba(0, 71, 255, 0.2);
-    }
-    .share-buttons {
-      margin: 20px 0;
-      text-align: center;
-    }
-    .share-btn {
+    .btn-share {
       display: inline-block;
       background-color: #0047FF;
       color: #ffffff !important;
-      text-decoration: none;
       font-size: 13px;
       font-weight: 700;
-      padding: 10px 18px;
+      padding: 10px 20px;
       border-radius: 50px;
+      text-decoration: none;
       margin: 4px;
     }
-    .footer {
-      background-color: #0047FF;
+    .section-bar {
+      background-color: #002999;
       color: #ffffff;
-      text-align: center;
-      padding: 30px 20px;
-      font-size: 12px;
-      line-height: 1.6;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      padding: 10px 20px;
     }
-    .footer a {
-      color: #ffffff;
-      text-decoration: underline;
+    @media only screen and (max-width: 600px) {
+      .main-card {
+        border-radius: 0 !important;
+      }
+      .content-padding {
+        padding: 24px 16px !important;
+      }
     }
   </style>
 </head>
@@ -135,120 +76,237 @@
     <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%">
       <tr>
         <td align="center">
-          <div class="main">
+          <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="main-card">
             
-            <!-- HEADER -->
-            <div class="header">
-              <!-- Party Banner / Garland Top Graphic -->
-              <div style="font-size: 24px; margin-bottom: 8px;">🎉 🎊 🎈 🎊 🎉</div>
-              <div style="font-size: 22px; font-weight: 900; letter-spacing: 2px;">XANE</div>
-              <h1>You're on the list</h1>
-              <div style="font-size: 36px; margin-top: 10px;">🥳 🚀</div>
-            </div>
+            <!-- 1. HERO CELEBRATION HEADER (MATCHING FIGMA PAGE 4 & 5) -->
+            <tr>
+              <td style="background-color: #0047FF; padding: 0; position: relative; text-align: center;">
+                
+                <!-- Bunting Garland Graphic -->
+                <svg viewBox="0 0 600 70" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; display: block;">
+                  <path d="M-10 10 Q 300 40 610 10" stroke="#111111" stroke-width="2.5" stroke-linecap="round"/>
+                  <polygon points="0,10 40,12 20,55" fill="#FF8585"/>
+                  <polygon points="45,13 95,16 70,62" fill="#9CE7FF"/>
+                  <polygon points="100,17 150,20 125,68" fill="#95E89B"/>
+                  <polygon points="155,21 205,24 180,70" fill="#FFAAA6"/>
+                  <polygon points="210,25 260,27 235,71" fill="#B3EEFF"/>
+                  <polygon points="265,27 315,28 290,72" fill="#FFF285"/>
+                  <polygon points="320,28 370,27 345,71" fill="#FFAAA6"/>
+                  <polygon points="375,26 425,23 400,70" fill="#9CE7FF"/>
+                  <polygon points="430,22 480,18 455,67" fill="#95E89B"/>
+                  <polygon points="485,17 535,14 510,63" fill="#FF9B9B"/>
+                  <polygon points="540,13 585,11 562,56" fill="#9CE7FF"/>
+                  <polygon points="590,11 610,9 600,48" fill="#FFF285"/>
+                </svg>
 
-            <!-- CONTENT -->
-            <div class="content">
-              <div class="greeting">{{user_tag}} —</div>
-              
-              <div class="lead-text">
-                <p><strong>Your XaneTag is reserved. Nobody else can take it.</strong></p>
-                <p>You're <strong>#{{user_rank}}</strong> on the waitlist. The first 100 get rewards when Xane launches.</p>
-                <p>Here's how to move: <strong>refer 1 person and you jump 3 places.</strong></p>
-              </div>
+                <div style="padding: 16px 20px 24px 20px; text-align: center;">
+                  <!-- Logo -->
+                  <div style="margin-bottom: 8px;">
+                    <span style="font-size: 20px; font-weight: 900; color: #ffffff; letter-spacing: 1px;">⩕ xane</span>
+                  </div>
 
-              <!-- CTA Button -->
-              <div style="text-align: center;">
-                <a href="{{referral_link}}" class="btn-primary" target="_blank">
-                  🔗 Copy your referral link
-                </a>
-              </div>
+                  <!-- Headline -->
+                  <h1 style="font-size: 34px; font-weight: 900; color: #ffffff; margin: 0 0 16px 0; letter-spacing: -0.5px;">
+                    You’re on the list
+                  </h1>
 
-              <p style="font-size: 13px; color: #666666; text-align: center; margin-top: -10px; margin-bottom: 24px;">
-                Every referral moves you up the waitlist and counts toward your level. Three referrals makes you a <strong>Xane Scout</strong>.
-              </p>
+                  <!-- Party Popper & Ribbons Graphic -->
+                  <svg viewBox="0 0 260 210" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 200px; height: auto; margin: 0 auto; display: block;">
+                    <!-- Confetti Bits -->
+                    <rect x="110" y="25" width="14" height="15" rx="3" fill="#FFC72C" transform="rotate(-15 110 25)"/>
+                    <rect x="105" y="55" width="12" height="12" rx="2" fill="#FF9500" transform="rotate(25 105 55)"/>
+                    <rect x="65" y="110" width="12" height="14" rx="3" fill="#00E5FF" transform="rotate(-30 65 110)"/>
+                    <rect x="70" y="145" width="14" height="12" rx="2" fill="#FFC72C" transform="rotate(18 70 145)"/>
+                    <rect x="135" y="65" width="12" height="12" rx="2" fill="#FFC72C" transform="rotate(-20 135 65)"/>
+                    <rect x="145" y="100" width="13" height="13" rx="3" fill="#FF3B30" transform="rotate(15 145 100)"/>
+                    <rect x="175" y="105" width="14" height="14" rx="3" fill="#FF9500" transform="rotate(35 175 105)"/>
+                    <rect x="165" y="145" width="15" height="13" rx="3" fill="#FF3B30" transform="rotate(-25 165 145)"/>
+                    <!-- Ribbons -->
+                    <path d="M 110 160 C 102 140, 90 115, 93 95 C 96 75, 120 75, 122 95 C 124 115, 102 125, 95 105" stroke="#FF3B30" stroke-width="13" stroke-linecap="round"/>
+                    <path d="M 125 155 C 122 130, 136 112, 130 90 C 124 68, 138 52, 148 46 C 156 42, 155 34, 145 28" stroke="#FF7597" stroke-width="13" stroke-linecap="round"/>
+                    <path d="M 136 158 C 148 138, 164 124, 158 102 C 153 80, 163 60, 172 54" stroke="#00BFFF" stroke-width="12" stroke-linecap="round"/>
+                    <!-- Popper Cone -->
+                    <path d="M 102 160 C 100 148, 152 148, 150 160 C 148 175, 130 208, 118 208 C 106 208, 102 175, 102 160 Z" fill="#FFC72C"/>
+                    <path d="M 118 208 C 130 208, 148 175, 150 160 C 150 154, 140 154, 134 160 C 124 180, 120 202, 118 208 Z" fill="#FFA000" opacity="0.8"/>
+                    <ellipse cx="126" cy="160" rx="25" ry="10" fill="#FFD54F"/>
+                    <ellipse cx="126" cy="160" rx="21" ry="8" fill="#4E2E18"/>
+                  </svg>
 
-              <!-- BADGE SECTION -->
-              <div class="badge-section">
-                <h3>Your Waitlist Badge</h3>
-                <div class="badge-card">
-                  <div style="font-size: 40px; margin-bottom: 4px;">🤖</div>
-                  <div style="font-size: 16px; font-weight: 800; color: #0047FF;">Waitlist Member</div>
-                  <div style="font-size: 12px; color: #666666; margin-top: 4px;">Level 1 Badge — yours the moment you joined.</div>
-                  <div style="margin-top: 12px;">
-                    <a href="{{leaderboard_link}}" style="color: #0047FF; font-weight: 700; font-size: 13px; text-decoration: none;">
-                      See all levels →
-                    </a>
+                  <!-- Stroked "Waitlist" Outline Watermark -->
+                  <div style="font-size: 32px; font-weight: 900; color: rgba(255,255,255,0.25); letter-spacing: 4px; text-transform: uppercase; margin-top: 10px;">
+                    WAITLIST
                   </div>
                 </div>
-              </div>
 
-              <!-- SHARE MOMENT SECTION -->
-              <div style="margin-top: 30px; text-align: center;">
-                <h3 style="font-size: 16px; font-weight: 800; color: #111111; margin-bottom: 8px;">
-                  Share your Xane Waitlist moment
-                </h3>
+              </td>
+            </tr>
+
+            <!-- 2. MAIN BODY CONTENT -->
+            <tr>
+              <td class="content-padding" style="padding: 32px 36px;">
                 
-                <!-- Shareable Ticket Mockup -->
-                <div class="ticket-card">
-                  <table width="100%" border="0" cellpadding="0" cellspacing="0">
+                <div style="font-size: 20px; font-weight: 800; color: #111111; margin-bottom: 12px;">
+                  {{user_tag}} —
+                </div>
+
+                <p style="font-size: 15px; line-height: 1.6; color: #222222; margin: 0 0 12px 0;">
+                  Your XaneTag is reserved. Nobody else can take it.
+                </p>
+
+                <p style="font-size: 15px; line-height: 1.6; color: #222222; margin: 0 0 12px 0;">
+                  You’re <strong>#{{user_rank}}</strong> on the waitlist. The first 100 get rewards when Xane launches.
+                </p>
+
+                <p style="font-size: 15px; line-height: 1.6; color: #222222; margin: 0 0 24px 0;">
+                  Here's how to move: <strong>refer 1 person and you jump 3 places.</strong>
+                </p>
+
+                <!-- Primary CTA Button -->
+                <div style="text-align: center; margin: 24px 0;">
+                  <a href="{{referral_link}}" class="btn-pill" target="_blank">
+                    Copy your referral link
+                  </a>
+                </div>
+
+                <p style="font-size: 13px; line-height: 1.5; color: #555555; text-align: center; margin: 16px 0 28px 0;">
+                  Every referral moves you up the waitlist and counts toward your level. Three referrals makes you a Xane Scout.
+                </p>
+
+              </td>
+            </tr>
+
+            <!-- 3. SECTION: YOUR WAITLIST BADGE -->
+            <tr>
+              <td>
+                <div class="section-bar">
+                  Your Waitlist Badge
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding: 24px 20px; text-align: center; background-color: #ffffff;">
+                
+                <!-- Mascot Level 1 Badge (Mascot1) -->
+                <div style="display: inline-block; text-align: center; margin-bottom: 8px;">
+                  <img src="https://raw.githubusercontent.com/xaneApp/xane-whitelist/main/src/assets/mascot1.png" alt="Level 1 Waitlist Badge" style="width: 140px; height: auto; display: inline-block;" onerror="this.src='https://raw.githubusercontent.com/theloneson/image-muse/main/src/assets/mascot1.png'" />
+                </div>
+
+                <p style="font-size: 14px; font-weight: 600; color: #111111; margin: 8px 0;">
+                  Your Level 1 badge — yours the moment you joined.
+                </p>
+
+                <div>
+                  <a href="{{leaderboard_link}}" style="color: #0047FF; font-size: 14px; font-weight: 800; text-decoration: none;">
+                    See all levels &nbsp;➔
+                  </a>
+                </div>
+
+              </td>
+            </tr>
+
+            <!-- 4. SECTION: SHARE YOUR MOMENT -->
+            <tr>
+              <td>
+                <div class="section-bar" style="margin-top: 16px;">
+                  Share your Xane Waitlist moment
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="content-padding" style="padding: 24px 28px; background-color: #ffffff;">
+                
+                <!-- Dark Background Ticket Container -->
+                <div style="background-color: #161616; border-radius: 16px; padding: 20px; text-align: center; margin-bottom: 20px;">
+                  
+                  <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #0047FF; border-radius: 14px; overflow: hidden; color: #ffffff;">
                     <tr>
-                      <td style="font-size: 16px; font-weight: 900; color: #ffffff;">XANE</td>
-                      <td align="right" style="font-size: 11px; font-weight: 700; color: #D9FF3F;">WAITLIST • ACCESS</td>
-                    </tr>
-                    <tr>
-                      <td colspan="2" style="padding: 16px 0 8px 0;">
-                        <span style="font-size: 11px; opacity: 0.8; text-transform: uppercase;">Your XaneTag</span>
-                        <div style="font-size: 24px; font-weight: 900; color: #ffffff;">{{user_tag}}</div>
+                      <!-- Left Ticket Body -->
+                      <td style="padding: 20px; vertical-align: top; text-align: left;">
+                        <div style="font-size: 15px; font-weight: 900; color: #ffffff; letter-spacing: 1px;">⩕ xane</div>
+                        <div style="font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.7); letter-spacing: 1px; margin: 6px 0 16px 0;">WAITLIST •••••••• ACCESS</div>
+                        
+                        <div style="font-size: 11px; text-transform: uppercase; color: rgba(255,255,255,0.8); font-weight: 600;">Your XaneTag</div>
+                        <div style="font-size: 22px; font-weight: 900; color: #ffffff; margin-bottom: 12px;">{{user_tag}}</div>
+
+                        <div style="font-size: 11px; text-transform: uppercase; color: rgba(255,255,255,0.8); font-weight: 600;">Your Position</div>
+                        <div style="font-size: 22px; font-weight: 900; color: #ffffff;">#{{user_rank}}</div>
                       </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <span style="font-size: 11px; opacity: 0.8; text-transform: uppercase;">Your Position</span>
-                        <div style="font-size: 22px; font-weight: 900; color: #D9FF3F;">#{{user_rank}}</div>
-                      </td>
-                      <td align="right" style="font-size: 12px; font-weight: 800; color: #ffffff;">
-                        Waitlist Member • 01
+
+                      <!-- Right Ticket Stub with Mascot -->
+                      <td width="35%" style="background-color: #0036CC; border-left: 2px dashed rgba(255,255,255,0.3); padding: 16px 12px; vertical-align: middle; text-align: center;">
+                        <img src="https://raw.githubusercontent.com/xaneApp/xane-whitelist/main/src/assets/mascot1.png" alt="Mascot" style="width: 65px; height: auto; display: block; margin: 0 auto 8px auto;" onerror="this.src='https://raw.githubusercontent.com/theloneson/image-muse/main/src/assets/mascot1.png'" />
+                        <div style="font-size: 11px; font-weight: 800; color: #ffffff; text-transform: uppercase; letter-spacing: 0.5px;">
+                          Waitlist Member • 01
+                        </div>
                       </td>
                     </tr>
                   </table>
+
                 </div>
 
-                <p style="font-size: 13px; color: #555555; margin-bottom: 16px;">
-                  If you would like to share it with your network, click below to post:
+                <p style="font-size: 14px; line-height: 1.5; color: #333333; text-align: center; margin: 0 0 16px 0;">
+                  If you would like to share it with your network we’ve created an image you can post.
                 </p>
 
-                <!-- Social Share Buttons -->
-                <div class="share-buttons">
-                  <a href="https://api.whatsapp.com/send?text=I%20just%20claimed%20my%20XaneTag%20on%20Xane!%20Join%20the%20waitlist:%20{{referral_link}}" class="share-btn" target="_blank">
-                    Share to WhatsApp
+                <!-- Share Buttons -->
+                <div style="text-align: center; margin-bottom: 20px;">
+                  <a href="https://api.whatsapp.com/send?text=I%20just%20claimed%20my%20XaneTag%20on%20Xane!%20Join%20the%20waitlist:%20{{referral_link}}" class="btn-share" target="_blank">
+                    Share to Whatsapp or Instagram
                   </a>
-                  <a href="https://twitter.com/intent/tweet?text=I%20just%20claimed%20my%20XaneTag%20on%20@XaneApp_!%20Join%20the%20waitlist:%20{{referral_link}}" class="share-btn" target="_blank">
-                    Share to Twitter / X
+                  <a href="https://twitter.com/intent/tweet?text=I%20just%20claimed%20my%20XaneTag%20on%20@XaneApp_!%20Join%20the%20waitlist:%20{{referral_link}}" class="btn-share" target="_blank">
+                    Share to Twitter
                   </a>
                 </div>
 
-                <div style="margin-top: 24px;">
-                  <a href="{{leaderboard_link}}" style="display: inline-block; background-color: #0047FF; color: #ffffff; text-decoration: none; font-size: 14px; font-weight: 700; padding: 10px 24px; border-radius: 50px;">
+                <p style="font-size: 13px; line-height: 1.5; color: #555555; text-align: center; margin: 16px 0;">
+                  Move up the leaderboard by inviting friends—every signup counts.
+                </p>
+
+                <div style="text-align: center; margin-bottom: 24px;">
+                  <a href="{{leaderboard_link}}" class="btn-pill" style="font-size: 14px; padding: 12px 28px;" target="_blank">
                     View the leaderboard
                   </a>
                 </div>
 
-                <p style="font-size: 13px; color: #888888; margin-top: 24px;">
+                <p style="font-size: 13px; color: #888888; text-align: center; margin: 0 0 8px 0;">
                   — The Xane Team
                 </p>
-              </div>
 
-            </div>
+              </td>
+            </tr>
 
-            <!-- FOOTER -->
-            <div class="footer">
-              <div style="font-size: 20px; font-weight: 900; margin-bottom: 8px;">XANE</div>
-              <p style="margin: 6px 0;">You're receiving this email because you joined the Xane waitlist.</p>
-              <p style="margin: 6px 0; opacity: 0.8;"><a href="#">Unsubscribe</a></p>
-              <p style="margin: 12px 0 0 0; font-size: 11px; opacity: 0.7;">© All Rights Reserved. Xane, LLC</p>
-            </div>
+            <!-- 5. FOOTER (MATCHING FIGMA BLUE FOOTER) -->
+            <tr>
+              <td style="background-color: #0047FF; color: #ffffff; text-align: center; padding: 32px 20px;">
+                <!-- Logo -->
+                <div style="margin-bottom: 12px;">
+                  <span style="font-size: 22px; font-weight: 900; color: #ffffff; letter-spacing: 2px;">⩕ xane</span>
+                </div>
 
-          </div>
+                <p style="font-size: 13px; color: rgba(255,255,255,0.9); margin: 6px 0;">
+                  You're receiving this email because you joined the Xane waitlist.
+                </p>
+
+                <p style="font-size: 12px; margin: 6px 0;">
+                  <a href="#" style="color: rgba(255,255,255,0.8); text-decoration: underline;">Unsubscribe</a>
+                </p>
+
+                <!-- Social Links -->
+                <div style="margin: 16px 0 12px 0;">
+                  <a href="https://x.com/XaneApp_" style="color: #ffffff; text-decoration: none; margin: 0 8px; font-weight: 700; font-size: 13px;">X (Twitter)</a>
+                  &bull;
+                  <a href="https://www.instagram.com/xaneapp_" style="color: #ffffff; text-decoration: none; margin: 0 8px; font-weight: 700; font-size: 13px;">Instagram</a>
+                  &bull;
+                  <a href="https://www.linkedin.com/company/xaneapp/" style="color: #ffffff; text-decoration: none; margin: 0 8px; font-weight: 700; font-size: 13px;">LinkedIn</a>
+                </div>
+
+                <p style="font-size: 11px; color: rgba(255,255,255,0.7); margin: 8px 0 0 0;">
+                  © All Rights Reserved. Xane, LLC
+                </p>
+              </td>
+            </tr>
+
+          </table>
         </td>
       </tr>
     </table>
