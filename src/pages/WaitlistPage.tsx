@@ -113,11 +113,10 @@ const WaitlistPage = () => {
           />
         )}
 
-        {currentStep === "leaderboard" && (
-          <LeaderboardView
-            currentUserTag={userData.premiumTag || userData.freeTag}
-          />
-        )}
+        <LeaderboardView
+  currentUserTag={userData.premiumTag || userData.freeTag}
+  userId={userData.userId}
+/>
       </main>
 
       {/* Footer */}
