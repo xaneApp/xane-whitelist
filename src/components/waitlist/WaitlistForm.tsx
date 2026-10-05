@@ -5,6 +5,7 @@ import xaneIcon from "@/assets/xane-icon.png";
 import {
   checkXaneTag,
   displayTag,
+  getReferralPreview,
   joinWaitlist,
   normalizePhone,
   normalizeTag,
@@ -45,6 +46,7 @@ const WaitlistForm: React.FC<WaitlistFormProps> = ({ onSubmitSuccess }) => {
   const [emailResendTimer, setEmailResendTimer] = useState(0);
 
   const [freeTagState, setFreeTagState] = useState<TagState>("idle");
+  const [referrerName, setReferrerName] = useState("");
   const [premiumTagState, setPremiumTagState] = useState<TagState>("idle");
   const [tagMessage, setTagMessage] = useState("");
   const [premiumMessage, setPremiumMessage] = useState("");
@@ -147,6 +149,35 @@ const WaitlistForm: React.FC<WaitlistFormProps> = ({ onSubmitSuccess }) => {
     };
   }, [normalizedPremiumTag]);
 
+useEffect(() => {
+  if (!referralCode) {
+    setReferrerName("");
+    return;
+  }
+
+  let cancelled = false;
+
+  const loadReferralPreview = async () => {
+    try {
+      const result = await getReferralPreview(referralCode);
+
+      if (!cancelled) {
+        setReferrerName(result.referrerName || "");
+      }
+    } catch {
+      if (!cancelled) {
+        setReferrerName("");
+      }
+    }
+  };
+
+  loadReferralPreview();
+
+  return () => {
+    cancelled = true;
+  };
+}, [referralCode]);
+
   const handlePhoneChange = (value: string) => {
     setPhone(value.replace(/\D/g, "").replace(/^234/, "").replace(/^0/, "").slice(0, 10));
     setPhoneOtpState("idle");
@@ -226,14 +257,18 @@ if (purpose === "phone") {
   );
 };
 
-  const isFormValid =
-    fullName.trim().length >= 2 &&
-    phone.length === 10 &&
-    phoneOtpState === "verified" &&
-    validEmail &&
-    emailOtpState === "verified" &&
-    freeTagState === "available" &&
-    (!normalizedPremiumTag || premiumTagState === "available");
+const selectedTagValid =
+  tagType === "free"
+    ? freeTagState === "available"
+    : premiumTagState === "available";
+
+const isFormValid =
+  fullName.trim().length >= 2 &&
+  phone.length === 10 &&
+  phoneOtpState === "verified" &&
+  validEmail &&
+  emailOtpState === "verified" &&
+  selectedTagValid;
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -241,14 +276,15 @@ if (purpose === "phone") {
     setIsSubmitting(true);
     setFormError("");
     try {
-      const result = await joinWaitlist({
-        fullName: fullName.trim(),
-        phone: normalizedPhone,
-        email: email.trim().toLowerCase(),
-        xaneTag: normalizedFreeTag,
-        premiumXaneTag: normalizedPremiumTag || undefined,
-        referralCode,
-      });
+const result = await joinWaitlist({
+  fullName: fullName.trim(),
+  phone: normalizedPhone,
+  email: email.trim().toLowerCase(),
+  xaneTag: tagType === "free" ? normalizedFreeTag : undefined,
+  premiumXaneTag:
+    tagType === "premium" ? normalizedPremiumTag : undefined,
+  referralCode,
+});
       onSubmitSuccess({
         fullName: fullName.trim(),
         phone: normalizedPhone,
@@ -586,7 +622,15 @@ if (purpose === "phone") {
     </div>
   </div>
 )}
-          {referralCode && <p className="rounded-[12px] bg-blue-50 px-3 py-2 text-[11px] font-semibold text-[#0047FF]">Referral link detected — your signup will be credited to the referrer after activation.</p>}
+{referralCode && referrerName && (
+  <p className="rounded-[12px] bg-blue-50 px-3 py-2 text-[11px] font-semibold text-[#0047FF]">
+    👋 Welcome! You joined through{" "}
+    <span className="font-black">
+      {referrerName.trim().split(/\s+/)[0]}
+    </span>
+    's referral.
+  </p>
+)}
           {formError && <div className="rounded-[14px] border border-red-200 bg-red-50 px-4 py-3 text-xs font-semibold text-red-600">{formError}</div>}
 
           <motion.button type="submit" whileHover={isFormValid ? { scale: 1.02 } : {}} whileTap={isFormValid ? { scale: 0.98 } : {}} disabled={!isFormValid || isSubmitting} className={`flex w-full items-center justify-center gap-2 rounded-full py-3.5 sm:py-4 text-sm sm:text-base font-bold transition-all shadow-md ${isFormValid ? "bg-[#0047FF] text-white hover:bg-[#0036CC]" : "bg-gray-300 text-gray-500 cursor-not-allowed opacity-80"}`}><span>{isSubmitting ? "Joining..." : "Join Waitlist"}</span><div className="flex h-5 w-5 items-center justify-center rounded-full bg-white/20"><ArrowRight size={13} strokeWidth={3} /></div></motion.button>

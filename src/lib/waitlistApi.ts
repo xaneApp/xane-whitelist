@@ -201,6 +201,16 @@ export async function getClimb(userId: string) {
   );
 }
 
+export async function getReferralPreview(referralCode: string) {
+  return request<{
+    referrerName: string;
+  }>(
+    `/api/waitlist/referral-preview?ref=${encodeURIComponent(
+      referralCode
+    )}`
+  );
+}
+
 export async function getLeaderboard() {
   return request<{
     leaderboard: {
