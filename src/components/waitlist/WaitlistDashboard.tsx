@@ -49,7 +49,7 @@ const WaitlistDashboard = ({ userData, onViewLeaderboard }: WaitlistDashboardPro
   }, [userData.userId]);
 
   const displayTag = data?.xaneTag ? `@${data.xaneTag}.xane` : userData.freeTag;
-  const referralLink = data?.referralLink ? data.referralLink.replace("/join?", "/waitlist?") : "";
+  const referralLink = data?.referralLink || "";
   const rank = data?.position;
   const referralCount = data?.referralCount ?? 0;
   const currentLevel = climb?.currentLevel?.label || "Waitlist Member";
@@ -81,8 +81,52 @@ const WaitlistDashboard = ({ userData, onViewLeaderboard }: WaitlistDashboardPro
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="w-full rounded-[24px] bg-white p-6 sm:p-8 shadow-xl text-[#111111] text-center space-y-4">
         <div className="text-left"><h2 className="font-sans text-lg sm:text-xl font-bold">Move up the waitlist</h2><p className="text-xs sm:text-sm font-semibold text-gray-600 flex items-center gap-1.5 mt-0.5"><span>{nextLevel ? `Refer ${nextLevel.referralsNeeded} more` : "You reached the current highest level"}</span><ArrowRight size={14} className="text-gray-400" /><span className="text-[#0047FF]">{nextLevel?.label || "Keep referring"}</span></p></div>
         <div className="flex items-center gap-3 py-1"><span className="rounded-lg bg-gray-100 px-3 py-1.5 text-xs sm:text-sm font-bold">{referralCount} refs</span><div className="relative h-3.5 flex-1 overflow-hidden rounded-full bg-blue-100"><div className="h-full rounded-full bg-[#0047FF] transition-all duration-700" style={{ width: `${progress}%` }} /></div><span className="rounded-lg bg-blue-50 px-3 py-1.5 text-xs sm:text-sm font-bold text-[#0047FF]">{nextLevel ? `${nextLevel.referralsNeeded} to go` : "Max"}</span></div>
-        <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} onClick={() => handleCopy(referralLink, "link")} disabled={!referralLink} className="flex w-full items-center justify-center gap-2.5 rounded-full bg-[#0047FF] py-3.5 sm:py-4 px-6 text-sm sm:text-base font-bold text-white shadow-lg disabled:opacity-50"><span>{copiedLink ? "Referral link copied! 🎉" : "Copy referral link"}</span><LinkIcon size={18} /></motion.button>
-        <p className="text-[11px] font-medium text-gray-500">Every verified referral moves you up and counts toward your next level.</p>
+<div className="space-y-3">
+  <div className="text-left">
+    <p className="text-sm font-black text-[#111111]">
+      Your referral link
+    </p>
+  </div>
+
+  <div className="flex items-center gap-2 rounded-[14px] border border-gray-200 bg-gray-50 p-2">
+    <p className="min-w-0 flex-1 truncate px-2 text-xs font-medium text-gray-600">
+      {referralLink || "Loading..."}
+    </p>
+
+    <button
+      type="button"
+      onClick={() => handleCopy(referralLink, "link")}
+      disabled={!referralLink}
+      className="flex shrink-0 items-center gap-1.5 rounded-[10px] bg-[#0047FF] px-4 py-2.5 text-xs font-black text-white transition hover:bg-[#0036CC] disabled:opacity-50"
+    >
+      {copiedLink ? (
+        <>
+          <Check size={15} />
+          Copied
+        </>
+      ) : (
+        <>
+          <Copy size={15} />
+          Copy Link
+        </>
+      )}
+    </button>
+  </div>
+
+  <p className="text-left text-[11px] font-medium leading-relaxed text-gray-500">
+    📧{" "}
+    <span className="font-black text-gray-700">
+      We also sent this link to your email.
+    </span>
+    <br />
+    If you ever lose it, just search your inbox for{" "}
+    <span className="font-black text-gray-700">Xane</span>.
+  </p>
+
+  <p className="text-[11px] font-medium text-gray-500">
+    Every verified referral moves you up and counts toward your next level.
+  </p>
+</div>
       </motion.div>
 
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="w-full rounded-[24px] bg-gradient-to-r from-[#0036CC] to-[#0047FF] p-5 sm:p-6 shadow-xl text-white flex flex-col sm:flex-row items-center justify-between gap-5 border border-white/10">
