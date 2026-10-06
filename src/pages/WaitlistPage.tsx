@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useSearchParams, useNavigate, useLocation } from "react-router-dom";
+import { useSearchParams, useLocation } from "react-router-dom";
 import WaitlistBackground from "@/components/waitlist/WaitlistBackground";
 import WaitlistHeader from "@/components/waitlist/WaitlistHeader";
 import WaitlistForm, { WaitlistFormData } from "@/components/waitlist/WaitlistForm";
@@ -13,7 +13,6 @@ type WaitlistViewStep = "form" | "telegram" | "celebration" | "dashboard" | "lea
 
 const WaitlistPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const navigate = useNavigate();
   const location = useLocation();
 
   const initialView = location.pathname === "/leaderboard" ? "leaderboard" : ((searchParams.get("view") as WaitlistViewStep) || "form");
@@ -106,17 +105,19 @@ const WaitlistPage = () => {
           <CelebrationStep onContinue={handleCelebrationContinue} />
         )}
 
-        {currentStep === "dashboard" && (
-          <WaitlistDashboard
-            userData={userData}
-            onViewLeaderboard={handleGoToLeaderboard}
-          />
-        )}
+{currentStep === "dashboard" && (
+  <WaitlistDashboard
+    userData={userData}
+    onViewLeaderboard={handleGoToLeaderboard}
+  />
+)}
 
-        <LeaderboardView
-  currentUserTag={userData.premiumTag || userData.freeTag}
-  userId={userData.userId}
-/>
+{currentStep === "leaderboard" && (
+  <LeaderboardView
+    currentUserTag={userData.premiumTag || userData.freeTag}
+    userId={userData.userId}
+  />
+)}
       </main>
 
       {/* Footer */}
