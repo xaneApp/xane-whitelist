@@ -15,7 +15,7 @@ import {
 
 export interface WaitlistFormData {
   fullName: string;
-  phone: string;
+  phone?: string;
   email: string;
   freeTag: string;
   premiumTag: string;
@@ -304,46 +304,57 @@ const WaitlistForm: React.FC<WaitlistFormProps> = ({ onSubmitSuccess }) => {
       ? freeTagState === "available"
       : premiumTagState === "available";
 
-  const isFormValid =
-    fullName.trim().length >= 2 &&
-    /*  phone.length === 10 && */
-    phoneOtpState === "verified" &&
-    validEmail &&
-    emailOtpState === "verified" &&
-    selectedTagValid;
+const isFormValid =
+  fullName.trim().length >= 2 &&
+  /* phone.length === 10 && */
+  /* phoneOtpState === "verified" && */
+  validEmail &&
+  emailOtpState === "verified" &&
+  selectedTagValid;
 
-  const handleSubmit = async (event: React.FormEvent) => {
-    event.preventDefault();
-    if (!isFormValid || isSubmitting) return;
-    setIsSubmitting(true);
-    setFormError("");
-    try {
-      const result = await joinWaitlist({
-        fullName: fullName.trim(),
-        phone: normalizedPhone,
-        email: email.trim().toLowerCase(),
-        xaneTag: tagType === "free" ? normalizedFreeTag : undefined,
-        premiumXaneTag:
-          tagType === "premium" ? normalizedPremiumTag : undefined,
-        referralCode,
-      });
-      onSubmitSuccess({
-        fullName: fullName.trim(),
-        phone: normalizedPhone,
-        email: email.trim().toLowerCase(),
-        freeTag: displayTag(result.xaneTag),
-        premiumTag: displayTag(normalizedPremiumTag),
-        userId: result.userId,
-        telegramDeepLink: result.telegramDeepLink,
-      });
-    } catch (error) {
-      setFormError(
-        error instanceof Error ? error.message : "Could not join the waitlist.",
-      );
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+const handleSubmit = async (event: React.FormEvent) => {
+  event.preventDefault();
+
+  if (!isFormValid || isSubmitting) return;
+
+  setIsSubmitting(true);
+  setFormError("");
+
+  try {
+    const result = await joinWaitlist({
+      fullName: fullName.trim(),
+      // phone: normalizedPhone,
+      email: email.trim().toLowerCase(),
+      xaneTag:
+        tagType === "free"
+          ? normalizedFreeTag
+          : undefined,
+      premiumXaneTag:
+        tagType === "premium"
+          ? normalizedPremiumTag
+          : undefined,
+      referralCode,
+    });
+
+    onSubmitSuccess({
+      fullName: fullName.trim(),
+      // phone: normalizedPhone,
+      email: email.trim().toLowerCase(),
+      freeTag: displayTag(result.xaneTag),
+      premiumTag: displayTag(normalizedPremiumTag),
+      userId: result.userId,
+      telegramDeepLink: result.telegramDeepLink,
+    });
+  } catch (error) {
+    setFormError(
+      error instanceof Error
+        ? error.message
+        : "Could not join the waitlist.",
+    );
+  } finally {
+    setIsSubmitting(false);
+  }
+};
 
   const otpBox = (purpose: "phone" | "email") => {
     const state = purpose === "phone" ? phoneOtpState : emailOtpState;
