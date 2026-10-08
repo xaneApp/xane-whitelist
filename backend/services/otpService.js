@@ -11,7 +11,10 @@ const OTP_EXPIRY_MINUTES = 10;
 // false = validate phone and mark it verified without SMS
 // true  = use the normal Sendchamp SMS OTP flow
 const PHONE_OTP_ENABLED =
-  String(process.env.PHONE_OTP_ENABLED ?? 'true').toLowerCase() === 'true';
+  String(process.env.PHONE_OTP_ENABLED ?? 'false').toLowerCase() === 'true';
+
+const EMAIL_OTP_ENABLED =
+  String(process.env.EMAIL_OTP_ENABLED ?? 'false').toLowerCase() === 'true';
 
 function hashOtp(code) {
   return crypto.createHash('sha256').update(code).digest('hex');
@@ -271,6 +274,13 @@ async function verifyOtp({ identifier, purpose, code }) {
 }
 
 async function isVerified({ identifier, purpose }) {
+  if (purpose === 'phone' && !PHONE_OTP_ENABLED) {
+    return true;
+  }
+  if (purpose === 'email' && !EMAIL_OTP_ENABLED) {
+    return true;
+  }
+
   const { rows } = await pool.query(
     `SELECT 1 FROM otp_codes
      WHERE identifier = $1

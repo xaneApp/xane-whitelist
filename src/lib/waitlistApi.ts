@@ -135,7 +135,7 @@ export async function checkXaneTag(
 
 export async function joinWaitlist(payload: {
   fullName: string;
-  //phone: string;
+  phone?: string;
   email: string;
   xaneTag: string;
   premiumXaneTag?: string;
