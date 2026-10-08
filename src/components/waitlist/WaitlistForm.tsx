@@ -43,13 +43,23 @@ const WaitlistForm: React.FC<WaitlistFormProps> = ({ onSubmitSuccess }) => {
   const [premiumTag, setPremiumTag] = useState("");
   const [tagType, setTagType] = useState<"free" | "premium" | null>(null);
 
-  // Phone verification state
+  /*
+  // Phone verification state - commented out in favor of email verification
   const [phoneOtpState, setPhoneOtpState] = useState<
     "idle" | "otp-sent" | "verifying" | "verified" | "error"
   >("idle");
   const [phoneOtpCode, setPhoneOtpCode] = useState("");
   const [phoneResendTimer, setPhoneResendTimer] = useState(0);
   const [phoneError, setPhoneError] = useState("");
+  */
+
+  // Email verification state
+  const [emailOtpState, setEmailOtpState] = useState<
+    "idle" | "otp-sent" | "verifying" | "verified" | "error"
+  >("idle");
+  const [emailOtpCode, setEmailOtpCode] = useState("");
+  const [emailResendTimer, setEmailResendTimer] = useState(0);
+  const [emailError, setEmailError] = useState("");
 
   const [freeTagState, setFreeTagState] = useState<TagState>("idle");
   const [referrerTag, setReferrerTag] = useState("");
@@ -66,7 +76,8 @@ const WaitlistForm: React.FC<WaitlistFormProps> = ({ onSubmitSuccess }) => {
   const normalizedPremiumTag = normalizeTag(premiumTag);
   const validEmail = /^\S+@\S+\.\S+$/.test(email.trim());
 
-  // Phone OTP Resend Countdown
+  /*
+  // Phone OTP Resend Countdown - commented out
   useEffect(() => {
     if (phoneResendTimer <= 0) return;
     const interval = window.setInterval(() => {
@@ -74,6 +85,16 @@ const WaitlistForm: React.FC<WaitlistFormProps> = ({ onSubmitSuccess }) => {
     }, 1000);
     return () => window.clearInterval(interval);
   }, [phoneResendTimer]);
+  */
+
+  // Email OTP Resend Countdown
+  useEffect(() => {
+    if (emailResendTimer <= 0) return;
+    const interval = window.setInterval(() => {
+      setEmailResendTimer((prev) => (prev > 0 ? prev - 1 : 0));
+    }, 1000);
+    return () => window.clearInterval(interval);
+  }, [emailResendTimer]);
 
   // Free Tag Availability Check
   useEffect(() => {
@@ -182,12 +203,11 @@ const WaitlistForm: React.FC<WaitlistFormProps> = ({ onSubmitSuccess }) => {
 
   const handlePhoneChange = (value: string) => {
     setPhone(value.replace(/\D/g, "").slice(0, 11));
-    setPhoneOtpState("idle");
-    setPhoneOtpCode("");
-    setPhoneError("");
     setFormError("");
   };
 
+  /*
+  // Phone verification handlers - commented out in favor of email verification
   const handleSendPhoneOtp = async () => {
     if (phone.length < 7) return;
     setPhoneError("");
@@ -229,10 +249,56 @@ const WaitlistForm: React.FC<WaitlistFormProps> = ({ onSubmitSuccess }) => {
       );
     }
   };
+  */
 
   const handleEmailChange = (value: string) => {
     setEmail(value.trimStart());
+    setEmailOtpState("idle");
+    setEmailOtpCode("");
+    setEmailError("");
     setFormError("");
+  };
+
+  const handleSendEmailOtp = async () => {
+    if (!validEmail) return;
+    setEmailError("");
+    setFormError("");
+    setEmailOtpState("verifying");
+
+    try {
+      const result = await requestOtp(email.trim().toLowerCase(), "email");
+      if (result.bypassed || result.verified) {
+        setEmailOtpState("verified");
+        setEmailOtpCode("");
+        return;
+      }
+      setEmailOtpState("otp-sent");
+      setEmailResendTimer(result.resendAfterSeconds || 60);
+    } catch (error) {
+      setEmailOtpState("error");
+      setEmailError(
+        error instanceof Error ? error.message : "Could not send verification code to your email."
+      );
+    }
+  };
+
+  const handleVerifyEmailOtp = async (code: string) => {
+    setEmailOtpCode(code);
+    if (code.length !== 6) return;
+
+    setEmailOtpState("verifying");
+    setEmailError("");
+
+    try {
+      await verifyOtp(email.trim().toLowerCase(), "email", code);
+      setEmailOtpState("verified");
+      setEmailOtpCode("");
+    } catch (error) {
+      setEmailOtpState("error");
+      setEmailError(
+        error instanceof Error ? error.message : "Incorrect or expired verification code."
+      );
+    }
   };
 
   const handleFreeTagChange = (value: string) => {
@@ -268,6 +334,7 @@ const WaitlistForm: React.FC<WaitlistFormProps> = ({ onSubmitSuccess }) => {
     fullName.trim().length >= 2 &&
     phone.length >= 7 &&
     validEmail &&
+    emailOtpState === "verified" &&
     tagType !== null &&
     selectedTagValid;
 
@@ -279,6 +346,13 @@ const WaitlistForm: React.FC<WaitlistFormProps> = ({ onSubmitSuccess }) => {
     setFormError("");
 
     try {
+      // Background phone registration for backend compatibility if needed
+      try {
+        await requestOtp(normalizedPhone, "phone");
+      } catch {
+        // Silently continue
+      }
+
       const generatedFreeFallback =
         tagType === "premium"
           ? `${normalizedPremiumTag}_${Math.floor(10 + Math.random() * 90)}`
@@ -380,21 +454,19 @@ const WaitlistForm: React.FC<WaitlistFormProps> = ({ onSubmitSuccess }) => {
                   <input
                     type="tel"
                     required
-                    disabled={phoneOtpState === "verifying"}
                     value={phone}
                     onChange={(e) => handlePhoneChange(e.target.value)}
                     placeholder="e.g 12345678901"
-                    className="w-full rounded-[16px] bg-transparent py-3.5 pl-10 pr-24 text-xs sm:text-sm font-medium outline-none placeholder:text-gray-400 focus:ring-4 focus:ring-[#0047FF]/10 disabled:opacity-70"
+                    className="w-full rounded-[16px] bg-transparent py-3.5 pl-10 pr-4 text-xs sm:text-sm font-medium outline-none placeholder:text-gray-400 focus:ring-4 focus:ring-[#0047FF]/10"
                   />
 
-                  {/* Verifying Status */}
+                  {/*
+                  Phone verification commented out - switching to email verification
                   {phoneOtpState === "verifying" && (
                     <span className="absolute right-3 text-xs font-bold text-[#0047FF] animate-pulse">
                       Verifying...
                     </span>
                   )}
-
-                  {/* Verify button: Shown ONLY when NOT verified and NOT verifying */}
                   {phoneOtpState !== "verified" && phoneOtpState !== "verifying" && (
                     <button
                       type="button"
@@ -405,18 +477,18 @@ const WaitlistForm: React.FC<WaitlistFormProps> = ({ onSubmitSuccess }) => {
                       Verify
                     </button>
                   )}
-
-                  {/* When VERIFIED: The Verify button is completely removed! Show Verified check badge */}
                   {phoneOtpState === "verified" && (
                     <div className="absolute right-3 flex items-center gap-1 rounded-full bg-emerald-50 px-2 py-0.5 text-xs font-bold text-emerald-600">
                       <Check size={14} strokeWidth={2.8} />
                       <span>Verified</span>
                     </div>
                   )}
+                  */}
                 </div>
               </div>
 
-              {/* Inline OTP Code input if SMS OTP sent */}
+              {/*
+              Inline OTP Code input if SMS OTP sent - commented out
               {phoneOtpState === "otp-sent" && (
                 <motion.div
                   initial={{ opacity: 0, y: -4 }}
@@ -442,10 +514,7 @@ const WaitlistForm: React.FC<WaitlistFormProps> = ({ onSubmitSuccess }) => {
                   </button>
                 </motion.div>
               )}
-
-              {phoneError && (
-                <p className="mt-1 text-[11px] font-semibold text-red-500">{phoneError}</p>
-              )}
+              */}
             </div>
 
             {/* Email Address Field */}
@@ -462,12 +531,71 @@ const WaitlistForm: React.FC<WaitlistFormProps> = ({ onSubmitSuccess }) => {
                 <input
                   type="email"
                   required
+                  disabled={emailOtpState === "verifying"}
                   value={email}
                   onChange={(e) => handleEmailChange(e.target.value)}
                   placeholder="e.g your@mail.com"
-                  className="w-full rounded-[16px] bg-transparent py-3.5 pl-10 pr-4 text-xs sm:text-sm font-medium outline-none placeholder:text-gray-400 focus:ring-4 focus:ring-[#0047FF]/10"
+                  className="w-full rounded-[16px] bg-transparent py-3.5 pl-10 pr-24 text-xs sm:text-sm font-medium outline-none placeholder:text-gray-400 focus:ring-4 focus:ring-[#0047FF]/10 disabled:opacity-70"
                 />
+
+                {/* Verifying Status */}
+                {emailOtpState === "verifying" && (
+                  <span className="absolute right-3 text-xs font-bold text-[#0047FF] animate-pulse">
+                    Verifying...
+                  </span>
+                )}
+
+                {/* Verify button: Shown ONLY when NOT verified and NOT verifying */}
+                {emailOtpState !== "verified" && emailOtpState !== "verifying" && (
+                  <button
+                    type="button"
+                    disabled={!validEmail || emailOtpState === "otp-sent"}
+                    onClick={handleSendEmailOtp}
+                    className="absolute right-2 rounded-full bg-[#0047FF] px-3.5 py-1.5 text-[11px] font-bold text-white transition-all hover:bg-[#0036CC] active:scale-95 disabled:bg-gray-200 disabled:text-gray-400 cursor-pointer disabled:cursor-not-allowed shadow-xs"
+                  >
+                    Verify
+                  </button>
+                )}
+
+                {/* When VERIFIED: The Verify button is completely removed! Show Verified check badge */}
+                {emailOtpState === "verified" && (
+                  <div className="absolute right-3 flex items-center gap-1 rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-bold text-emerald-600">
+                    <Check size={14} strokeWidth={2.8} />
+                    <span>Verified</span>
+                  </div>
+                )}
               </div>
+
+              {/* Inline OTP Code input if Email OTP sent */}
+              {emailOtpState === "otp-sent" && (
+                <motion.div
+                  initial={{ opacity: 0, y: -4 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="mt-1.5 flex items-center justify-between rounded-[14px] border border-[#0047FF]/40 bg-[#F0F5FF] px-3 py-2 text-xs"
+                >
+                  <input
+                    type="text"
+                    maxLength={6}
+                    value={emailOtpCode}
+                    onChange={(e) => handleVerifyEmailOtp(e.target.value.replace(/\D/g, ""))}
+                    placeholder="Enter 6-digit OTP from email"
+                    className="w-48 bg-transparent font-bold tracking-widest text-[#111111] outline-none placeholder:font-normal placeholder:tracking-normal placeholder:text-gray-400 text-xs"
+                    autoFocus
+                  />
+                  <button
+                    type="button"
+                    disabled={emailResendTimer > 0}
+                    onClick={handleSendEmailOtp}
+                    className="text-[11px] font-bold text-[#0047FF] hover:underline disabled:text-gray-400"
+                  >
+                    {emailResendTimer > 0 ? `Resend (${emailResendTimer}s)` : "Resend"}
+                  </button>
+                </motion.div>
+              )}
+
+              {emailError && (
+                <p className="mt-1 text-[11px] font-semibold text-red-500">{emailError}</p>
+              )}
             </div>
 
           </div>
