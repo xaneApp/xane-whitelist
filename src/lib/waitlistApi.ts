@@ -203,7 +203,8 @@ export async function getClimb(userId: string) {
 
 export async function getReferralPreview(referralCode: string) {
   return request<{
-    referrerName: string;
+    referrerName?: string;
+    referrerTag?: string;
   }>(
     `/api/waitlist/referral-preview?ref=${encodeURIComponent(
       referralCode
