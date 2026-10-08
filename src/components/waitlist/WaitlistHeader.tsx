@@ -24,12 +24,20 @@ const WaitlistHeader = ({
         {/* Right Action */}
         <div className="flex items-center gap-3">
           {rightAction === "homepage" && (
-            <Link
-              to="/"
-              className="rounded-full bg-[#D9FF3F] px-5 py-2 sm:px-6 sm:py-2.5 text-xs sm:text-sm font-bold text-[#111111] shadow-md transition-all hover:bg-[#cbf530] hover:scale-105 active:scale-95"
-            >
-              Homepage
-            </Link>
+            <div className="flex items-center gap-2 sm:gap-3">
+              <Link
+                to="/waitlist?view=leaderboard"
+                className="rounded-full bg-[#0036CC] px-3.5 py-1.5 sm:px-5 sm:py-2 text-xs sm:text-sm font-bold text-white shadow-md transition-all hover:bg-[#002B99] hover:scale-105 active:scale-95 whitespace-nowrap"
+              >
+                <span className="hidden sm:inline">View </span>Leaderboard
+              </Link>
+              <Link
+                to="/"
+                className="rounded-full bg-[#D9FF3F] px-4 py-1.5 sm:px-6 sm:py-2 text-xs sm:text-sm font-bold text-[#111111] shadow-md transition-all hover:bg-[#cbf530] hover:scale-105 active:scale-95 whitespace-nowrap"
+              >
+                Homepage
+              </Link>
+            </div>
           )}
 
           {rightAction === "leaderboard-nav" && (

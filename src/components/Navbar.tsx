@@ -19,25 +19,25 @@ const Navbar = ({ onOpenWaitlist }: NavbarProps) => {
 
         {/* Right CTA */}
 
-        <div className="flex items-center gap-3">
-          <a
-            href="/Waitlist?view=leaderboard"
-            className="rounded-full bg-[#D9FF3F] px-5 py-2 sm:px-6 sm:py-2.5 text-xs sm:text-sm font-bold text-[#111111] shadow-md transition-all hover:bg-[#cbf530] hover:scale-105 active:scale-95 cursor-pointer"
+        <div className="flex items-center gap-2 sm:gap-3">
+          <Link
+            to="/waitlist?view=leaderboard"
+            className="rounded-full bg-[#0036CC] px-3.5 py-1.5 sm:px-5 sm:py-2.5 text-xs sm:text-sm font-bold text-white shadow-md transition-all hover:bg-[#002B99] hover:scale-105 active:scale-95 whitespace-nowrap"
           >
-            Leaderboard
-          </a>
+            <span className="hidden sm:inline">View </span>Leaderboard
+          </Link>
           {onOpenWaitlist ? (
             <button
               type="button"
               onClick={onOpenWaitlist}
-              className="rounded-full bg-[#D9FF3F] px-5 py-2 sm:px-6 sm:py-2.5 text-xs sm:text-sm font-bold text-[#111111] shadow-md transition-all hover:bg-[#cbf530] hover:scale-105 active:scale-95 cursor-pointer"
+              className="rounded-full bg-[#D9FF3F] px-3.5 py-1.5 sm:px-6 sm:py-2.5 text-xs sm:text-sm font-bold text-[#111111] shadow-md transition-all hover:bg-[#cbf530] hover:scale-105 active:scale-95 cursor-pointer whitespace-nowrap"
             >
               Join Waitlist
             </button>
           ) : (
             <Link
               to="/waitlist"
-              className="rounded-full bg-[#D9FF3F] px-5 py-2 sm:px-6 sm:py-2.5 text-xs sm:text-sm font-bold text-[#111111] shadow-md transition-all hover:bg-[#cbf530] hover:scale-105 active:scale-95"
+              className="rounded-full bg-[#D9FF3F] px-3.5 py-1.5 sm:px-6 sm:py-2.5 text-xs sm:text-sm font-bold text-[#111111] shadow-md transition-all hover:bg-[#cbf530] hover:scale-105 active:scale-95 whitespace-nowrap"
             >
               Join Waitlist
             </Link>
