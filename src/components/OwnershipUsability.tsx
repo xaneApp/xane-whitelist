@@ -1,15 +1,35 @@
 import { motion } from "framer-motion";
 import appXanepay from "@/assets/app-xanepay.png"; 
-import walletKeys from "@/assets/wallet-keys.png";
-import phoneNumbers from "@/assets/phone-numbers.png";
-import convertCrypto from "@/assets/convert-crypto.png";
-import withdrawBank from "@/assets/withdraw-bank.png";
+import cardReceiveCrypto from "@/assets/card-receive-crypto.png";
+import cardConvertCrypto from "@/assets/card-convert-crypto.png";
+import cardWithdrawBank from "@/assets/card-withdraw-bank.png";
+import cardInstantMoney from "@/assets/card-instant-money.png";
 
 const cards = [
-  { image: walletKeys, alt: "You control your wallet keys", rotate: -18, y: 60 },
-  { image: phoneNumbers, alt: "Send to phone numbers or addresses", rotate: -5, y: 10 },
-  { image: convertCrypto, alt: "Convert crypto to local currency", rotate: 5, y: 10 },
-  { image: withdrawBank, alt: "Withdraw directly to bank", rotate: 18, y: 60 },
+  {
+    image: cardReceiveCrypto,
+    alt: "Receive any crypto — USDC, USDT, BTC, ETH and more",
+    y: 35,
+    zIndex: 10,
+  },
+  {
+    image: cardConvertCrypto,
+    alt: "Convert crypto to local currency instantly",
+    y: 15,
+    zIndex: 20,
+  },
+  {
+    image: cardWithdrawBank,
+    alt: "Withdraw directly to bank or mobile money",
+    y: 0,
+    zIndex: 30,
+  },
+  {
+    image: cardInstantMoney,
+    alt: "Money in your bank in seconds — not days",
+    y: 30,
+    zIndex: 20,
+  },
 ];
 
 const OwnershipUsability = () => {
@@ -76,47 +96,46 @@ const OwnershipUsability = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.3 }}
               transition={{ duration: 0.5, delay: i * 0.1 }}
-              className="group relative overflow-hidden rounded-2xl bg-white shadow-md transition-shadow hover:shadow-xl"
+              className="group relative overflow-hidden rounded-2xl transition-transform hover:scale-105 drop-shadow-md"
             >
               <img 
                 src={card.image} 
                 alt={card.alt} 
-                className="h-auto w-full object-cover rounded-2xl" 
+                className="h-auto w-full object-contain" 
               />
             </motion.div>
           ))}
         </div>
 
         {/* DESKTOP CARDS: Fanned Deck (>= md) */}
-        <div className="hidden md:flex mt-20 lg:mt-28 w-full justify-center md:space-x-[-4%] lg:space-x-[-2%]">
+        <div className="hidden md:flex mt-16 lg:mt-24 w-full justify-center md:space-x-[-4%] lg:space-x-[-2%]">
           {cards.map((card, i) => (
             <motion.div
               key={i}
-              initial={{ opacity: 0, y: 80, rotate: 0 }}
+              initial={{ opacity: 0, y: 60 }}
               whileInView={{ 
                 opacity: 1, 
-                y: card.y, 
-                rotate: card.rotate 
+                y: card.y,
               }}
               viewport={{ once: true, amount: 0.3 }}
               transition={{ 
                 type: "spring", 
                 bounce: 0.3, 
-                duration: 1, 
+                duration: 0.9, 
                 delay: i * 0.1 
               }}
               whileHover={{ 
-                rotate: 0, 
-                y: card.y - 25, 
-                scale: 1.06, 
-                zIndex: 50 
+                y: card.y - 20, 
+                scale: 1.05, 
+                zIndex: 60 
               }}
-              className="relative z-10 w-[240px] lg:w-[290px] xl:w-[320px] cursor-pointer drop-shadow-xl"
+              style={{ zIndex: card.zIndex }}
+              className="relative w-[230px] lg:w-[280px] xl:w-[310px] cursor-pointer drop-shadow-xl"
             >
               <img 
                 src={card.image} 
                 alt={card.alt} 
-                className="h-auto w-full rounded-[24px] lg:rounded-[30px]" 
+                className="h-auto w-full" 
               />
             </motion.div>
           ))}

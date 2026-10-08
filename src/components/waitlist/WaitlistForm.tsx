@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { User, Mail, Phone, ChevronRight } from "lucide-react";
+import { User, Mail, Phone, ChevronRight, Check } from "lucide-react";
 import xaneIcon from "@/assets/xane-icon.png";
 import {
   checkXaneTag,
@@ -9,6 +9,8 @@ import {
   joinWaitlist,
   normalizePhone,
   normalizeTag,
+  requestOtp,
+  verifyOtp,
 } from "@/lib/waitlistApi";
 
 export interface WaitlistFormData {
@@ -41,6 +43,14 @@ const WaitlistForm: React.FC<WaitlistFormProps> = ({ onSubmitSuccess }) => {
   const [premiumTag, setPremiumTag] = useState("");
   const [tagType, setTagType] = useState<"free" | "premium" | null>(null);
 
+  // Phone verification state
+  const [phoneOtpState, setPhoneOtpState] = useState<
+    "idle" | "otp-sent" | "verifying" | "verified" | "error"
+  >("idle");
+  const [phoneOtpCode, setPhoneOtpCode] = useState("");
+  const [phoneResendTimer, setPhoneResendTimer] = useState(0);
+  const [phoneError, setPhoneError] = useState("");
+
   const [freeTagState, setFreeTagState] = useState<TagState>("idle");
   const [referrerName, setReferrerName] = useState("");
   const [premiumTagState, setPremiumTagState] = useState<TagState>("idle");
@@ -55,6 +65,15 @@ const WaitlistForm: React.FC<WaitlistFormProps> = ({ onSubmitSuccess }) => {
   const normalizedFreeTag = normalizeTag(freeTag);
   const normalizedPremiumTag = normalizeTag(premiumTag);
   const validEmail = /^\S+@\S+\.\S+$/.test(email.trim());
+
+  // Phone OTP Resend Countdown
+  useEffect(() => {
+    if (phoneResendTimer <= 0) return;
+    const interval = window.setInterval(() => {
+      setPhoneResendTimer((prev) => (prev > 0 ? prev - 1 : 0));
+    }, 1000);
+    return () => window.clearInterval(interval);
+  }, [phoneResendTimer]);
 
   // Free Tag Availability Check
   useEffect(() => {
@@ -163,7 +182,52 @@ const WaitlistForm: React.FC<WaitlistFormProps> = ({ onSubmitSuccess }) => {
 
   const handlePhoneChange = (value: string) => {
     setPhone(value.replace(/\D/g, "").slice(0, 11));
+    setPhoneOtpState("idle");
+    setPhoneOtpCode("");
+    setPhoneError("");
     setFormError("");
+  };
+
+  const handleSendPhoneOtp = async () => {
+    if (phone.length < 7) return;
+    setPhoneError("");
+    setFormError("");
+    setPhoneOtpState("verifying");
+
+    try {
+      const result = await requestOtp(normalizedPhone, "phone");
+      if (result.bypassed || result.verified) {
+        setPhoneOtpState("verified");
+        setPhoneOtpCode("");
+        return;
+      }
+      setPhoneOtpState("otp-sent");
+      setPhoneResendTimer(result.resendAfterSeconds || 60);
+    } catch (error) {
+      setPhoneOtpState("error");
+      setPhoneError(
+        error instanceof Error ? error.message : "Could not verify phone number."
+      );
+    }
+  };
+
+  const handleVerifyPhoneOtp = async (code: string) => {
+    setPhoneOtpCode(code);
+    if (code.length !== 6) return;
+
+    setPhoneOtpState("verifying");
+    setPhoneError("");
+
+    try {
+      await verifyOtp(normalizedPhone, "phone", code);
+      setPhoneOtpState("verified");
+      setPhoneOtpCode("");
+    } catch (error) {
+      setPhoneOtpState("error");
+      setPhoneError(
+        error instanceof Error ? error.message : "Incorrect or expired OTP."
+      );
+    }
   };
 
   const handleEmailChange = (value: string) => {
@@ -316,13 +380,72 @@ const WaitlistForm: React.FC<WaitlistFormProps> = ({ onSubmitSuccess }) => {
                   <input
                     type="tel"
                     required
+                    disabled={phoneOtpState === "verifying"}
                     value={phone}
                     onChange={(e) => handlePhoneChange(e.target.value)}
                     placeholder="e.g 12345678901"
-                    className="w-full rounded-[16px] bg-transparent py-3.5 pl-10 pr-4 text-xs sm:text-sm font-medium outline-none placeholder:text-gray-400 focus:ring-4 focus:ring-[#0047FF]/10"
+                    className="w-full rounded-[16px] bg-transparent py-3.5 pl-10 pr-24 text-xs sm:text-sm font-medium outline-none placeholder:text-gray-400 focus:ring-4 focus:ring-[#0047FF]/10 disabled:opacity-70"
                   />
+
+                  {/* Verifying Status */}
+                  {phoneOtpState === "verifying" && (
+                    <span className="absolute right-3 text-xs font-bold text-[#0047FF] animate-pulse">
+                      Verifying...
+                    </span>
+                  )}
+
+                  {/* Verify button: Shown ONLY when NOT verified and NOT verifying */}
+                  {phoneOtpState !== "verified" && phoneOtpState !== "verifying" && (
+                    <button
+                      type="button"
+                      disabled={phone.length < 7 || phoneOtpState === "otp-sent"}
+                      onClick={handleSendPhoneOtp}
+                      className="absolute right-2 rounded-full bg-[#0047FF] px-3 py-1.5 text-[11px] font-bold text-white transition-all hover:bg-[#0036CC] active:scale-95 disabled:bg-gray-200 disabled:text-gray-400 cursor-pointer disabled:cursor-not-allowed shadow-xs"
+                    >
+                      Verify
+                    </button>
+                  )}
+
+                  {/* When VERIFIED: The Verify button is completely removed! Show Verified check badge */}
+                  {phoneOtpState === "verified" && (
+                    <div className="absolute right-3 flex items-center gap-1 rounded-full bg-emerald-50 px-2 py-0.5 text-xs font-bold text-emerald-600">
+                      <Check size={14} strokeWidth={2.8} />
+                      <span>Verified</span>
+                    </div>
+                  )}
                 </div>
               </div>
+
+              {/* Inline OTP Code input if SMS OTP sent */}
+              {phoneOtpState === "otp-sent" && (
+                <motion.div
+                  initial={{ opacity: 0, y: -4 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="mt-1.5 flex items-center justify-between rounded-[14px] border border-[#0047FF]/40 bg-[#F0F5FF] px-3 py-2 text-xs"
+                >
+                  <input
+                    type="text"
+                    maxLength={6}
+                    value={phoneOtpCode}
+                    onChange={(e) => handleVerifyPhoneOtp(e.target.value.replace(/\D/g, ""))}
+                    placeholder="Enter 6-digit OTP"
+                    className="w-36 bg-transparent font-bold tracking-widest text-[#111111] outline-none placeholder:font-normal placeholder:tracking-normal placeholder:text-gray-400"
+                    autoFocus
+                  />
+                  <button
+                    type="button"
+                    disabled={phoneResendTimer > 0}
+                    onClick={handleSendPhoneOtp}
+                    className="text-[11px] font-bold text-[#0047FF] hover:underline disabled:text-gray-400"
+                  >
+                    {phoneResendTimer > 0 ? `Resend (${phoneResendTimer}s)` : "Resend"}
+                  </button>
+                </motion.div>
+              )}
+
+              {phoneError && (
+                <p className="mt-1 text-[11px] font-semibold text-red-500">{phoneError}</p>
+              )}
             </div>
 
             {/* Email Address Field */}
