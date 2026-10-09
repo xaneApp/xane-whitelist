@@ -272,29 +272,19 @@ const WaitlistForm: React.FC<WaitlistFormProps> = ({ onSubmitSuccess }) => {
     setFormError("");
 
     try {
-      const generatedFreeFallback =
-        tagType === "premium"
-          ? `${normalizedPremiumTag}_${Math.floor(10 + Math.random() * 90)}`
-          : undefined;
-
-      // Unique fallback phone for backend database constraints compatibility
-      const fallbackPhone = `080${Math.floor(10000000 + Math.random() * 90000000)}`;
-
       const result = await joinWaitlist({
         fullName: fullName.trim(),
-        phone: fallbackPhone,
         email: email.trim().toLowerCase(),
-        xaneTag: tagType === "free" ? normalizedFreeTag : generatedFreeFallback,
+        xaneTag: tagType === "free" ? normalizedFreeTag : undefined,
         premiumXaneTag: tagType === "premium" ? normalizedPremiumTag : undefined,
         referralCode,
       });
 
       onSubmitSuccess({
         fullName: fullName.trim(),
-        phone: fallbackPhone,
         email: email.trim().toLowerCase(),
-        freeTag: displayTag(result.xaneTag || normalizedFreeTag),
-        premiumTag: displayTag(normalizedPremiumTag),
+        freeTag: displayTag(result.xaneTag || (tagType === "free" ? normalizedFreeTag : "")),
+        premiumTag: displayTag(tagType === "premium" ? normalizedPremiumTag : ""),
         userId: result.userId,
         telegramDeepLink: result.telegramDeepLink,
       });
