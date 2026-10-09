@@ -427,151 +427,189 @@ const WaitlistForm: React.FC<WaitlistFormProps> = ({ onSubmitSuccess }) => {
 
           {/* 3. Choose your XaneTag option */}
           <div className="space-y-2 text-left">
-            <label className="text-xs font-semibold text-gray-800">
-              Choose your XaneTag option
+            <label className="text-xs font-black tracking-wider text-[#111111] uppercase">
+              CHOOSE XANETAG
             </label>
 
-            {/* Outer Container for option cards */}
-            <div className="rounded-[18px] border border-gray-200/80 bg-[#FAFAFA] p-2.5 sm:p-3 shadow-xs">
-              <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 sm:gap-3">
-                
-                {/* Free XaneTag Option Card */}
-                <div
-                  onClick={() => setTagType("free")}
-                  className={`flex cursor-pointer items-center justify-between rounded-[14px] p-3 sm:p-3.5 transition-all ${
-                    tagType === "free"
-                      ? "border-2 border-[#0047FF] bg-white shadow-sm"
-                      : "border border-[#0047FF] bg-white hover:border-2"
-                  }`}
-                >
-                  <div className="flex flex-col text-left pr-2">
-                    <span className="text-xs sm:text-sm font-black tracking-wider uppercase text-[#111111]">
-                      FREE XANETAG
-                    </span>
-                    <span className="text-[9px] sm:text-[10px] text-gray-500 leading-tight mt-0.5">
-                      Must contain letters and numbers or underscores.
-                    </span>
-                  </div>
-
-                  {/* Radio Indicator */}
-                  <div className="flex h-5 w-5 items-center justify-center rounded-full border border-[#0047FF] shrink-0">
-                    {tagType === "free" ? (
-                      <div className="h-2.5 w-2.5 rounded-full bg-[#0047FF]" />
-                    ) : (
-                      <div className="h-1.5 w-1.5 rounded-full border border-[#0047FF]/50" />
-                    )}
-                  </div>
+            {/* Side-by-side Option Cards */}
+            <div className="grid grid-cols-2 gap-3">
+              {/* Free XaneTag Option Card */}
+              <button
+                type="button"
+                onClick={() => setTagType("free")}
+                className={`flex items-center gap-2.5 sm:gap-3 rounded-[16px] p-3 sm:p-3.5 text-left transition-all cursor-pointer ${
+                  tagType === "free"
+                    ? "border-2 border-[#0047FF] bg-white shadow-xs"
+                    : "border border-gray-200 bg-white hover:border-gray-300"
+                }`}
+              >
+                <div className={`flex h-5 w-5 items-center justify-center rounded-full shrink-0 ${
+                  tagType === "free" ? "border-2 border-[#0047FF]" : "border border-gray-300"
+                }`}>
+                  {tagType === "free" && (
+                    <div className="h-2.5 w-2.5 rounded-full bg-[#0047FF]" />
+                  )}
                 </div>
-
-                {/* Premium XaneTag Option Card */}
-                <div
-                  onClick={() => setTagType("premium")}
-                  className={`flex cursor-pointer items-center justify-between rounded-[14px] p-3 sm:p-3.5 transition-all ${
-                    tagType === "premium"
-                      ? "border-2 border-[#0047FF] bg-white shadow-sm"
-                      : "border border-[#0047FF] bg-white hover:border-2"
-                  }`}
-                >
-                  <div className="flex flex-col text-left pr-2">
-                    <span className="text-xs sm:text-sm font-black tracking-wider uppercase text-[#0047FF]">
-                      PREMIUM XANETAG
-                    </span>
-                    <span className="text-[9px] sm:text-[10px] text-gray-500 leading-tight mt-0.5">
-                      Only your name, no special characters.
-                    </span>
-                  </div>
-
-                  {/* Radio Indicator */}
-                  <div className="flex h-5 w-5 items-center justify-center rounded-full border border-[#0047FF] shrink-0">
-                    {tagType === "premium" ? (
-                      <div className="h-2.5 w-2.5 rounded-full bg-[#0047FF]" />
-                    ) : (
-                      <div className="h-1.5 w-1.5 rounded-full border border-[#0047FF]/50" />
-                    )}
-                  </div>
+                <div className="flex flex-col">
+                  <span className="text-xs sm:text-sm font-bold text-gray-900 leading-tight">
+                    Free XaneTag
+                  </span>
+                  <span className="text-[10px] sm:text-[11px] text-gray-400 leading-tight mt-0.5">
+                    Standard
+                  </span>
                 </div>
+              </button>
 
-              </div>
+              {/* Premium XaneTag Option Card */}
+              <button
+                type="button"
+                onClick={() => setTagType("premium")}
+                className={`flex items-center gap-2.5 sm:gap-3 rounded-[16px] p-3 sm:p-3.5 text-left transition-all cursor-pointer ${
+                  tagType === "premium"
+                    ? "border-2 border-[#0047FF] bg-[#F4F7FF] shadow-xs"
+                    : "border border-gray-200 bg-white hover:border-gray-300"
+                }`}
+              >
+                <div className={`flex h-5 w-5 items-center justify-center rounded-full shrink-0 ${
+                  tagType === "premium" ? "bg-[#0047FF]" : "border border-gray-300"
+                }`}>
+                  {tagType === "premium" ? (
+                    <div className="h-2 w-2 rounded-full bg-white" />
+                  ) : null}
+                </div>
+                <div className="flex flex-col">
+                  <span className={`text-xs sm:text-sm font-bold leading-tight ${
+                    tagType === "premium" ? "text-[#0047FF]" : "text-gray-900"
+                  }`}>
+                    Premium XaneTag
+                  </span>
+                  <span className="text-[10px] sm:text-[11px] text-gray-500 leading-tight mt-0.5">
+                    Refer 10 people
+                  </span>
+                </div>
+              </button>
             </div>
           </div>
 
-          {/* 4. Dynamic XaneTag Input (shown below the option box) */}
+          {/* 4. Dynamic XaneTag Input Block */}
           {tagType === "free" && (
-            <div className="space-y-1 text-left">
-              <div className="relative flex items-center rounded-[16px] border border-[#0047FF] bg-white">
-                <User
-                  size={18}
-                  className="pointer-events-none absolute left-3.5 text-[#111111]"
-                />
+            <div className="rounded-[20px] border border-gray-200 bg-[#F9FAFB] p-4 sm:p-5 space-y-3 text-left">
+              <span className="text-xs font-black tracking-wider uppercase text-gray-900">
+                FREE XANETAG
+              </span>
+              
+              <div
+                className={`relative flex items-center rounded-[16px] border bg-white px-3 py-3 shadow-xs transition-colors ${
+                  freeTagState === "available"
+                    ? "border-emerald-500"
+                    : freeTagState === "taken" || freeTagState === "invalid"
+                    ? "border-red-400"
+                    : "border-[#0047FF]"
+                }`}
+              >
+                <div className="flex h-7 w-7 items-center justify-center rounded-[8px] bg-gray-100 p-1 shrink-0">
+                  <User size={16} className="text-gray-600" />
+                </div>
+                <span className="ml-2 font-bold text-gray-900 text-sm sm:text-base">
+                  @
+                </span>
                 <input
                   type="text"
                   required
                   value={freeTag}
                   onChange={(e) => handleFreeTagChange(e.target.value)}
-                  placeholder="e.g yourname_22.xane"
-                  className="w-full rounded-[16px] bg-transparent py-3.5 pl-11 pr-4 text-xs sm:text-sm font-medium outline-none placeholder:text-gray-400 focus:ring-4 focus:ring-[#0047FF]/10"
+                  placeholder="yourname_22"
+                  className="flex-1 bg-transparent px-1 font-semibold text-gray-900 outline-none text-sm sm:text-base placeholder:font-normal placeholder:text-gray-400"
                 />
+                <span className="font-bold text-gray-400 text-sm sm:text-base pr-1">
+                  .xane
+                </span>
               </div>
 
               {/* Tag Validation Message */}
-              {freeTagState !== "idle" && (
-                <div className="flex items-center justify-between px-1 text-[10px]">
-                  <span
-                    className={
-                      freeTagState === "available"
-                        ? "font-semibold text-emerald-600"
-                        : freeTagState === "taken" || freeTagState === "invalid"
-                        ? "font-semibold text-red-500"
-                        : "text-gray-400"
-                    }
-                  >
-                    {freeTagState === "checking"
-                      ? "Checking availability..."
-                      : tagMessage}
+              <div className="flex items-center justify-between text-xs px-0.5">
+                <span className="text-gray-500 font-medium text-[11px] sm:text-xs">
+                  Letters, numbers & underscores only.
+                </span>
+                {freeTagState === "available" && (
+                  <span className="font-semibold text-emerald-600 text-[11px] sm:text-xs">
+                    Available ✓
                   </span>
-                </div>
-              )}
+                )}
+                {freeTagState === "checking" && (
+                  <span className="text-[11px] sm:text-xs text-gray-400">
+                    Checking...
+                  </span>
+                )}
+                {(freeTagState === "taken" || freeTagState === "invalid") && (
+                  <span className="font-semibold text-red-500 text-[11px] sm:text-xs">
+                    {tagMessage || "Taken"}
+                  </span>
+                )}
+              </div>
             </div>
           )}
 
           {tagType === "premium" && (
-            <div className="space-y-1 text-left">
-              <div className="relative flex items-center rounded-[16px] border border-[#0047FF] bg-white">
-                <div className="pointer-events-none absolute left-3 flex h-5 w-5 items-center justify-center rounded-[4px] bg-[#0047FF] p-0.5 shadow-xs">
+            <div className="rounded-[20px] border border-blue-200/90 bg-[#F4F7FF] p-4 sm:p-5 space-y-3 text-left">
+              <span className="text-xs font-black tracking-wider uppercase text-[#0047FF]">
+                PREMIUM XANETAG
+              </span>
+              
+              <div
+                className={`relative flex items-center rounded-[16px] border bg-white px-3 py-3 shadow-xs transition-colors ${
+                  premiumTagState === "available"
+                    ? "border-emerald-500"
+                    : premiumTagState === "taken" || premiumTagState === "invalid"
+                    ? "border-red-400"
+                    : "border-[#0047FF]"
+                }`}
+              >
+                <div className="flex h-7 w-7 items-center justify-center rounded-[8px] bg-[#0047FF] p-1 shrink-0 shadow-xs">
                   <img
                     src={xaneIcon}
                     alt="Xane"
                     className="h-full w-full object-contain brightness-0 invert"
                   />
                 </div>
+                <span className="ml-2 font-bold text-gray-900 text-sm sm:text-base">
+                  @
+                </span>
                 <input
                   type="text"
                   required
                   value={premiumTag}
                   onChange={(e) => handlePremiumTagChange(e.target.value)}
-                  placeholder="@yourname.xane"
-                  className="w-full rounded-[16px] bg-transparent py-3.5 pl-11 pr-4 text-xs sm:text-sm font-medium outline-none placeholder:text-gray-400 focus:ring-4 focus:ring-[#0047FF]/10"
+                  placeholder="yourname"
+                  className="flex-1 bg-transparent px-1 font-semibold text-gray-900 outline-none text-sm sm:text-base placeholder:font-normal placeholder:text-gray-400"
                 />
+                <span className="font-bold text-[#0047FF] text-sm sm:text-base pr-1">
+                  .xane
+                </span>
               </div>
 
-              {/* Premium Tag Validation Message */}
-              {premiumTagState !== "idle" && (
-                <div className="flex items-center justify-between px-1 text-[10px]">
-                  <span
-                    className={
-                      premiumTagState === "available"
-                        ? "font-semibold text-emerald-600"
-                        : premiumTagState === "taken" || premiumTagState === "invalid"
-                        ? "font-semibold text-red-500"
-                        : "text-gray-400"
-                    }
-                  >
-                    {premiumTagState === "checking"
-                      ? "Checking availability..."
-                      : premiumMessage}
+              {/* Requirement on left & Availability on right */}
+              <div className="flex items-center justify-between text-xs px-0.5">
+                <span className="text-gray-500 font-medium text-[11px] sm:text-xs">
+                  Refer 10 people in 14 days to own it.
+                </span>
+
+                {premiumTagState === "available" && (
+                  <span className="font-semibold text-emerald-600 text-[11px] sm:text-xs">
+                    Available ✓
                   </span>
-                </div>
-              )}
+                )}
+                {premiumTagState === "checking" && (
+                  <span className="text-[11px] sm:text-xs text-gray-400">
+                    Checking...
+                  </span>
+                )}
+                {(premiumTagState === "taken" || premiumTagState === "invalid") && (
+                  <span className="font-semibold text-red-500 text-[11px] sm:text-xs">
+                    {premiumMessage || "Taken"}
+                  </span>
+                )}
+              </div>
             </div>
           )}
 
