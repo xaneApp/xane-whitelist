@@ -10,7 +10,7 @@ import mascot5 from "@/assets/mascot5.png";
 import mascot6 from "@/assets/mascot6.png";
 import lockIcon from "@/assets/lock.png";
 
-import { getClimb, getLeaderboard } from "@/lib/waitlistApi";
+import { getClimb, getLeaderboard, getMe, normalizeTag } from "@/lib/waitlistApi";
 
 interface Props {
   currentUserTag?: string;
@@ -26,6 +26,8 @@ const badgeImage: Record<string, string> = {
   "Xane Captain": mascot6,
   "Xane Founding Council": mascot6,
 };
+
+const PAGE_SIZE = 10;
 
 const LeaderboardView = ({
   currentUserTag = "",
@@ -50,8 +52,13 @@ const LeaderboardView = ({
   const [climb, setClimb] = useState<
     Awaited<ReturnType<typeof getClimb>> | null
   >(null);
+  const [userMe, setUserMe] = useState<
+    Awaited<ReturnType<typeof getMe>> | null
+  >(null);
 
   const [levelsLoading, setLevelsLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [timeframe, setTimeframe] = useState<"7days" | "allTime">("7days");
 
   /*
    * LOAD PUBLIC LEADERBOARD
@@ -90,41 +97,27 @@ const LeaderboardView = ({
 
   /*
    * LOAD PERSONAL PROGRESS ONLY IF USER EXISTS
-   *
-   * The Levels page itself is public.
-   * A visitor without an account still sees every level.
    */
   useEffect(() => {
     if (!userId) {
       setClimb(null);
+      setUserMe(null);
       setLevelsLoading(false);
       return;
     }
 
     let cancelled = false;
-
     setLevelsLoading(true);
 
-    getClimb(userId)
-      .then((result) => {
+    Promise.allSettled([getClimb(userId), getMe(userId)]).then(
+      ([climbRes, meRes]) => {
         if (!cancelled) {
-          setClimb(result);
-        }
-      })
-      .catch(() => {
-        /*
-         * Personal progress is optional.
-         * Do NOT show "Not found" to public visitors.
-         */
-        if (!cancelled) {
-          setClimb(null);
-        }
-      })
-      .finally(() => {
-        if (!cancelled) {
+          if (climbRes.status === "fulfilled") setClimb(climbRes.value);
+          if (meRes.status === "fulfilled") setUserMe(meRes.value);
           setLevelsLoading(false);
         }
-      });
+      }
+    );
 
     return () => {
       cancelled = true;
@@ -132,12 +125,94 @@ const LeaderboardView = ({
   }, [userId]);
 
   const leader = rows[0];
+  const leaderInitial = leader
+    ? normalizeTag(leader.username).charAt(0).toUpperCase() || "R"
+    : "R";
+
+  const normalizedCurrentTag = normalizeTag(
+    currentUserTag || userMe?.xaneTag || ""
+  ).toLowerCase();
 
   const currentIndex = rows.findIndex(
-    (row) =>
-      row.username.toLowerCase() ===
-      currentUserTag.toLowerCase()
+    (row) => normalizeTag(row.username).toLowerCase() === normalizedCurrentTag
   );
+
+  const userRank =
+    (currentIndex >= 0 ? rows[currentIndex].rank : null) ??
+    climb?.position ??
+    userMe?.position ??
+    null;
+
+  const userFriends =
+    (currentIndex >= 0 ? rows[currentIndex].friends : null) ??
+    climb?.referralCount ??
+    userMe?.referralCount ??
+    0;
+
+  const userBadge =
+    (currentIndex >= 0 ? rows[currentIndex].badge : null) ??
+    climb?.currentLevel?.label ??
+    userMe?.level ??
+    "Waitlist Member";
+
+  const effectiveUserTag =
+    currentUserTag ||
+    (userMe?.xaneTag ? `@${normalizeTag(userMe.xaneTag)}.xane` : "") ||
+    "you";
+
+  // Total pages (each page shows 10 items)
+  const totalPages = Math.max(1, Math.ceil(rows.length / PAGE_SIZE));
+
+  useEffect(() => {
+    if (currentPage > totalPages) {
+      setCurrentPage(totalPages);
+    }
+  }, [totalPages, currentPage]);
+
+  /*
+   * FIRST PAGE USER POSITION PINNING:
+   * Radiyat: "🖼 The bottom nav bar, the number of page and the position of the person on the first page. So each page shows 10"
+   * If the current user has a known position outside the top 10 (or is not in top 10 rows),
+   * Page 1 shows ranks #1 through #9, and row 10 shows the user's position '#<userRank> (you)'.
+   */
+  const hasPinnedUserOnPageOne =
+    currentPage === 1 &&
+    userRank !== null &&
+    userRank > 10 &&
+    (currentIndex === -1 || currentIndex >= 10);
+
+  let displayedRows: {
+    rank: number;
+    username: string;
+    badge: string;
+    friends: number;
+    isCurrentUser: boolean;
+  }[] = [];
+
+  if (loading) {
+    displayedRows = [];
+  } else if (hasPinnedUserOnPageOne) {
+    const topNine = rows.slice(0, 9).map((r) => ({
+      ...r,
+      isCurrentUser: false,
+    }));
+    const pinnedUser = {
+      rank: userRank,
+      username: effectiveUserTag,
+      badge: userBadge,
+      friends: userFriends,
+      isCurrentUser: true,
+    };
+    displayedRows = [...topNine, pinnedUser];
+  } else {
+    const startIndex = (currentPage - 1) * PAGE_SIZE;
+    displayedRows = rows.slice(startIndex, startIndex + PAGE_SIZE).map((r) => ({
+      ...r,
+      isCurrentUser:
+        Boolean(normalizedCurrentTag) &&
+        normalizeTag(r.username).toLowerCase() === normalizedCurrentTag,
+    }));
+  }
 
   /*
    * PUBLIC LEVEL LADDER
@@ -210,7 +285,7 @@ const LeaderboardView = ({
         <button
           type="button"
           onClick={() => setActiveTab("leaderboard")}
-          className={`rounded-full px-6 py-2 text-xs font-bold sm:text-sm ${
+          className={`rounded-full px-6 py-2 text-xs font-bold sm:text-sm cursor-pointer transition-all ${
             activeTab === "leaderboard"
               ? "bg-white text-[#0047FF] shadow-md"
               : "text-white"
@@ -222,7 +297,7 @@ const LeaderboardView = ({
         <button
           type="button"
           onClick={() => setActiveTab("levels")}
-          className={`rounded-full px-6 py-2 text-xs font-bold sm:text-sm ${
+          className={`rounded-full px-6 py-2 text-xs font-bold sm:text-sm cursor-pointer transition-all ${
             activeTab === "levels"
               ? "bg-white text-[#0047FF] shadow-md"
               : "text-white"
@@ -241,20 +316,52 @@ const LeaderboardView = ({
           animate={{ opacity: 1, y: 0 }}
           className="mt-8 flex w-full max-w-[850px] flex-col items-center"
         >
-          <div className="mt-2 flex flex-col items-center text-center">
-            <div className="w-10 drop-shadow-lg sm:w-12">
-              <img
-                src={crownIcon}
-                alt="Crown"
-                className="w-full object-contain"
-              />
+          {/* TIMEFRAME TOGGLE (from Figma Image 1) */}
+          <div className="flex items-center rounded-full border border-white/20 bg-[#002699]/80 p-0.5 shadow-inner">
+            <button
+              type="button"
+              onClick={() => setTimeframe("7days")}
+              className={`rounded-full px-4 py-1 text-xs font-bold transition-all cursor-pointer ${
+                timeframe === "7days"
+                  ? "bg-white text-[#0047FF] shadow-xs"
+                  : "text-white/80 hover:text-white"
+              }`}
+            >
+              7 days
+            </button>
+            <button
+              type="button"
+              onClick={() => setTimeframe("allTime")}
+              className={`rounded-full px-4 py-1 text-xs font-bold transition-all cursor-pointer ${
+                timeframe === "allTime"
+                  ? "bg-white text-[#0047FF] shadow-xs"
+                  : "text-white/80 hover:text-white"
+              }`}
+            >
+              All time
+            </button>
+          </div>
+
+          {/* LEADER HEADER */}
+          <div className="mt-4 flex flex-col items-center text-center">
+            <div className="relative flex flex-col items-center">
+              <div className="w-10 drop-shadow-lg sm:w-12">
+                <img
+                  src={crownIcon}
+                  alt="Crown"
+                  className="w-full object-contain"
+                />
+              </div>
+              <div className="-mt-2 flex h-8 w-8 items-center justify-center rounded-full border-2 border-white bg-[#0047FF] text-xs font-black text-white shadow-md">
+                {leaderInitial}
+              </div>
             </div>
 
-            <p className="mt-1 font-sans text-xl font-black text-white sm:text-2xl">
+            <p className="mt-2 font-sans text-xl font-black text-white sm:text-2xl">
               {leader ? (
                 <>
                   <span className="text-[#D9FF3F]">
-                    {leader.username}
+                    @{normalizeTag(leader.username)}.xane
                   </span>{" "}
                   is leading
                 </>
@@ -263,9 +370,11 @@ const LeaderboardView = ({
               )}
             </p>
 
-            <p className="text-xs text-white/80 sm:text-sm">
+            <p className="text-xs text-white/80 sm:text-sm font-medium">
               {leader
-                ? `${leader.friends} verified referrals`
+                ? timeframe === "7days"
+                  ? `${leader.friends} referrals this week`
+                  : `${leader.friends} verified referrals`
                 : "Real-time active waitlist members"}
             </p>
           </div>
@@ -276,75 +385,134 @@ const LeaderboardView = ({
             </div>
           )}
 
+          {/* LEADERBOARD TABLE CONTAINER */}
           <div className="mt-6 w-full overflow-hidden rounded-[24px] border border-white/15 bg-[#0036CC]/80 shadow-2xl backdrop-blur-xl">
-            <div className="grid grid-cols-12 bg-[#0047FF] px-6 py-3.5 text-xs font-bold text-white">
-              <div className="col-span-2">Rank</div>
-
-              <div className="col-span-7 text-center">
-                XaneTag / Badge
-              </div>
-
-              <div className="col-span-3 text-right">
-                Verified Referrals
-              </div>
+            {/* Table Header */}
+            <div className="grid grid-cols-12 bg-[#0047FF] px-4 sm:px-6 py-3.5 text-xs font-extrabold uppercase tracking-wider text-white">
+              <div className="col-span-3 sm:col-span-2 text-left">Rank</div>
+              <div className="col-span-6 sm:col-span-7 px-2">Badge / XaneTag</div>
+              <div className="col-span-3 text-right">Verified Referrals</div>
             </div>
 
+            {/* Table Rows */}
             <div className="divide-y divide-white/10 text-xs font-medium text-white sm:text-sm">
               {loading ? (
-                <div className="px-6 py-8 text-center text-white/70">
+                <div className="px-6 py-12 text-center text-white/70 font-semibold">
                   Loading leaderboard...
                 </div>
-              ) : rows.length === 0 ? (
-                <div className="px-6 py-8 text-center text-white/70">
+              ) : displayedRows.length === 0 ? (
+                <div className="px-6 py-12 text-center text-white/70 font-semibold">
                   No active members yet.
                 </div>
               ) : (
-                rows.map((row) => (
-                  <div
-                    key={row.rank}
-                    className={`grid grid-cols-12 items-center px-6 py-3.5 transition-colors ${
-                      row.username.toLowerCase() ===
-                      currentUserTag.toLowerCase()
-                        ? "bg-[#0047FF]"
-                        : "hover:bg-white/5"
-                    }`}
-                  >
-                    <div className="col-span-2 text-left font-bold">
-                      #{row.rank}
+                displayedRows.map((row) => {
+                  const isYou = row.isCurrentUser;
+                  const cleanTag = normalizeTag(row.username);
+
+                  return (
+                    <div
+                      key={`${row.rank}-${row.username}`}
+                      className={`grid grid-cols-12 items-center px-4 sm:px-6 py-3.5 sm:py-4 transition-colors ${
+                        isYou
+                          ? "bg-[#0047FF] border-y border-[#D9FF3F]/30 shadow-inner"
+                          : "hover:bg-white/5"
+                      }`}
+                    >
+                      {/* 1. Rank */}
+                      <div className="col-span-3 sm:col-span-2 text-left flex items-center gap-1.5">
+                        <span
+                          className={`font-black text-xs sm:text-sm ${
+                            row.rank === 1
+                              ? "text-[#FFD700]"
+                              : row.rank === 2
+                              ? "text-[#E0E0E0]"
+                              : row.rank === 3
+                              ? "text-[#CD7F32]"
+                              : "text-white"
+                          }`}
+                        >
+                          #{row.rank}
+                        </span>
+                        {isYou && (
+                          <span className="rounded-full bg-[#D9FF3F] px-1.5 py-0.5 text-[9px] sm:text-[10px] font-black text-[#0036CC] uppercase leading-none shadow-xs">
+                            you
+                          </span>
+                        )}
+                      </div>
+
+                      {/* 2. Middle Column: XaneTag & Badge (Balanced) */}
+                      <div className="col-span-6 sm:col-span-7 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 sm:gap-4 px-2">
+                        {/* XaneTag */}
+                        <div className="flex items-center gap-1.5 truncate">
+                          <span className="font-bold text-white text-xs sm:text-sm truncate">
+                            @{cleanTag}
+                            <span className="text-white/60 font-normal">.xane</span>
+                          </span>
+                        </div>
+
+                        {/* Badge with Mascot */}
+                        <div className="flex items-center gap-1.5 text-white/90 text-[11px] sm:text-xs font-semibold shrink-0">
+                          <span className="hidden sm:inline text-white/30">·</span>
+                          <span className="truncate">{row.badge}</span>
+                          <img
+                            src={badgeImage[row.badge] || mascot1}
+                            alt={row.badge}
+                            className="h-5 w-5 sm:h-6 sm:w-6 object-contain shrink-0 drop-shadow-xs"
+                          />
+                        </div>
+                      </div>
+
+                      {/* 3. Verified Referrals */}
+                      <div className="col-span-3 text-right font-black text-white text-xs sm:text-base pr-1 sm:pr-2">
+                        {row.friends}
+                      </div>
                     </div>
-
-                    <div className="col-span-7 flex items-center justify-center gap-2">
-                      <span>{row.username}</span>
-
-                      <span className="text-white/60">
-                        ·
-                      </span>
-
-                      <span>{row.badge}</span>
-
-                      <img
-                        src={
-                          badgeImage[row.badge] || mascot1
-                        }
-                        alt={row.badge}
-                        className="h-6 w-6 object-contain"
-                      />
-                    </div>
-
-                    <div className="col-span-3 text-right font-bold">
-                      {row.friends}
-                    </div>
-                  </div>
-                ))
+                  );
+                })
               )}
             </div>
+
+            {/* Bottom Navigation Bar (from Figma Image 1) */}
+            {!loading && displayedRows.length > 0 && (
+              <div className="flex items-center justify-between border-t border-white/10 bg-[#002699]/60 px-4 sm:px-6 py-3.5 backdrop-blur-sm">
+                {/* Page Indicator */}
+                <span className="text-xs sm:text-sm font-semibold text-white/70">
+                  Page {currentPage}/{totalPages}
+                </span>
+
+                {/* Prev / Next Buttons */}
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    disabled={currentPage <= 1}
+                    onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+                    className="flex items-center gap-1.5 rounded-full border border-white/20 bg-white/10 px-3.5 py-1.5 text-xs font-bold text-white transition-all hover:bg-white/20 active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer shadow-xs"
+                  >
+                    <span className="flex h-4 w-4 items-center justify-center rounded-full bg-white text-[#0036CC] text-[10px] font-black">
+                      ‹
+                    </span>
+                    <span>Prev</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    disabled={currentPage >= totalPages}
+                    onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+                    className="flex items-center gap-1.5 rounded-full bg-white px-3.5 py-1.5 text-xs font-bold text-[#0036CC] transition-all hover:bg-white/90 active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer shadow-sm"
+                  >
+                    <span>Next</span>
+                    <span className="flex h-4 w-4 items-center justify-center rounded-full bg-[#0036CC] text-white text-[10px] font-black">
+                      ›
+                    </span>
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
 
-          {currentIndex < 0 && currentUserTag && (
-            <p className="mt-3 text-[11px] text-white/70">
-              Your tag will appear in the public leaderboard once
-              your account is active and within the returned
-              leaderboard results.
+          {currentIndex < 0 && !climb?.position && !userMe?.position && currentUserTag && (
+            <p className="mt-3 text-[11px] text-white/70 text-center">
+              Your tag will appear in the public leaderboard once your account is active and within the returned leaderboard results.
             </p>
           )}
         </motion.div>
